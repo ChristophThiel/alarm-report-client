@@ -5,3 +5,23 @@
 .seperator {
     margin-left: 16px;
 }
+
+.container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+}
+
+.container-margin-top {
+    margin-top: 64px;
+}
+
+@media screen and (max-width: 599px) {
+    .container-margin-top {
+        margin-top: 56px;
+    }
+}
+  
