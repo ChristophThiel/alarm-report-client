@@ -7,21 +7,21 @@
 }
 
 .container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #eee;
+    background: white;
+    height: calc(100vh - 64px);
 }
 
-.container-margin-top {
-    margin-top: 64px;
+.container .mat-sidenav {
+    background: blue;
 }
 
-@media screen and (max-width: 599px) {
-    .container-margin-top {
-        margin-top: 56px;
+.container .mat-tab-group {
+    margin: 1em;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        height: calc(100vh - 56px);
     }
 }
   
