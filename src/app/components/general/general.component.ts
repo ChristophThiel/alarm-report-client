@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RestService } from '../../services/rest.service';
 import { Alarm } from '../../models/alarm';
+import { debug } from 'util';
 
 @Component({
   selector: 'app-general',
@@ -10,7 +11,7 @@ import { Alarm } from '../../models/alarm';
 })
 export class GeneralComponent implements OnInit {
 
-  @Input() alarm: string;
+  @Input() public alarm: string;
 
   public test: string = "";
 

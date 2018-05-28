@@ -8,7 +8,7 @@ import { Alarm } from '../../models/alarm';
 })
 export class AppComponent {
   
-  currentAlarm = "Test";
+  public currentAlarm = "Test";
 
   constructor() { }
 
