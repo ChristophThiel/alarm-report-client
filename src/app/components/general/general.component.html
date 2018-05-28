@@ -1,5 +1,5 @@
 <form>
   <mat-form-field class="width-full">
-    <input matInput placeholder="Alarmstichwort" value="{{alarm}}">
+    <input matInput placeholder="Alarmstichwort" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
   </mat-form-field>
 </form>
