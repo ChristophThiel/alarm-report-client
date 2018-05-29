@@ -1,5 +1,27 @@
-<form>
-  <mat-form-field class="width-full">
-    <input matInput placeholder="Alarmstichwort" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
-  </mat-form-field>
-</form>
+<div class="content content-padding"
+     fxLayout="column"
+     fxLayout.gt="row">
+  <form>
+    <mat-form-field fxFlex="calc(75%)">
+      <input matInput placeholder="Alarmstichwort" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+    <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
+      <mat-select placeholder="Einsatztyp">
+        <mat-option value="Brand">Brand</mat-option>
+        <mat-option value="Technisch">Technisch</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <form>
+      <mat-form-field fxFlex="calc(50%)">
+        <input matInput placeholder="Straße">
+      </mat-form-field>
+      <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
+        <input matInput placeholder="Gemeinde">
+      </mat-form-field>
+      <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
+        <input matInput placeholder="Bezirk">
+      </mat-form-field>
+    </form>
+</div>

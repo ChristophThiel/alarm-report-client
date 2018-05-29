@@ -7,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule, MatIcon } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { MatIconModule, MatIcon } from '@angular/material/icon';
     MatSidenavModule,
     MatTabsModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   exports: [
     MatButtonModule,
@@ -24,7 +26,8 @@ import { MatIconModule, MatIcon } from '@angular/material/icon';
     MatSidenavModule,
     MatTabsModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   declarations: []
 })
