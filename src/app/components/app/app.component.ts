@@ -12,12 +12,12 @@ export class AppComponent {
   
   public currentAlarm: Alarm;
 
-  constructor(private _rest: RestService) { 
+  constructor(private rest: RestService) { 
     this.currentAlarm = new Alarm();
   }
 
   public generatePdf(): void {
-    this._rest.generatePdf(this.currentAlarm);
+    this.rest.generatePdf(this.currentAlarm);
   }
 
 }

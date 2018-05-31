@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Alarm } from '../../models/alarm';
+import { AlarmKeyword } from '../../models/alarmKeyword';
+import { RestService } from '../../services/rest.service';
 
 @Component({
   selector: 'app-general',
@@ -11,10 +13,25 @@ export class GeneralComponent implements OnInit {
 
   @Input() public alarm: Alarm;
 
-  constructor() { }
+  public alarmKeywords: AlarmKeyword;
+  public keywords: string[];
 
-  ngOnInit(): void {
-    
+  constructor(private rest: RestService) { }
+
+  public ngOnInit(): void {
+    this.rest.getAlarmKeywords().subscribe(data => { 
+      this.alarmKeywords = data;
+      this.keywords = this.alarmKeywords.fireAlarmKeywords; 
+    });
+    /*this.rest.getAlarmKeywords().subscribe(data => {
+      this.alarmKeywords = data;
+      this.keywords = this.alarmKeywords.fireAlarmKeywords as string[];
+      //this.keywords = data.fireAlarmKeywords;
+    });*/
+  } 
+
+  public checkAlarmKeyword(): void {
+    this.alarm.isFireAlarmType = this.alarmKeywords.fireAlarmKeywords.indexOf(this.alarm.alarmKeyword) > -1 ? true : false;
   }
 
 }

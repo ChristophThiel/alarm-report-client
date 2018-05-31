@@ -8,6 +8,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule, MatIcon } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatTabsModule,
     MatInputModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatButtonModule,
@@ -27,7 +29,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatTabsModule,
     MatInputModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatAutocompleteModule
   ],
   declarations: []
 })

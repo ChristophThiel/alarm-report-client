@@ -3,12 +3,17 @@
      fxLayout.gt="row">
   <form>
     <mat-form-field fxFlex="calc(75%)">
-      <input matInput placeholder="Alarmstichwort" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
+      <input matInput placeholder="Alarmstichwort" (keyup)="checkAlarmKeyword()" [matAutocomplete]="auto" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let keyword of keywords | async" [value]="keyword">
+          <span>{{keyword}}</span>
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
     <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
-      <mat-select placeholder="Einsatztyp">
-        <mat-option value="Brand">Brand</mat-option>
-        <mat-option value="Technisch">Technisch</mat-option>
+      <mat-select placeholder="Einsatztyp" [value]="alarm.isFireAlarmType == true ? '1' : '0'">
+        <mat-option value="1">Brand</mat-option>
+        <mat-option value="0">Technisch</mat-option>
       </mat-select>
     </mat-form-field>
   </form>
