@@ -4,8 +4,8 @@
   <form>
     <mat-form-field fxFlex="calc(75%)">
       <input matInput placeholder="Alarmstichwort" (keyup)="checkAlarmKeyword()" [matAutocomplete]="auto" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let keyword of keywords | async" [value]="keyword">
+      <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
+        <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword">
           <span>{{keyword}}</span>
         </mat-option>
       </mat-autocomplete>

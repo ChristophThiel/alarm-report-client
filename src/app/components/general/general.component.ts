@@ -14,23 +14,28 @@ export class GeneralComponent implements OnInit {
   @Input() public alarm: Alarm;
 
   public alarmKeywords: AlarmKeyword;
-  public keywords: string[];
+  public keywords: string[] = [];
+  public filteredKeywords: string[] = [];
 
   constructor(private rest: RestService) { }
 
   public ngOnInit(): void {
     this.rest.getAlarmKeywords().subscribe(data => { 
       this.alarmKeywords = data;
-      this.keywords = this.alarmKeywords.fireAlarmKeywords; 
+      this.keywords = data.fireAlarmKeywords.concat(data.technicalAlarmKeywords);
     });
-    /*this.rest.getAlarmKeywords().subscribe(data => {
-      this.alarmKeywords = data;
-      this.keywords = this.alarmKeywords.fireAlarmKeywords as string[];
-      //this.keywords = data.fireAlarmKeywords;
-    });*/
   } 
 
   public checkAlarmKeyword(): void {
+    this.filteredKeywords = [];
+    this.keywords.forEach(keyword => {
+      if (this.alarm.alarmKeyword == "") {
+        this.filteredKeywords = this.keywords;
+      }
+      else if (keyword.toLowerCase().startsWith(this.alarm.alarmKeyword.toLowerCase())) {
+        this.filteredKeywords.push(keyword);
+      }
+    });
     this.alarm.isFireAlarmType = this.alarmKeywords.fireAlarmKeywords.indexOf(this.alarm.alarmKeyword) > -1 ? true : false;
   }
 
