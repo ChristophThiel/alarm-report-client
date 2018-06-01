@@ -12,16 +12,11 @@ export class RestService {
 
   constructor(private http: HttpClient) { }
 
-  public testService(): string {
-    return "The service worked!";
-  }
-
   public generatePdf(alarm: Alarm) {
     this.http.post(`${environment.restApiUrl}/alarm/pdf`, alarm);
   }
 
   public getAlarmKeywords(): Observable<AlarmKeyword> {
-    return this.http.get<AlarmKeyword>(`${environment.restApiUrl}/keywords`);
+    return this.http.get<AlarmKeyword>(`${environment.restApiUrl}/alarmkeyword`);
   }
-
 }
