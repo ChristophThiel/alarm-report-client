@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Alarm } from '../../models/alarm';
 import { AlarmKeyword } from '../../models/alarmKeyword';
 import { RestService } from '../../services/rest.service';
+import { environment } from '../../../environments/environment';
+import { delay } from 'q';
 
 @Component({
   selector: 'app-general',
@@ -27,6 +29,23 @@ export class GeneralComponent implements OnInit {
   } 
 
   public checkAlarmKeyword(): void {
+    this.filter()
+    this.alarm.isFireAlarmType = this.alarmKeywords.fireAlarmKeywords.indexOf(this.alarm.alarmKeyword) > -1 ? true : false;
+  }
+
+  public setDefaultParish(): void {
+    if (this.alarm.parish == "") {
+      this.alarm.parish = environment.defaultParish;
+    }
+  }
+
+  public setDefaultDistrict(): void {
+    if (this.alarm.district == "") {
+      this.alarm.district = environment.defaultDistrict;
+    }
+  }
+
+  private filter(): void {
     this.filteredKeywords = [];
     this.keywords.forEach(keyword => {
       if (this.alarm.alarmKeyword == "") {
@@ -36,7 +55,6 @@ export class GeneralComponent implements OnInit {
         this.filteredKeywords.push(keyword);
       }
     });
-    this.alarm.isFireAlarmType = this.alarmKeywords.fireAlarmKeywords.indexOf(this.alarm.alarmKeyword) > -1 ? true : false;
   }
 
 }

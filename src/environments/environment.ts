@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  restApiUrl: "http://localhost:54788/api/rest"
+  restApiUrl: "http://localhost:54788/api/rest",
+  defaultParish: "Marchtrenk",
+  defaultDistrict: "Wels-Land"
 };
 
 /*

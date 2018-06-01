@@ -23,10 +23,10 @@
         <input matInput placeholder="Straße">
       </mat-form-field>
       <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
-        <input matInput placeholder="Gemeinde">
+        <input matInput placeholder="Gemeinde" (focus)="setDefaultParish()" [(ngModel)]="alarm.parish" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
       <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
-        <input matInput placeholder="Bezirk">
+        <input matInput placeholder="Bezirk" (focus)="setDefaultDistrict()" [(ngModel)]="alarm.district" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
     </form>
 </div>
