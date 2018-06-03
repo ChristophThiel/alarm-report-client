@@ -2,17 +2,22 @@
     flex: 1 1 auto;
 }
 
-.seperator {
-    margin-left: 16px;
-}
-
 .container {
     background: white;
     height: calc(100vh - 64px);
 }
 
 .container .mat-sidenav {
-    background: blue;
+    background: #3f51b5;
+    width: calc(250px + 2em);
+}
+
+.container .mat-sidenav button {
+    color: white;
+    font-size: 14pt;
+    margin: 1em 1em 0 1em;
+    display: block;
+    width: 250px;
 }
 
 .container .mat-tab-group {

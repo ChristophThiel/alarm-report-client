@@ -20,7 +20,7 @@
 
   <form>
       <mat-form-field fxFlex="calc(50%)">
-        <input matInput placeholder="Straße">
+        <input matInput placeholder="Straße" [(ngModel)]="alarm.street" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
       <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
         <input matInput placeholder="Gemeinde" (focus)="setDefaultParish()" [(ngModel)]="alarm.parish" [ngModelOptions]="{standalone: true}">
