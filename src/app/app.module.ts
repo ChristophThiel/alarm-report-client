@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './components/app/app.component';
 import { GeneralComponent } from './components/general/general.component';
+import { AlertedComponent } from './components/alerted/alerted.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Browser } from 'protractor';
 
@@ -14,7 +15,8 @@ import { MaterialModule } from './material.module';
 @NgModule({
   declarations: [
     AppComponent,
-    GeneralComponent
+    GeneralComponent,
+    AlertedComponent
   ],
   imports: [
     BrowserModule,
