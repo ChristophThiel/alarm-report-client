@@ -4,6 +4,8 @@ import { AlarmKeyword } from '../../models/alarmKeyword';
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
 import { delay } from 'q';
+import { MatChipInputEvent } from '@angular/material';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-general',
@@ -19,6 +21,10 @@ export class GeneralComponent implements OnInit {
   public keywords: string[] = [];
   public filteredKeywords: string[] = [];
 
+  public departments = [ {name: "Marchtrenk"} ];
+  public visible: boolean = true;
+  private separatorKeysCodes = [ENTER, COMMA];
+
   constructor(private rest: RestService) { }
 
   public ngOnInit(): void {
@@ -29,18 +35,18 @@ export class GeneralComponent implements OnInit {
     this.getDummyAlarmKeywords();
   } 
 
-  public checkAlarmKeyword(): void {
+  private checkAlarmKeyword(): void {
     this.filter()
     this.alarm.isFireAlarmType = this.alarmKeywords.fireAlarmKeywords.indexOf(this.alarm.alarmKeyword) > -1 ? true : false;
   }
 
-  public setDefaultParish(): void {
+  private setDefaultParish(): void {
     if (this.alarm.parish == "") {
       this.alarm.parish = environment.defaultParish;
     }
   }
 
-  public setDefaultDistrict(): void {
+  private setDefaultDistrict(): void {
     if (this.alarm.district == "") {
       this.alarm.district = environment.defaultDistrict;
     }
@@ -56,6 +62,24 @@ export class GeneralComponent implements OnInit {
         this.filteredKeywords.push(keyword);
       }
     });
+  }
+
+  private add(event: MatChipInputEvent): void {
+    let input = event.input;
+    let value = event.value;
+    if ((value || '').trim()) {
+      this.departments.push({ name: value.trim() });
+    }
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  private remove(department: any): void {
+    let index = this.departments.indexOf(department);
+    if (index >= 0) {
+      this.departments.splice(index, 1);
+    }
   }
 
   private getDummyAlarmKeywords() {

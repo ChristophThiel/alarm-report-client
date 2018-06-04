@@ -2,7 +2,8 @@
      fxLayout="column"
      fxLayout.gt="row">
     
-  <form>
+  <!-- fxShow on medium an large -->
+  <form fxHide fxShow.md fxShow.lg>
     <mat-card fxFlex="calc(50% - 15px)" style="margin: 10px 0 10px 10px">
       <mat-form-field fxFlex="calc(75%)">
         <input matInput placeholder="Alarmstichwort" (keyup)="checkAlarmKeyword()" [matAutocomplete]="auto" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
@@ -34,32 +35,56 @@
     </mat-card>
   </form>
 
-  <!--<form>
-    <mat-form-field fxFlex="calc(75%)">
-      <input matInput placeholder="Alarmstichwort" (keyup)="checkAlarmKeyword()" [matAutocomplete]="auto" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
-      <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
-        <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword">
-          <span>{{keyword}}</span>
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
-      <mat-select placeholder="Einsatztyp" [value]="alarm.isFireAlarmType == true ? '1' : '0'">
-        <mat-option value="1">Brand</mat-option>
-        <mat-option value="0">Technisch</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <form>
+    <mat-card fxFlex="calc(100% - 20px)" style="margin: 10px 10px 10px 10px">
+      <mat-form-field fxFlex="calc(100%)">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let department of departments; let i = index"
+                    [removable]="i >= 1" (removed)="remove(department)">
+            {{department.name}}
+            <mat-icon matChipRemove *ngIf="i >= 1">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Eingesetzte Feuerwehren"
+                  [matChipInputFor]="chipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="add($event)" />
+        </mat-chip-list>
+      </mat-form-field>
+    </mat-card>
   </form>
 
-  <form>
-    <mat-form-field fxFlex="calc(50%)">
-      <input matInput placeholder="Straße" [(ngModel)]="alarm.street" [ngModelOptions]="{standalone: true}">
-    </mat-form-field>
-    <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
-      <input matInput placeholder="Gemeinde" (focus)="setDefaultParish()" [(ngModel)]="alarm.parish" [ngModelOptions]="{standalone: true}">
-    </mat-form-field>
-    <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
-      <input matInput placeholder="Bezirk" (focus)="setDefaultDistrict()" [(ngModel)]="alarm.district" [ngModelOptions]="{standalone: true}">
-    </mat-form-field>
-  </form>-->
+  <!-- fxShow on small-->
+  <form fxHide fxShow.xs fxShow.sm>
+    <mat-card fxFlex="calc(100% - 20px)" style="margin: 10px">
+      <mat-form-field fxFlex="calc(60%)">
+        <input matInput placeholder="Alarmstichwort" (keyup)="checkAlarmKeyword()" [matAutocomplete]="auto" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
+        <mat-autocomplete autoActiveFirstOption (optionSelected)="checkAlarmKeyword()"  #auto="matAutocomplete">
+          <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword">
+            <span>{{keyword}}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="calc(40% - 10px)" fxFlexOffset="10px">
+        <mat-select placeholder="Einsatztyp" [value]="alarm.isFireAlarmType == true ? '1' : '0'">
+          <mat-option value="1">Brand</mat-option>
+          <mat-option value="0">Technisch</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card>
+
+    <mat-card fxFlex="calc(100% - 20px)" style="margin: 10px">
+      <mat-form-field fxFlex="calc(50%)">
+        <input matInput placeholder="Straße" [(ngModel)]="alarm.street" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
+        <input matInput placeholder="Gemeinde" (focus)="setDefaultParish()" [(ngModel)]="alarm.parish" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
+        <input matInput placeholder="Bezirk" (focus)="setDefaultDistrict()" [(ngModel)]="alarm.district" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </mat-card>
+  </form>
+  
+
 </div>
