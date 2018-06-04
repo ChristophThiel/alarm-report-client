@@ -22,10 +22,11 @@ export class GeneralComponent implements OnInit {
   constructor(private rest: RestService) { }
 
   public ngOnInit(): void {
-    this.rest.getAlarmKeywords().subscribe(data => { 
+    /*this.rest.getAlarmKeywords().subscribe(data => { 
       this.alarmKeywords = data;
       this.keywords = data.fireAlarmKeywords.concat(data.technicalAlarmKeywords);
-    });
+    });*/
+    this.getDummyAlarmKeywords();
   } 
 
   public checkAlarmKeyword(): void {
@@ -55,6 +56,44 @@ export class GeneralComponent implements OnInit {
         this.filteredKeywords.push(keyword);
       }
     });
+  }
+
+  private getDummyAlarmKeywords() {
+    this.alarmKeywords = JSON.parse(`{
+      "fireAlarmIdentifier": "Brandmeldealarm",
+      "fireAlarmKeywords": [
+          "Brandmeldealarm",
+          "Brandmeldetaste Gedrückt",
+          "Brand Gewerbe, Industrie",
+          "Brand Wohnhaus",
+          "Brand Landwirtschaftliches Objekt",
+          "Brand Gebäude Menschenansammlung",
+          "Brandeinsatz",
+          "Brand Abfall Container",
+          "Brandverdacht",
+          "Brand Baum, Flur, Böschung",
+          "Brand Kamin",
+          "Brand KFZ",
+          "Brandeinsatz, Klein",
+          "Brand Elektrische Anlagen"
+      ],
+      "technicalAlarmKeywords": [
+          "Verkehrsunfall Aufräumarbeiten",
+          "Verkehrsunfall Eingeklemmte Person",
+          "Personenrettung",
+          "Technischer Einsatz",
+          "Übungsalarm",
+          "Fahrzeugbergung",
+          "Eingeschlossene Person in Lift",
+          "Ölspur, Ölaustritt",
+          "Technischer Einsatz Klein",
+          "Sturmschaden",
+          "Tierrettung",
+          "Türöffnung",
+          "Überflutung",
+          "Wasserschaden"
+      ]}`);
+      this.keywords = this.alarmKeywords.fireAlarmKeywords.concat(this.alarmKeywords.technicalAlarmKeywords);
   }
 
 }
