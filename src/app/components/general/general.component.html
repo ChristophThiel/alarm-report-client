@@ -35,8 +35,8 @@
     </mat-card>
   </form>
 
-  <form>
-    <mat-card fxFlex="calc(100% - 20px)" style="margin: 10px 10px 10px 10px">
+  <form fxHide fxShow.md fxShow.lg>
+    <mat-card fxFlex="calc(100% - 20px)" style="margin: 10px">
       <mat-form-field fxFlex="calc(100%)">
         <mat-chip-list #chipList>
           <mat-chip *ngFor="let department of departments; let i = index"
@@ -84,6 +84,23 @@
         <input matInput placeholder="Bezirk" (focus)="setDefaultDistrict()" [(ngModel)]="alarm.district" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
     </mat-card>
+
+    <mat-card fxFlex="calc(100% - 20px)" style="margin: 10px">
+      <mat-form-field fxFlex="calc(100%)">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let department of departments; let i = index"
+                    [removable]="i >= 1" (removed)="remove(department)">
+            {{department.name}}
+            <mat-icon matChipRemove *ngIf="i >= 1">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Eingesetzte Feuerwehren"
+                  [matChipInputFor]="chipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="add($event)" />
+        </mat-chip-list>
+      </mat-form-field>
+    </mat-card>
+
   </form>
   
 
