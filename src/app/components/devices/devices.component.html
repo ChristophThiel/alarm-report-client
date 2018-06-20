@@ -1,18 +1,49 @@
-<div class="content"
-     fxLayout="column"
-     fxLayout.gt="row">
+<div class="content">
   <form>
-    <mat-card fxFlex="calc(50% - 20px)" fxFlexOffset="10px" style="margin: 10px 10px 10px 0">
-      <mat-form-field fxFlex="calc(100% - 110px)">
-        <input matInput placeholder="Gerät">
+    <mat-card fxLayout="row">
+      <mat-form-field fxFlex>
+        <input matInput
+               placeholder="Gerätename"
+               name="deviceName"
+               [(ngModel)]="deviceName">
       </mat-form-field>
-      <button mat-raised-button color="primary" style="margin-left: 10px; width: 100px">Hinzufügen</button>
+      <mat-form-field fxFlex="20">
+        <input matInput
+               placeholder="Anzahl"
+               type="number"
+               min="1"
+               name="deviceCount"
+               [(ngModel)]="deviceCount">
+      </mat-form-field>
+      <button mat-raised-button
+              fxHide
+              fxShow.gt-sm
+              fxFlex="none"
+              fxFlexOffset="2"
+              color="primary"
+              (click)="add()"
+              style="height: 36px">Hinzufügen</button>
+      <button mat-mini-fab
+              fxHide
+              fxShow.lt-md
+              fxFlex="none"
+              fxFlexOffset="2"
+              color="primary"
+              (click)="add()">
+        <mat-icon>add</mat-icon>
+      </button>
     </mat-card>
-    <mat-card fxFlex="calc(50% - 20px)" fxFlexOffset="10px" style="margin: 10px 10px 10px 0">
-      <mat-form-field fxFlex="calc(100% - 110px)">
-        <input matInput placeholder="Gerät">
-      </mat-form-field>
-      <button mat-raised-button color="primary" style="margin-left: 10px; width: 100px">Hinzufügen</button>
+  </form>
+
+  <form>
+    <mat-card fxFlex="grow">
+      <mat-chip-list>
+        <mat-chip *ngFor="let device of devices">
+          {{device.count}}x {{device.name}}
+          <mat-icon matChipRemove
+                    (click)="delete(device)">cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
     </mat-card>
   </form>
 </div>

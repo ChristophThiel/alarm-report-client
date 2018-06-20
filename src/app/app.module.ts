@@ -6,7 +6,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './components/app/app.component';
 import { GeneralComponent } from './components/general/general.component';
-import { AlertedComponent } from './components/alerted/alerted.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
 import { DevicesComponent } from './components/devices/devices.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,7 +17,6 @@ import { MaterialModule } from './material.module';
   declarations: [
     AppComponent,
     GeneralComponent,
-    AlertedComponent,
     VehiclesComponent,
     DevicesComponent
   ],

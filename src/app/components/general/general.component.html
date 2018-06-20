@@ -3,7 +3,7 @@
      fxLayout.gt="row">
     
   <!-- fxShow on medium an large -->
-  <form fxHide fxShow.md fxShow.lg>
+  <form fxHide fxShow.md fxShow.lg fxShow.xl>
     <mat-card fxFlex="calc(50% - 15px)" style="margin: 10px 0 10px 10px">
       <mat-form-field fxFlex="calc(75%)">
         <input matInput placeholder="Alarmstichwort" (keyup)="checkAlarmKeyword()" [matAutocomplete]="auto" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
