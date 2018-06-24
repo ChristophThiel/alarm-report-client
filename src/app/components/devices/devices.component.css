@@ -1,5 +1,22 @@
+.content {
+    width: 50%;
+    margin: 0 25% 0 25%;
+}
+
+/* md */
+@media screen and (max-width: 1279px) {
+    .content {
+        width: 100%;
+        margin: 0;
+    }
+}
+
 mat-card {
     margin: 10px !important;
+}
+
+mat-chip {
+    cursor: pointer;
 }
 
 button {

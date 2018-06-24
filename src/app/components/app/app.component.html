@@ -1,19 +1,19 @@
 <mat-toolbar color="primary">
-  <span fxHide fxShow.sm fxShow.md fxShow.lg>{{currentAlarm.alarmKeyword}} {{currentAlarm.street}}</span>
-  <span fxHide fxShow.sm fxShow.md fxShow.lg class="spacer"></span>
-  <span fxHide fxShow.xs fxShow.sm></span>
+  <span>{{currentAlarm.alarmKeyword}} {{currentAlarm.street}}</span>
+  <span class="spacer"></span>
+  <!--<span fxHide fxShow.xs fxShow.sm></span>-->
   
-  <button mat-button fxHide fxShow.sm fxShow.md fxShow.lg>
+  <button mat-button>
     Bericht erstellen
   </button>
-  <button mat-button fxHide fxShow.sm fxShow.md fxShow.lg>
+  <button mat-button>
     Bericht öffnen
   </button>
-  <button mat-button fxHide fxShow.sm fxShow.md fxShow.lg>
+  <button mat-button>
     Bericht speichern
   </button>
   
-  <div fxLayout="row" fxLayoutAlign="center center">
+  <!--<div fxLayout="row" fxLayoutAlign="center center">
     <button mat-icon-button fxHide fxShow.xs>
       <mat-icon>note_add</mat-icon>
     </button>
@@ -23,7 +23,7 @@
     <button mat-icon-button fxHide fxShow.xs>
       <mat-icon>save</mat-icon>
     </button>
-  </div>
+  </div>-->
 </mat-toolbar>
 
 <mat-sidenav-container class="container">
