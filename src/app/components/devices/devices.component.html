@@ -38,7 +38,8 @@
   <form>
     <mat-card fxFlex="grow">
       <mat-chip-list>
-        <mat-chip *ngFor="let device of devices">
+        <mat-chip *ngFor="let device of devices"
+                  (click)="openDialog(device)">
           {{device.count}}x {{device.name}}
           <mat-icon matChipRemove
                     (click)="delete(device)">cancel</mat-icon>

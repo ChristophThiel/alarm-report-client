@@ -3,8 +3,8 @@
     margin: 0 25% 0 25%;
 }
 
-/* md */
-@media screen and (max-width: 1279px) {
+/* sm */
+@media screen and (max-width: 959px) {
     .content {
         width: 100%;
         margin: 0;

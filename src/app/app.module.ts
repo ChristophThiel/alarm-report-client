@@ -7,9 +7,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './components/app/app.component';
 import { GeneralComponent } from './components/general/general.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
-import { DevicesComponent } from './components/devices/devices.component';
+import { DevicesComponent, DeviceDialog } from './components/devices/devices.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Browser } from 'protractor';
 
 import { MaterialModule } from './material.module';
 
@@ -18,7 +17,8 @@ import { MaterialModule } from './material.module';
     AppComponent,
     GeneralComponent,
     VehiclesComponent,
-    DevicesComponent
+    DevicesComponent,
+    DeviceDialog
   ],
   imports: [
     BrowserModule,
@@ -28,6 +28,7 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     FlexLayoutModule
   ],
+  entryComponents: [DeviceDialog],
   providers: [],
   bootstrap: [AppComponent]
 })
