@@ -19,7 +19,7 @@ export class DevicesComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialog(device: Device): void {
+  private openDialog(device: Device): void {
     let dialogRef = this.dialog.open(DeviceDialog, {
       width: '40%',
       data: { id: this.devices.indexOf(device), name: device.name, count: device.count }
