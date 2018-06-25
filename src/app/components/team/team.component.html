@@ -1,13 +1,15 @@
 <div class="content">
   <form>
     <mat-card fxLayout="row">
-      <mat-form-field fxFlex>
+      <mat-form-field fxFlex="20"
+                      fxFlexOffset>
         <input matInput
                placeholder="Nachname"
                name="lastname"
                [(ngModel)]="lastname">
       </mat-form-field>
-      <mat-form-field fxFlex>
+      <mat-form-field fxFlex="20"
+                      fxFlexOffset>
         <input matInput
                placeholder="Vorname"
                name="firstname"
@@ -20,7 +22,8 @@
                name="vehicle"
                [(ngModel)]="vehicle">
       </mat-form-field>
-      <mat-form-field fxFlex>
+      <mat-form-field fxFlex
+                      fxFlexOffset="0">
         <input matInput
                placeholder="Position"
                name="position"
