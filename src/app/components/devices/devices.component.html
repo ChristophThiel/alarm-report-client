@@ -15,6 +15,12 @@
                name="deviceCount"
                [(ngModel)]="deviceCount">
       </mat-form-field>
+      <mat-form-field fxFlex="10">
+        <mat-select placeholder="Einheit" [value]="deviceUnit.toString()">
+          <mat-option value="0">Stück</mat-option>
+          <mat-option value="1">Sack</mat-option>
+        </mat-select>
+      </mat-form-field>
       <button mat-raised-button
               fxHide
               fxShow.gt-sm

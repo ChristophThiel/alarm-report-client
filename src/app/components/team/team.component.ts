@@ -46,7 +46,6 @@ export class TeamComponent implements OnInit {
     let update = this.team.slice(0, this.team.length - 1);
     update[member.id] = new TeamMember(member.lastname, member.firstname, member.vehicle, member.position);
     this.team = update;
-    alert(this.team[0].lastname);
   }
 
 }

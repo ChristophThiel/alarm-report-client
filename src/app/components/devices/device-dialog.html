@@ -5,12 +5,20 @@
                placeholder="Gerätename"
                [(ngModel)]="data.name">
     </mat-form-field>
-    <mat-form-field style="width: 30%;">
+    <mat-form-field style="width: 20%;">
         <input matInput
                placeholder="Anzahl"
                type="number"
                min="1"
                [(ngModel)]="data.count">
+    </mat-form-field>
+    <mat-form-field style="width: 10%">
+        <mat-select placeholder="Einheit"
+                    name="unit"
+                    [(ngModel)]="data.unit">
+            <mat-option value="0">Stück</mat-option>
+            <mat-option value="1">Sack</mat-option>
+        </mat-select>
     </mat-form-field>
 </div>
 <div mat-dialog-actions>

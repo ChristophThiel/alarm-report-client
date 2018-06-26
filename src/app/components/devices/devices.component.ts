@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Device } from '../../models/device';
+import { Device, Unit } from '../../models/device';
 
 @Component({
   selector: 'app-devices',
@@ -9,22 +9,25 @@ import { Device } from '../../models/device';
 })
 export class DevicesComponent implements OnInit {
 
-  private devices: Device[] = [new Device("Besen", 2)]
+  private devices: Device[] = [];
 
-  private deviceName: string = ""
-  private deviceCount: number = 1
+  private deviceName: string = "";
+  private deviceCount: number = 1;
+  private deviceUnit: Unit = Unit.Stück;
 
   constructor(public dialog: MatDialog) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   private openDialog(device: Device): void {
     let dialogRef = this.dialog.open(DeviceDialog, {
       width: '40%',
-      data: { id: this.devices.indexOf(device), name: device.name, count: device.count }
+      data: { id: this.devices.indexOf(device),
+              name: device.name,
+              count: device.count,
+              unit: device.unit.toString() 
+            }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       this.update(result);
     });
@@ -32,20 +35,31 @@ export class DevicesComponent implements OnInit {
 
   private add(): void {
     if (this.deviceName != "" && this.deviceCount > 0) {
+
+      // Checks if the device has been already added
       this.devices.forEach(device => {
         if (device.name == this.deviceName)
           this.delete(device);
       });
-      this.devices.push(new Device(this.deviceName, this.deviceCount));
+      this.devices.push(new Device(this.deviceName, this.deviceCount, this.deviceUnit));
     }
+
+    // Clears input fields
+    this.clear();
   }
 
   private update(result: any): void {
-    this.devices[result.id] = new Device(result.name, result.count <= 0 ? 1 : result.count);
+    this.devices[result.id] = new Device(result.name, result.count <= 0 ? 1 : result.count, result.unit);
   }
 
   private delete(device: Device): void {
     this.devices.splice(this.devices.indexOf(device), 1);
+  }
+
+  private clear(): void {
+    this.deviceName = "";
+    this.deviceCount = 1;
+    this.deviceUnit = Unit.Stück;
   }
 
 }
