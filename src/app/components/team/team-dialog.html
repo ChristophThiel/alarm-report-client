@@ -1,0 +1,31 @@
+<h1 class="mat-h2">Eintrag bearbeiten</h1>
+<div mat-dialog-content>
+    <mat-form-field style="width: calc(50% - 0.5%);">
+        <input matInput
+               placeholder="Nachname"
+               [(ngModel)]="data.lastname">
+    </mat-form-field>
+    <mat-form-field style="width: calc(50% - 0.5%);margin-left: 1%;">
+        <input matInput
+               placeholder="Vorname"
+               [(ngModel)]="data.firstname">
+    </mat-form-field>
+    <br/>
+    <mat-form-field style="width: calc(50% - 0.5%);">
+        <input matInput
+               placeholder="Fahrzeug"
+               [(ngModel)]="data.vehicle">
+    </mat-form-field>
+    <mat-form-field style="width: calc(50% - 0.5%);margin-left: 1%;">
+        <input matInput
+               placeholder="Position"
+               [(ngModel)]="data.position">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button
+            (click)="onNoClick()">Abbrechen</button>
+    <button mat-button
+            [mat-dialog-close]="data"
+            cdkFocusInitial>Speichern</button>
+</div>
