@@ -13,7 +13,7 @@ export class ProtocolComponent implements OnInit {
   private text: string = "";
 
   private displayedColumns = ["time", "text", "edit", "delete"];
-  private entries: Entry[] = [new Entry("12:32", "Meldung laut EL, Fehlalarm, Einsatzende")];
+  private entries: Entry[] = [];
 
   constructor(private dialog: MatDialog) { }
 
