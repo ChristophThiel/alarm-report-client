@@ -1,8 +1,32 @@
-<!-- Use Expanding Table from Angular Material -->
 <div class="content">
     <form>
-        <mat-card fxLayout="row" fxLayoutAlign="center">
-            <button mat-raised-button color="primary">Fahrzeug hinzufügen</button>
+        <mat-card fxLayout="row">
+            <mat-form-field fxFlex
+                            fxFlexOffset>
+                <input matInput 
+                       placeholder="Fahrzeugname"
+                       name="name"
+                       [(ngModel)]="vehicleName">
+            </mat-form-field>
+            <button class="add"
+                    mat-raised-button
+                    fxHide
+                    fxShow.gt-sm
+                    fxFlex="none"
+                    fxFlexOffset="2"
+                    color="primary"
+                    (click)="add()"
+                    style="height: 36px">Hinzufügen</button>
+            <button class="add"
+                    mat-mini-fab
+                    fxHide
+                    fxShow.lt-md
+                    fxFlex="none"
+                    fxFlexOffset="2"
+                    color="primary"
+                    (click)="add()">
+                <mat-icon>add</mat-icon>
+            </button>
         </mat-card>
     </form>
 </div>

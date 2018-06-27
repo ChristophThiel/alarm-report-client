@@ -3,7 +3,6 @@ import { Alarm } from '../../models/alarm';
 import { AlarmKeyword } from '../../models/alarmKeyword';
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
-import { delay } from 'q';
 import { MatChipInputEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 
