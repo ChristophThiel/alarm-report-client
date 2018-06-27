@@ -9,7 +9,7 @@ import { GeneralComponent } from './components/general/general.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
 import { DevicesComponent, DeviceDialog } from './components/devices/devices.component';
 import { TeamComponent, TeamDialog } from './components/team/team.component';
-import { ProtocolComponent } from './components/protocol/protocol.component';
+import { ProtocolComponent, ProtocolDialog } from './components/protocol/protocol.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialModule } from './material.module';
@@ -23,7 +23,8 @@ import { MaterialModule } from './material.module';
     DeviceDialog,
     TeamComponent,
     TeamDialog,
-    ProtocolComponent
+    ProtocolComponent,
+    ProtocolDialog
   ],
   imports: [
     BrowserModule,
@@ -33,7 +34,7 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     FlexLayoutModule
   ],
-  entryComponents: [DeviceDialog, TeamDialog],
+  entryComponents: [DeviceDialog, TeamDialog, ProtocolDialog],
   providers: [],
   bootstrap: [AppComponent]
 })

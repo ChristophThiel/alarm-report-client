@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { TeamMember } from '../../models/teamMember';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
