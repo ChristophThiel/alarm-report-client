@@ -35,7 +35,7 @@ export class GeneralComponent implements OnInit {
   } 
 
   private checkAlarmKeyword(): void {
-    this.filter()
+    this.filter();
     this.alarm.isFireAlarmType = this.alarmKeywords.fireAlarmKeywords.indexOf(this.alarm.alarmKeyword) > -1 ? true : false;
   }
 

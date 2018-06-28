@@ -1,6 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { TeamMember } from '../../models/teamMember';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { TeamDialog } from '../../dialogs/team/team.dialog';
+import { Alarm } from '../../models/alarm';
+import { Vehicle } from '../../models/vehicle';
 
 @Component({
   selector: 'app-team',
@@ -9,9 +12,11 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class TeamComponent implements OnInit {
 
+  @Input() public alarm: Alarm;
+
   private lastname: string;
   private firstname: string;
-  private vehicle: any;
+  private vehicle: Vehicle;
   private position: string;
 
   private displayedColumns = ["lastname", "firstname", "vehicle", "position", "edit", "delete"];
@@ -20,6 +25,7 @@ export class TeamComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.team = this.alarm.team;
   }
 
   private openDialog(member: TeamMember): void {
@@ -46,22 +52,6 @@ export class TeamComponent implements OnInit {
     let update = this.team.slice(0, this.team.length - 1);
     update[member.id] = new TeamMember(member.lastname, member.firstname, member.vehicle, member.position);
     this.team = update;
-  }
-
-}
-
-@Component({
-  selector: 'team-dialog',
-  templateUrl: 'team-dialog.html'
-})
-export class TeamDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<TeamDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 
 }

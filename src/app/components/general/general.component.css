@@ -1,0 +1,12 @@
+.content {
+    width: 70%;
+    margin: 0 15% 0 15%;
+}
+
+/* sm */
+@media screen and (max-width: 959px) {
+    .content {
+        width: 100%;
+        margin: 0;
+    }
+}

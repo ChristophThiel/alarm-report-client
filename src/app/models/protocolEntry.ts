@@ -1,4 +1,4 @@
-export class Entry {
+export class ProtocolEntry {
 
     public time: string;
     public text: string;

@@ -1,4 +1,4 @@
-export enum Unit {
+export enum DeviceUnit {
     Item = "Stück",
     Sack = "Sack"
 }

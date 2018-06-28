@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Device } from '../../models/device';
 import { InstrumentDialog } from '../../dialogs/instruments/instruments.dialog';
 import { Vehicle } from '../../models/vehicle';
-import { Unit } from '../../enums/unit';
+import { DeviceUnit } from '../../enums/deviceUnit';
 import { Instrument } from '../../interfaces/instrument';
+import { Alarm } from '../../models/alarm';
 
 @Component({
   selector: 'app-instruments',
@@ -13,17 +14,21 @@ import { Instrument } from '../../interfaces/instrument';
 })
 export class InstrumentsComponent implements OnInit {
 
-  private instruments: Instrument[] = [new Vehicle("Tank 2"), new Device("Besen", 1, Unit.Item)];
+  @Input() public alarm: Alarm;
+
+  private instruments: Instrument[] = [];
 
   private instrumentType: string = "0";
   private instrumentName: string = "";
   private instrumentCount: number = 1;
-  private instrumentUnit: Unit = Unit.Item;
+  private instrumentUnit: DeviceUnit = DeviceUnit.Item;
   private isVehicle: boolean = false;
 
   constructor(public dialog: MatDialog) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.instruments = this.instruments.concat(this.alarm.vehicles).concat(this.alarm.devices);
+  }
 
   private checkType(): void {
     this.isVehicle = this.instrumentType == "1";
@@ -67,49 +72,5 @@ export class InstrumentsComponent implements OnInit {
       this.update(result);
     });
   }
-
-  /*private openDialog(device: Device): void {
-    let dialogRef = this.dialog.open(DeviceDialog, {
-      width: '40%',
-      data: { id: this.instruments.indexOf(device),
-              name: device.name,
-              count: device.count,
-              unit: device.unit.toString() 
-            }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.update(result);
-    });
-  }
-
-  private add(): void {
-    if (this.isVehicle)
-      this.instruments.push(this.instrumentName);
-    else {
-      // Checks if the device has been already added
-      this.instruments.forEach(device => {
-        if (device.name == this.instrumentName)
-          this.delete(device);
-      });
-      this.instruments.push(new Device(this.instrumentName, this.instrumentCount, this.instrumentUnit));
-    }
-    this.clear();
-  }
-
-  private update(result: any): void {
-    this.instruments[result.id] = new Device(result.name, result.count <= 0 ? 1 : result.count, result.unit);
-  }
-
-  private delete(device: Device): void {
-    this.instruments.splice(this.instruments.indexOf(device), 1);
-  }
-
-  private clear(): void {
-    this.instrumentType = "0";
-    this.instrumentName = "";
-    this.instrumentCount = 1;
-    this.instrumentUnit = Unit.Stück;
-    this.isVehicle = false;
-  }*/
 
 }

@@ -9,8 +9,10 @@ import { GeneralComponent } from './components/general/general.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
 import { InstrumentsComponent } from './components/instruments/instruments.component';
 import { InstrumentDialog } from './dialogs/instruments//instruments.dialog';
-import { TeamComponent, TeamDialog } from './components/team/team.component';
-import { ProtocolComponent, ProtocolDialog } from './components/protocol/protocol.component';
+import { TeamComponent } from './components/team/team.component';
+import { TeamDialog } from './dialogs/team/team.dialog';
+import { ProtocolComponent } from './components/protocol/protocol.component';
+import { ProtocolDialog } from './dialogs/protocol/protocol.dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialModule } from './material.module';

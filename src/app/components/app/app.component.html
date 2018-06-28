@@ -2,7 +2,7 @@
   <span>{{currentAlarm.alarmKeyword}} {{currentAlarm.street}}</span>
   <span class="spacer"></span>
   <!--<span fxHide fxShow.xs fxShow.sm></span>-->
-  
+
   <button mat-button>
     Bericht erstellen
   </button>
@@ -12,7 +12,7 @@
   <button mat-button>
     Bericht speichern
   </button>
-  
+
   <!--<div fxLayout="row" fxLayoutAlign="center center">
     <button mat-icon-button fxHide fxShow.xs>
       <mat-icon>note_add</mat-icon>
@@ -36,13 +36,13 @@
         <app-general [alarm]="currentAlarm"></app-general>
       </mat-tab>
       <mat-tab label="Fahrzeuge und Geräte">
-        <app-instruments></app-instruments>
+        <app-instruments [alarm]="currentAlarm"></app-instruments>
       </mat-tab>
       <mat-tab label="Mannschaft">
-        <app-team></app-team>
+        <app-team [alarm]="currentAlarm"></app-team>
       </mat-tab>
       <mat-tab label="Protokoll">
-        <app-protocol></app-protocol>
+        <app-protocol [alarm]="currentAlarm"></app-protocol>
       </mat-tab>
     </mat-tab-group>
   </mat-sidenav-content>
