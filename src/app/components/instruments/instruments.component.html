@@ -10,8 +10,9 @@
       <mat-form-field fxFlex fxFlexOffset="1">
         <input matInput placeholder="{{isVehicle ? 'Fahrzeugname' : 'Gerätename' }}" name="instrumentName" [(ngModel)]="instrumentName">
       </mat-form-field>
-      <mat-form-field fxFlex="20" *ngIf="!isVehicle">
-        <input matInput placeholder="Anzahl" type="number" min="1" name="instrumentCount" [(ngModel)]="instrumentCount">
+      <mat-form-field fxFlex="20">
+        <input matInput placeholder="Anzahl" type="number" min="1" name="instrumentCount" [(ngModel)]="instrumentCount" [style.text-align]="isVehicle ? 'right' : 'left'">
+        <span matSuffix *ngIf="isVehicle">km</span>
       </mat-form-field>
       <mat-form-field fxFlex="10" *ngIf="!isVehicle">
         <mat-select placeholder="Einheit" [value]="instrumentUnit.toString()">

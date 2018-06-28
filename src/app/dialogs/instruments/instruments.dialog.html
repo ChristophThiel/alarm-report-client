@@ -3,8 +3,9 @@
     <mat-form-field fxFlex>
         <input matInput placeholder="{{data.type ? 'Fahrzeugname' : 'Gerätename'}}" [(ngModel)]="data.instrument.name">
     </mat-form-field>
-    <mat-form-field fxFlex="20" *ngIf="!data.type">
-        <input matInput placeholder="Anzahl" type="number" min="1" [(ngModel)]="data.instrument.count">
+    <mat-form-field fxFlex="20">
+        <input matInput placeholder="Anzahl" type="number" min="1" [(ngModel)]="data.instrument.count" [style.text-align]="data.type ? 'right' : 'left'">
+        <span matSuffix *ngIf="data.type">km</span>
     </mat-form-field>
     <mat-form-field fxFlex="10" *ngIf="!data.type">
         <mat-select placeholder="Einheit" name="unit" [(ngModel)]="data.instrument.unit">

@@ -22,7 +22,7 @@ export class AppComponent {
     this.currentAlarm.alarmKeyword = "Türöffnung";
     this.currentAlarm.street = "Berggasse 4";
     this.currentAlarm.devices = [new Device("Besen", 2, DeviceUnit.Item)];
-    this.currentAlarm.vehicles = [new Vehicle("Tank 3")];
+    this.currentAlarm.vehicles = [new Vehicle("Tank 3", 20)];
     this.currentAlarm.team = [new TeamMember("Thiel", "Christoph", "Tank 3", "Mann")];
 
     this.alarms = [];

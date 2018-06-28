@@ -40,7 +40,7 @@ export class InstrumentsComponent implements OnInit {
 
   private add(): void {
     if (this.isVehicle)
-      this.instruments.push(new Vehicle(this.instrumentName));
+      this.instruments.push(new Vehicle(this.instrumentName, this.instrumentCount));
     else
       this.instruments.push(new Device(this.instrumentName, this.instrumentCount, this.instrumentUnit));
   }
@@ -53,7 +53,7 @@ export class InstrumentsComponent implements OnInit {
 
   private update(data: any): void {
     if (data.instrument instanceof Vehicle)
-      this.instruments[data.id] = new Vehicle(data.instrument.name);
+      this.instruments[data.id] = new Vehicle(data.instrument.name, data.instrument.count);
     else 
       this.instruments[data.id] = new Device(data.instrument.name, data.instrument.count, data.instrument.unit);
   }
