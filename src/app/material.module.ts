@@ -13,6 +13,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
@@ -28,7 +33,12 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatTableModule,
     MatCardModule,
     MatChipsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatExpansionModule,
+    MatListModule,
+    MatDividerModule,
+    MatCheckboxModule,
+    MatRadioModule
   ],
   exports: [
     MatButtonModule,
@@ -42,7 +52,12 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatTableModule,
     MatCardModule,
     MatChipsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatExpansionModule,
+    MatListModule,
+    MatDividerModule,
+    MatCheckboxModule,
+    MatRadioModule
   ],
   declarations: []
 })

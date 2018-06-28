@@ -1,88 +1,107 @@
-<div class="content"
-     fxLayout.gt="row">
-    
-  <!-- fxShow on medium an large -->
-  <form fxHide fxShow.md fxShow.lg fxShow.xl>
-    <mat-card fxFlex="calc(50% - 15px)" style="margin: 10px 0 10px 10px">
-      <mat-form-field fxFlex="calc(75%)">
-        <input matInput placeholder="Alarmstichwort" (keyup)="checkAlarmKeyword()" [matAutocomplete]="auto" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
-        <mat-autocomplete autoActiveFirstOption (optionSelected)="checkAlarmKeyword()"  #auto="matAutocomplete">
+<div class="content">
+  <form fxLayout="row">
+    <mat-card fxFlex="50" fxLayout="row">
+      <mat-form-field fxFlex="75">
+        <input matInput placeholder="Alarmstichwort" name="keyword" (keyup)="checkAlarmKeyword()" [matAutocomplete]="auto" [(ngModel)]="alarm.alarmKeyword">
+        <mat-autocomplete autoActiveFirstOption (optionSelected)="checkAlarmKeyword()" #auto="matAutocomplete">
           <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword">
             <span>{{keyword}}</span>
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-
-      <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
+      <mat-form-field fxFlex="25">
         <mat-select placeholder="Einsatztyp" [value]="alarm.isFireAlarmType == true ? '1' : '0'">
           <mat-option value="1">Brand</mat-option>
           <mat-option value="0">Technisch</mat-option>
         </mat-select>
       </mat-form-field>
     </mat-card>
-
-    <mat-card fxFlex="calc(50% - 15px)" fxFlexOffset="10px" style="margin: 10px 10px 10px 0">
-      <mat-form-field fxFlex="calc(50%)">
-        <input matInput placeholder="Straße" [(ngModel)]="alarm.street" [ngModelOptions]="{standalone: true}">
+    <mat-card fxFlex="50" fxLayout="row">
+      <mat-form-field fxFlex="50">
+        <input matInput placeholder="Straße" name="street" [(ngModel)]="alarm.street">
       </mat-form-field>
-      <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
-        <input matInput placeholder="Gemeinde" (focus)="setDefaultParish()" [(ngModel)]="alarm.parish" [ngModelOptions]="{standalone: true}">
+      <mat-form-field fxFlex="25">
+        <input matInput placeholder="Gemeinde" name="parish" (focus)="setDefaultParish()" [(ngModel)]="alarm.parish">
       </mat-form-field>
-      <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
-        <input matInput placeholder="Bezirk" (focus)="setDefaultDistrict()" [(ngModel)]="alarm.district" [ngModelOptions]="{standalone: true}">
-      </mat-form-field>
-    </mat-card>
-  </form>
-
-  <!-- fxShow on small-->
-  <form fxHide fxShow.xs fxShow.sm>
-    <mat-card fxFlex="calc(100% - 20px)" style="margin: 10px">
-      <mat-form-field fxFlex="calc(60%)">
-        <input matInput placeholder="Alarmstichwort" (keyup)="checkAlarmKeyword()" [matAutocomplete]="auto" [(ngModel)]="alarm.alarmKeyword" [ngModelOptions]="{standalone: true}">
-        <mat-autocomplete autoActiveFirstOption (optionSelected)="checkAlarmKeyword()"  #auto="matAutocomplete">
-          <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword">
-            <span>{{keyword}}</span>
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="calc(40% - 10px)" fxFlexOffset="10px">
-        <mat-select placeholder="Einsatztyp" [value]="alarm.isFireAlarmType == true ? '1' : '0'">
-          <mat-option value="1">Brand</mat-option>
-          <mat-option value="0">Technisch</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-card>
-
-    <mat-card fxFlex="calc(100% - 20px)" style="margin: 10px">
-      <mat-form-field fxFlex="calc(50%)">
-        <input matInput placeholder="Straße" [(ngModel)]="alarm.street" [ngModelOptions]="{standalone: true}">
-      </mat-form-field>
-      <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
-        <input matInput placeholder="Gemeinde" (focus)="setDefaultParish()" [(ngModel)]="alarm.parish" [ngModelOptions]="{standalone: true}">
-      </mat-form-field>
-      <mat-form-field fxFlex="calc(25% - 10px)" fxFlexOffset="10px">
-        <input matInput placeholder="Bezirk" (focus)="setDefaultDistrict()" [(ngModel)]="alarm.district" [ngModelOptions]="{standalone: true}">
+      <mat-form-field fxFlex="25">
+        <input matInput placeholder="Bezirk" name="district" (focus)="setDefaultDistrict()" [(ngModel)]="alarm.district">
       </mat-form-field>
     </mat-card>
   </form>
-
-  <form>
-    <mat-card fxFlex="calc(100% - 20px)" style="margin: 0 10px 10px 10px">
-      <mat-form-field fxFlex="calc(100%)">
-        <mat-chip-list #chipList>
-          <mat-chip *ngFor="let department of departments; let i = index"
-                    [removable]="i >= 1" (removed)="remove(department)">
-            {{department.name}}
-            <mat-icon matChipRemove *ngIf="i >= 1">cancel</mat-icon>
-          </mat-chip>
-          <input placeholder="Eingesetzte Feuerwehren"
-                  [matChipInputFor]="chipList"
-                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  (matChipInputTokenEnd)="add($event)"/>
-        </mat-chip-list>
-      </mat-form-field>
-    </mat-card>
+  <form fxLayout="row">
+    <mat-accordion fxFlex>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Zeiten
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>Not implemented yet!</p>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Alarmierung
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="column">
+          <mat-form-field fxFlex="100">
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let department of departments; let i = index" [removable]="i >= 1" (removed)="remove(department)">
+                {{department.name}}
+                <mat-icon matChipRemove *ngIf="i >= 1">cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Eingesetzte Feuerwehren" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="add($event)" />
+            </mat-chip-list>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Schadenslage, Tätigkeiten und Probleme
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="column">
+          <mat-form-field fxFlex="100">
+            <textarea matInput placeholder="Schadenslage"></textarea>
+          </mat-form-field>
+          <mat-form-field fxFlex="100">
+            <textarea matInput placeholder="Vorkommnisse"></textarea>
+          </mat-form-field>
+          <mat-form-field fxFlex="100">
+            <textarea matInput placeholder="Tätigkeiten"></textarea>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Sonstiges
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="column">
+          <form fxFlex="100" fxLayout="row">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Temperatur" type="number" style="text-align: right">
+              <span matSuffix>° C</span>
+            </mat-form-field>
+            <mat-form-field fxFlex="70" fxFlexOffset="1">
+              <input matInput placeholder="Wetter">
+            </mat-form-field>
+          </form>
+          <mat-checkbox>Kosten bereits bezahlt</mat-checkbox>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Einsatzspezifische Informationen
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>Not implemented yet!</p>
+      </mat-expansion-panel>
+    </mat-accordion>
   </form>
-
 </div>
