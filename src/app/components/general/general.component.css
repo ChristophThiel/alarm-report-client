@@ -19,10 +19,6 @@ mat-accordion {
     margin: 10px !important;
 }
 
-mat-radio-button {
-    margin-right: 10px;
-}
-
 button {
     margin-top: 12px;
 }
