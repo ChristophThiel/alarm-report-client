@@ -5,10 +5,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
     selector: 'instruments-dialog',
     templateUrl: 'instruments.dialog.html'
 })
-export class DeviceDialog {
+export class InstrumentDialog {
 
     constructor(
-        public dialogRef: MatDialogRef<DeviceDialog>,
+        public dialogRef: MatDialogRef<InstrumentDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     onNoClick(): void {

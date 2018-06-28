@@ -8,7 +8,7 @@ import { AppComponent } from './components/app/app.component';
 import { GeneralComponent } from './components/general/general.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
 import { InstrumentsComponent } from './components/instruments/instruments.component';
-import { DeviceDialog } from './dialogs/instruments/instruments.dialog';
+import { InstrumentDialog } from './dialogs/instruments//instruments.dialog';
 import { TeamComponent, TeamDialog } from './components/team/team.component';
 import { ProtocolComponent, ProtocolDialog } from './components/protocol/protocol.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +21,7 @@ import { MaterialModule } from './material.module';
     GeneralComponent,
     VehiclesComponent,
     InstrumentsComponent,
-    DeviceDialog,
+    InstrumentDialog,
     TeamComponent,
     TeamDialog,
     ProtocolComponent,
@@ -35,7 +35,7 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     FlexLayoutModule
   ],
-  entryComponents: [DeviceDialog, TeamDialog, ProtocolDialog],
+  entryComponents: [InstrumentDialog, TeamDialog, ProtocolDialog],
   providers: [],
   bootstrap: [AppComponent]
 })

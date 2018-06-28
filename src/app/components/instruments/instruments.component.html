@@ -2,52 +2,25 @@
   <form>
     <mat-card fxLayout="row">
       <mat-form-field fxFlex="10">
-        <mat-select placeholder="Typ"
-                    name="instrumentType"
-                    [(ngModel)]="instrumentType"
-                    (selectionChange)="checkType()">
+        <mat-select placeholder="Typ" name="instrumentType" [(ngModel)]="instrumentType" (selectionChange)="checkType()">
           <mat-option value="0">Gerät</mat-option>
           <mat-option value="1">Fahrzeug</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field fxFlex
-                      fxFlexOffset="1">
-        <input matInput
-               placeholder="{{isVehicle ? 'Fahrzeugname' : 'Gerätename' }}"
-               name="instrumentName"
-               [(ngModel)]="instrumentName"
-               (keyup)="checkInstrumen()">
+      <mat-form-field fxFlex fxFlexOffset="1">
+        <input matInput placeholder="{{isVehicle ? 'Fahrzeugname' : 'Gerätename' }}" name="instrumentName" [(ngModel)]="instrumentName">
       </mat-form-field>
       <mat-form-field fxFlex="20" *ngIf="!isVehicle">
-        <input matInput
-               placeholder="Anzahl"
-               type="number"
-               min="1"
-               name="instrumentCount"
-               [(ngModel)]="instrumentCount">
+        <input matInput placeholder="Anzahl" type="number" min="1" name="instrumentCount" [(ngModel)]="instrumentCount">
       </mat-form-field>
       <mat-form-field fxFlex="10" *ngIf="!isVehicle">
-        <mat-select placeholder="Einheit"
-                    [value]="instrumentUnit.toString()">
-          <mat-option value="0">Stück</mat-option>
-          <mat-option value="1">Sack</mat-option>
+        <mat-select placeholder="Einheit" [value]="instrumentUnit.toString()">
+          <mat-option value="Stück">Stück</mat-option>
+          <mat-option value="Sack">Sack</mat-option>
         </mat-select>
       </mat-form-field>
-      <button mat-raised-button
-              fxHide
-              fxShow.gt-sm
-              fxFlex="none"
-              fxFlexOffset="2"
-              color="primary"
-              (click)="add()"
-              style="height: 36px">Hinzufügen</button>
-      <button mat-mini-fab
-              fxHide
-              fxShow.lt-md
-              fxFlex="none"
-              fxFlexOffset="2"
-              color="primary"
-              (click)="add()">
+      <button mat-raised-button fxHide fxShow.gt-sm fxFlex="none" fxFlexOffset="2" color="primary" (click)="add()" style="height: 36px">Hinzufügen</button>
+      <button mat-mini-fab fxHide fxShow.lt-md fxFlex="none" fxFlexOffset="2" color="primary" (click)="add()">
         <mat-icon>add</mat-icon>
       </button>
     </mat-card>
@@ -56,20 +29,10 @@
   <form>
     <mat-card fxFlex="grow">
       <mat-chip-list>
-        <!-- <mat-chip color="primary" 
-                  *ngFor="let vehicle of vehicles"
-                  selected>
-          {{vehicle}}
-          <mat-icon matChipRemove
-                    (click)="delete(device)">cancel</mat-icon>
-        </mat-chip> -->
-        <mat-chip *ngFor="let device of devices"
-                  (click)="openDialog(device)"
-                  color="{{isVehicle ? 'priamry' : ''"
-                  selected="isVehicle">
-          {{device.count}}x {{device.name}}
-          <mat-icon matChipRemove
-                    (click)="delete(device)">cancel</mat-icon>
+        <mat-chip *ngFor="let instrument of instruments" (click)="openDialog(instrument)" color="{{getColor(instrument)}}"
+          selected="isVehicle">
+          {{instrument.display()}}
+          <mat-icon matChipRemove (click)="delete(instrument)">cancel</mat-icon>
         </mat-chip>
       </mat-chip-list>
     </mat-card>

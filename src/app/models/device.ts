@@ -1,4 +1,7 @@
-export class Device {
+import { Unit } from "../enums/unit";
+import { Instrument } from "../interfaces/instrument";
+
+export class Device implements Instrument {
 
     public name: string;
     public count: number;
@@ -9,9 +12,8 @@ export class Device {
         this.count = count;
         this.unit = unit;
     }
-}
 
-export enum Unit { 
-    Stück = 0,
-    Sack
+    public display(): string {
+        return `${this.count}x ${this.name}`;
+    }
 }

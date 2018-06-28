@@ -1,30 +1,19 @@
 <h1 class="mat-h2">Eintrag bearbeiten</h1>
-<div mat-dialog-content>
-    <mat-form-field style="width: 70%;">
-        <input matInput
-               placeholder="Gerätename"
-               [(ngModel)]="data.name">
+<div mat-dialog-content fxLayout="row">
+    <mat-form-field fxFlex>
+        <input matInput placeholder="{{data.type ? 'Fahrzeugname' : 'Gerätename'}}" [(ngModel)]="data.instrument.name">
     </mat-form-field>
-    <mat-form-field style="width: 20%;">
-        <input matInput
-               placeholder="Anzahl"
-               type="number"
-               min="1"
-               [(ngModel)]="data.count">
+    <mat-form-field fxFlex="20" *ngIf="!data.type">
+        <input matInput placeholder="Anzahl" type="number" min="1" [(ngModel)]="data.instrument.count">
     </mat-form-field>
-    <mat-form-field style="width: 10%">
-        <mat-select placeholder="Einheit"
-                    name="unit"
-                    [(ngModel)]="data.unit">
-            <mat-option value="0">Stück</mat-option>
-            <mat-option value="1">Sack</mat-option>
+    <mat-form-field fxFlex="10" *ngIf="!data.type">
+        <mat-select placeholder="Einheit" name="unit" [(ngModel)]="data.instrument.unit">
+            <mat-option value="Stück">Stück</mat-option>
+            <mat-option value="Sack">Sack</mat-option>
         </mat-select>
     </mat-form-field>
 </div>
 <div mat-dialog-actions>
-    <button mat-button
-            (click)="onNoClick()">Abbrechen</button>
-    <button mat-button
-            [mat-dialog-close]="data"
-            cdkFocusInitial>Speichern</button>
+    <button mat-button (click)="onNoClick()">Abbrechen</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
 </div>
