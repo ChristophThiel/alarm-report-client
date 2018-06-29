@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -18,6 +18,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -38,7 +39,9 @@ import { MatRadioModule } from '@angular/material/radio';
     MatListModule,
     MatDividerModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     MatButtonModule,
@@ -57,8 +60,13 @@ import { MatRadioModule } from '@angular/material/radio';
     MatListModule,
     MatDividerModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  declarations: []
+  declarations: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'ge-AT'},
+  ],
 })
 export class MaterialModule { }

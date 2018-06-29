@@ -14,6 +14,7 @@ export class Alarm {
     public devices: Device[];
     public team: TeamMember[];
     public protocol: ProtocolEntry[];
+    public startTime: Date;
 
     constructor() { 
         this.alarmKeyword = "";
@@ -21,6 +22,7 @@ export class Alarm {
         this.street = "";
         this.parish = "";
         this.district = "";
+        this.startTime = new Date();
     }
 
 }

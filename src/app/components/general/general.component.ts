@@ -6,6 +6,8 @@ import { environment } from '../../../environments/environment';
 import { MatChipInputEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 
+const MONTH_NAMES: string[] = [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+
 @Component({
   selector: 'app-general',
   templateUrl: './general.component.html',
@@ -20,7 +22,7 @@ export class GeneralComponent implements OnInit {
   public keywords: string[] = [];
   public filteredKeywords: string[] = [];
 
-  public departments = [ {name: "Marchtrenk"} ];
+  public departments = [{ name: "Marchtrenk" }];
   public visible: boolean = true;
   private separatorKeysCodes = [ENTER, COMMA];
 
@@ -32,7 +34,7 @@ export class GeneralComponent implements OnInit {
       this.keywords = data.fireAlarmKeywords.concat(data.technicalAlarmKeywords);
     });*/
     this.getDummyAlarmKeywords();
-  } 
+  }
 
   private checkAlarmKeyword(): void {
     this.filter();
@@ -81,6 +83,14 @@ export class GeneralComponent implements OnInit {
     }
   }
 
+  private format(event: any): void {
+    alert(event);
+  }
+
+  private formatDate(date: Date): string {
+    return `${date.getDate()}. ${MONTH_NAMES[date.getMonth() - 1]} ${date.getFullYear()}`;
+  }
+
   private getDummyAlarmKeywords() {
     this.alarmKeywords = JSON.parse(`{
       "fireAlarmIdentifier": "Brandmeldealarm",
@@ -116,7 +126,7 @@ export class GeneralComponent implements OnInit {
           "Überflutung",
           "Wasserschaden"
       ]}`);
-      this.keywords = this.alarmKeywords.fireAlarmKeywords.concat(this.alarmKeywords.technicalAlarmKeywords);
+    this.keywords = this.alarmKeywords.fireAlarmKeywords.concat(this.alarmKeywords.technicalAlarmKeywords);
   }
 
 }

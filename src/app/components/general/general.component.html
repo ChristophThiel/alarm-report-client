@@ -36,6 +36,51 @@
             Zeiten
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <div fxLayout="column">
+          <form fxFlex="100" fxLayout="row">
+            <mat-form-field fxFlex="23">
+              <input matInput [matDatepicker]="picker" placeholder="Startzeit" name="startTime" [(ngModel)]="alarm.startTime" (ngModelChange)="format($event)">
+              <mat-hint>{{formatDate(alarm.startTime)}}</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field fxFlex="10">
+              <input matInput placeholder="Startzeit">
+            </mat-form-field>
+            <mat-form-field fxFlex="23" fxFlexOffset="1">
+              <input matInput placeholder="Ausgerückt">
+            </mat-form-field>
+            <mat-form-field fxFlex="10">
+              <input matInput placeholder="Ausgerückt">
+            </mat-form-field>
+            <mat-form-field fxFlex="23" fxFlexOffset="1">
+              <input matInput placeholder="1. Fahrzeug am Einsatzort">
+            </mat-form-field>
+            <mat-form-field fxFlex="10">
+              <input matInput placeholder="1. Fahrzeug am Einsatzort">
+            </mat-form-field>
+          </form>
+          <form fxFlex="100" fxLayout="row">
+            <mat-form-field fxFlex="23">
+              <input matInput placeholder="Alarm Stopp">
+            </mat-form-field>
+            <mat-form-field fxFlex="10">
+              <input matInput placeholder="Alarm Stopp">
+            </mat-form-field>
+            <mat-form-field fxFlex="23" fxFlexOffset="1">
+              <input matInput placeholder="Einsatzbereitschaft wiederhergestellt">
+            </mat-form-field>
+            <mat-form-field fxFlex="10">
+              <input matInput placeholder="Einsatzbereitschaft wiederhergestellt">
+            </mat-form-field>
+            <mat-form-field fxFlex="23" fxFlexOffset="1">
+              <input matInput placeholder="Endzeit">
+            </mat-form-field>
+            <mat-form-field fxFlex="10">
+              <input matInput placeholder="Endzeit">
+            </mat-form-field>
+          </form>
+        </div>
         <p>Not implemented yet!</p>
       </mat-expansion-panel>
       <mat-expansion-panel>

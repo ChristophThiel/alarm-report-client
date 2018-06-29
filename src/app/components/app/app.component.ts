@@ -24,6 +24,7 @@ export class AppComponent {
     this.currentAlarm.devices = [new Device("Besen", 2, DeviceUnit.Item)];
     this.currentAlarm.vehicles = [new Vehicle("Tank 3", 20)];
     this.currentAlarm.team = [new TeamMember("Thiel", "Christoph", "Tank 3", "Mann")];
+    this.currentAlarm.startTime = new Date(2018, 5, 8);
 
     this.alarms = [];
   }
