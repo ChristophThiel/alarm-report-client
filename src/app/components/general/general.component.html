@@ -38,50 +38,52 @@
         </mat-expansion-panel-header>
         <div fxLayout="column">
           <form fxFlex="100" fxLayout="row">
-            <mat-form-field fxFlex="23">
-              <input matInput [matDatepicker]="picker" placeholder="Startzeit" name="startTime" [(ngModel)]="alarm.startTime" (ngModelChange)="format($event)">
-              <mat-hint>{{formatDate(alarm.startTime)}}</mat-hint>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field fxFlex="10">
+            <mat-form-field fxFlex="33">
               <input matInput placeholder="Startzeit">
+              <input matInput [matDatepicker]="startTimePicker" name="startTime" [(ngModel)]="alarm.startTime" class="time">
+              <mat-hint>{{format(alarm.startTime)}}</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="startTimePicker"></mat-datepicker-toggle>
+              <mat-datepicker #startTimePicker></mat-datepicker>
             </mat-form-field>
-            <mat-form-field fxFlex="23" fxFlexOffset="1">
+            <mat-form-field fxFlex="33" fxFlexOffset="1">
               <input matInput placeholder="Ausgerückt">
+              <input matInput [matDatepicker]="engagedTimePicker" name="engagedTime" [(ngModel)]="alarm.engagedTime" class="time">
+              <mat-hint>{{format(alarm.engagedTime)}}</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="engagedTimePicker"></mat-datepicker-toggle>
+              <mat-datepicker #engagedTimePicker></mat-datepicker>
             </mat-form-field>
-            <mat-form-field fxFlex="10">
-              <input matInput placeholder="Ausgerückt">
-            </mat-form-field>
-            <mat-form-field fxFlex="23" fxFlexOffset="1">
+            <mat-form-field fxFlex="33" fxFlexOffset="1">
               <input matInput placeholder="1. Fahrzeug am Einsatzort">
-            </mat-form-field>
-            <mat-form-field fxFlex="10">
-              <input matInput placeholder="1. Fahrzeug am Einsatzort">
+              <input matInput [matDatepicker]="firstVehicleTimePicker" name="firstVehicleTime" [(ngModel)]="alarm.firstVehicleTime" class="time">
+              <mat-hint>{{format(alarm.firstVehicleTime)}}</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="firstVehicleTimePicker"></mat-datepicker-toggle>
+              <mat-datepicker #firstVehicleTimePicker></mat-datepicker>
             </mat-form-field>
           </form>
           <form fxFlex="100" fxLayout="row">
-            <mat-form-field fxFlex="23">
+            <mat-form-field fxFlex="33">
               <input matInput placeholder="Alarm Stopp">
+              <input matInput [matDatepicker]="alarmStopTimePicker" name="alarmStopTime" [(ngModel)]="alarm.alarmStopTime" class="time">
+              <mat-hint>{{format(alarm.alarmStopTime)}}</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="alarmStopTimePicker"></mat-datepicker-toggle>
+              <mat-datepicker #alarmStopTimePicker></mat-datepicker>
             </mat-form-field>
-            <mat-form-field fxFlex="10">
-              <input matInput placeholder="Alarm Stopp">
-            </mat-form-field>
-            <mat-form-field fxFlex="23" fxFlexOffset="1">
+            <mat-form-field fxFlex="33" fxFlexOffset="1">
               <input matInput placeholder="Einsatzbereitschaft wiederhergestellt">
+              <input matInput [matDatepicker]="preparednessTimePicker" name="preparednessTime" [(ngModel)]="alarm.preparednessTime" class="time">
+              <mat-hint>{{format(alarm.preparednessTime)}}</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="preparednessTimePicker"></mat-datepicker-toggle>
+              <mat-datepicker #preparednessTimePicker></mat-datepicker>
             </mat-form-field>
-            <mat-form-field fxFlex="10">
-              <input matInput placeholder="Einsatzbereitschaft wiederhergestellt">
-            </mat-form-field>
-            <mat-form-field fxFlex="23" fxFlexOffset="1">
+            <mat-form-field fxFlex="33" fxFlexOffset="1">
               <input matInput placeholder="Endzeit">
-            </mat-form-field>
-            <mat-form-field fxFlex="10">
-              <input matInput placeholder="Endzeit">
+              <input matInput [matDatepicker]="endTimePicker" name="endTime" [(ngModel)]="alarm.endTime" class="time">
+              <mat-hint>{{format(alarm.endTime)}}</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="endTimePicker"></mat-datepicker-toggle>
+              <mat-datepicker #endTimePicker></mat-datepicker>
             </mat-form-field>
           </form>
         </div>
-        <p>Not implemented yet!</p>
       </mat-expansion-panel>
       <mat-expansion-panel>
         <mat-expansion-panel-header>

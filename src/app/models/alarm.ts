@@ -10,11 +10,17 @@ export class Alarm {
     public street: string;
     public parish: string;
     public district: string;
+    public startTime: Date;
+    public engagedTime: Date;
+    public firstVehicleTime: Date;
+    public alarmStopTime: Date;
+    public preparednessTime: Date;
+    public endTime: Date;
+
     public vehicles: Vehicle[];
     public devices: Device[];
     public team: TeamMember[];
     public protocol: ProtocolEntry[];
-    public startTime: Date;
 
     constructor() { 
         this.alarmKeyword = "";
@@ -23,6 +29,16 @@ export class Alarm {
         this.parish = "";
         this.district = "";
         this.startTime = new Date();
+        this.engagedTime = new Date();
+        this.firstVehicleTime = new Date();
+        this.alarmStopTime = new Date();
+        this.preparednessTime = new Date();
+        this.endTime = new Date();
+
+        this.vehicles = [];
+        this.devices = [];
+        this.team = [];
+        this.protocol = [];
     }
 
 }

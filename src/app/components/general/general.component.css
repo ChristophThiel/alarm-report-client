@@ -3,6 +3,12 @@
     margin: 0 15% 0 15%;
 }
 
+.time {
+    visibility: collapse;
+    height: 0;
+    width: 0;
+}
+
 /* sm */
 @media screen and (max-width: 959px) {
     .content {

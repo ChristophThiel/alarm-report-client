@@ -83,12 +83,8 @@ export class GeneralComponent implements OnInit {
     }
   }
 
-  private format(event: any): void {
-    alert(event);
-  }
-
-  private formatDate(date: Date): string {
-    return `${date.getDate()}. ${MONTH_NAMES[date.getMonth() - 1]} ${date.getFullYear()}`;
+  private format(date: Date): string {
+    return `${date.getDate()}. ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
   }
 
   private getDummyAlarmKeywords() {
