@@ -5,6 +5,7 @@ import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
 import { MatChipInputEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { Alarmed } from '../../enums/alarmedBy';
 
 const MONTH_NAMES: string[] = [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 
@@ -25,6 +26,8 @@ export class GeneralComponent implements OnInit {
   public departments = [{ name: "Marchtrenk" }];
   public visible: boolean = true;
   private separatorKeysCodes = [ENTER, COMMA];
+
+  private isOthersSelected: boolean = true;
 
   constructor(private rest: RestService) { }
 
@@ -85,6 +88,10 @@ export class GeneralComponent implements OnInit {
 
   private format(date: Date): string {
     return `${date.getDate()}. ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
+  }
+
+  private enableOthers(): void {
+    this.isOthersSelected = this.alarm.alarmedBy != Alarmed.Andere;
   }
 
   private getDummyAlarmKeywords() {

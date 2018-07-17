@@ -1,13 +1,25 @@
 export class AlarmKeyword {
 
-    public fireAlarmIdentifier: string;
-    public fireAlarmKeywords: string[];
-    public technicalAlarmKeywords: string[];
+    private _fireAlarmIdentifier: string;
+    private _fireAlarmKeywords: string[];
+    private _technicalAlarmKeywords: string[];
   
     constructor(fireAlarmIdentifier: string, fireAlarmKeywords: string[], technicalAlarmKeywords: string[]) {
-        this.fireAlarmIdentifier = fireAlarmIdentifier;
-        this.fireAlarmKeywords = fireAlarmKeywords;
-        this.technicalAlarmKeywords = technicalAlarmKeywords;
+        this._fireAlarmIdentifier = fireAlarmIdentifier;
+        this._fireAlarmKeywords = fireAlarmKeywords;
+        this._technicalAlarmKeywords = technicalAlarmKeywords;
+    }
+
+    public get fireAlarmIdentifier(): string {
+        return this._fireAlarmIdentifier;
+    }
+
+    public get fireAlarmKeywords(): string[] {
+        return this._fireAlarmKeywords;
+    }
+
+    public get technicalAlarmKeywords(): string[] {
+        return this._technicalAlarmKeywords;
     }
   
   }

@@ -3,14 +3,38 @@ import { Instrument } from "../interfaces/instrument";
 
 export class Device implements Instrument {
 
-    public name: string;
-    public count: number;
-    public unit: DeviceUnit;
+    private  _name: string;
+    private _count: number;
+    private _unit: DeviceUnit;
 
     constructor(name: string, count: number, unit: DeviceUnit) {
-        this.name = name;
-        this.count = count;
-        this.unit = unit;
+        this._name = name;
+        this._count = count;
+        this._unit = unit;
+    }
+
+    public get name(): string {
+        return this._name;
+    }
+
+    public set name(value: string) {
+        this._name = value;
+    }
+
+    public get count(): number {
+        return this._count;
+    }
+
+    public set count(value: number) {
+        this._count = value;
+    }
+
+    public get unit(): DeviceUnit {
+        return this._unit;
+    }
+
+    public set unit(value: DeviceUnit) {
+        this._unit = value;
     }
 
     public display(): string {

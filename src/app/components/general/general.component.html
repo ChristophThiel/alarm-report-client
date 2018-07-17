@@ -94,17 +94,17 @@
         <div fxLayout="column">
           <form fxFlex="100" fxLayout="row">
             <mat-form-field fxFlex>
-              <mat-select placeholder="Alarmiert von">
+              <mat-select name="alarmedBy" placeholder="Alarmiert von" [(ngModel)]="alarm.alarmedBy" (ngModelChange)="enableOthers()">
                 <mat-option value="0">BWST/LWZ</mat-option>
                 <mat-option value="1">OvD</mat-option>
                 <mat-option value="2">Andere</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field fxFlex="60" fxFlexOffset="1">
-              <input matInput placeholder="Andere">
+              <input matInput placeholder="Andere" disabled="{{isOthersSelected}}">
             </mat-form-field>
           </form>
-          <p>Alarmierung mittels</p>
+          <p><b>Alarmierung mittels</b></p>
           <form fxFlex="100" fxLayout="column">
             <div fxLayout="row" fxFlex="100">
               <mat-checkbox fxFlex="20" color="primary">Feuer</mat-checkbox>
@@ -122,6 +122,27 @@
               <mat-checkbox fxFlex="20" color="primary">Wasserdienst</mat-checkbox>
               <mat-checkbox fxFlex="20" color="primary">Telefon</mat-checkbox>
               <mat-checkbox fxFlex="20" color="primary">Mannschaft ist im Feuerwehrhaus</mat-checkbox>
+            </div>
+          </form>
+          <p><b>Organisationen</b></p>
+          <form fxFlex="100" fxLayout="column">
+            <div fxLayout="row" fxFlex="100">
+              <mat-checkbox fxFlex="20" color="primary">Rettungsdienst</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary">Polizei</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary">Abschleppdienst</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary">Gemeinde</mat-checkbox>
+            </div>
+            <div fxLayout="row" fxFlex="100">
+              <mat-checkbox fxFlex="20" color="primary">BH</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary">Stromversorger</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary">Gasunternehmen</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary">ÖBB</mat-checkbox>
+            </div>
+            <div fxLayout="row" fxFlex="100">
+              <mat-checkbox fxFlex="20" color="primary">Staßenmeisterei</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary">Bestatter</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary">AFK</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary">BFK</mat-checkbox>
             </div>
           </form>
           <br/>
@@ -172,6 +193,20 @@
             </mat-form-field>
           </form>
           <mat-checkbox color="primary">Kosten bereits bezahlt</mat-checkbox>
+          <form fxFlex="100" fxLayout="row">
+            <mat-form-field fxFlex="25">
+              <input matInput placeholder="Anzahl geretteter Menschen" min="0" type="number" style="text-align: right">
+            </mat-form-field>
+            <mat-form-field fxFlex="25" fxFlexOffset="1">
+              <input matInput placeholder="Anzahl der geborgener Menschen" min="0" type="number" style="text-align: right">
+            </mat-form-field>
+            <mat-form-field fxFlex="25" fxFlexOffset="1">
+              <input matInput placeholder="Anzahl der geretteten Tiere" min="0" type="number" style="text-align: right">
+            </mat-form-field>
+            <mat-form-field fxFlex="25" fxFlexOffset="1">
+              <input matInput placeholder="Anzahl der geborgenen Tiere" min="0" type="number" style="text-align: right">
+            </mat-form-field>
+          </form>
         </div>
       </mat-expansion-panel>
       <mat-expansion-panel>

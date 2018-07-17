@@ -1,11 +1,27 @@
 export class Alerted {
 
-    public name: string;
-    public time: string;
+    private _name: string;
+    private _time: string;
 
     constructor() { 
-        this.name = "";
-        this.time = "";
+        this._name = "";
+        this._time = "";
+    }
+
+    public get name(): string {
+        return this._name;
+    }
+
+    public set name(value: string) {
+        this._name = value;
+    }
+
+    public get time(): string {
+        return this._time;
+    }
+
+    public set time(value: string) {
+        this._time = value;
     }
 
 }

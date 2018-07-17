@@ -1,11 +1,27 @@
 export class ProtocolEntry {
 
-    public time: string;
-    public text: string;
+    private _time: string;
+    private _text: string;
 
     constructor(time: string, text: string) {
-        this.time = time;
-        this.text = text;
+        this._time = time;
+        this._text = text;
+    }
+
+    public get time(): string {
+        return this._time;
+    }
+
+    public set time(value: string) {
+        this._time = value;
+    }
+
+    public get text(): string {
+        return this._text;
+    }
+
+    public set text(value: string) {
+        this._text = value;
     }
 
 }
