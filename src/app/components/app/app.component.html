@@ -12,18 +12,6 @@
   <button mat-button>
     Bericht speichern
   </button>
-
-  <!--<div fxLayout="row" fxLayoutAlign="center center">
-    <button mat-icon-button fxHide fxShow.xs>
-      <mat-icon>note_add</mat-icon>
-    </button>
-    <button mat-icon-button fxHide fxShow.xs>
-      <mat-icon>folder_open</mat-icon>
-    </button>
-    <button mat-icon-button fxHide fxShow.xs>
-      <mat-icon>save</mat-icon>
-    </button>
-  </div>-->
 </mat-toolbar>
 
 <mat-sidenav-container class="container">
@@ -43,6 +31,9 @@
       </mat-tab>
       <mat-tab label="Protokoll">
         <app-protocol [alarm]="currentAlarm"></app-protocol>
+      </mat-tab>
+      <mat-tab label="Verrechnung">
+        <!--<app-protocol [alarm]="currentAlarm"></app-protocol>-->
       </mat-tab>
     </mat-tab-group>
   </mat-sidenav-content>

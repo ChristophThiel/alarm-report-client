@@ -104,51 +104,55 @@
               <input matInput placeholder="Andere" disabled="{{isOthersSelected}}">
             </mat-form-field>
           </form>
-          <p><b>Alarmierung mittels</b></p>
+          <p>
+            <b>Alarmierung mittels</b>
+          </p>
           <form fxFlex="100" fxLayout="column">
             <div fxLayout="row" fxFlex="100">
-              <mat-checkbox fxFlex="20" color="primary">Feuer</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Sammelruf</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Mannschaft erforderlich</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Kleineinsatz</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(0)">Feuer</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(1)">Sammelruf</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(2)">Mannschaft erforderlich</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(3)">Kleineinsatz</mat-checkbox>
             </div>
             <div fxLayout="row" fxFlex="100">
-              <mat-checkbox fxFlex="20" color="primary">Gruppe 1</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Gruppe 2</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Sonderkraftfahrer</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Kommando</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(4)">Gruppe 1</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(5)">Gruppe 2</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(6)">Sonderkraftfahrer</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(7)">Kommando</mat-checkbox>
             </div>
             <div fxLayout="row" fxFlex="100">
-              <mat-checkbox fxFlex="20" color="primary">Wasserdienst</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Telefon</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Mannschaft ist im Feuerwehrhaus</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(8)">Wasserdienst</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(9)">Telefon</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setAlarmedOver(10)">Mannschaft ist im Feuerwehrhaus</mat-checkbox>
             </div>
           </form>
-          <p><b>Organisationen</b></p>
+          <p>
+            <b>Organisationen</b>
+          </p>
           <form fxFlex="100" fxLayout="column">
             <div fxLayout="row" fxFlex="100">
-              <mat-checkbox fxFlex="20" color="primary">Rettungsdienst</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Polizei</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Abschleppdienst</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Gemeinde</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(0)">Rettungsdienst</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(1)">Polizei</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(2)">Abschleppdienst</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(3)">Gemeinde</mat-checkbox>
             </div>
             <div fxLayout="row" fxFlex="100">
-              <mat-checkbox fxFlex="20" color="primary">BH</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Stromversorger</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Gasunternehmen</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">ÖBB</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(4)">BH</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(5)">Stromversorger</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(6)">Gasunternehmen</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(7)">ÖBB</mat-checkbox>
             </div>
             <div fxLayout="row" fxFlex="100">
-              <mat-checkbox fxFlex="20" color="primary">Staßenmeisterei</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">Bestatter</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">AFK</mat-checkbox>
-              <mat-checkbox fxFlex="20" color="primary">BFK</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(8)">Staßenmeisterei</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(9)">Bestatter</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(10)">AFK</mat-checkbox>
+              <mat-checkbox fxFlex="20" color="primary" (click)="setOrganisation(11)">BFK</mat-checkbox>
             </div>
           </form>
           <br/>
           <mat-form-field fxFlex="100">
             <mat-chip-list #chipList>
-              <mat-chip *ngFor="let department of departments; let i = index" [removable]="i >= 1" (removed)="remove(department)">
+              <mat-chip *ngFor="let department of alarm.departments; let i = index" [removable]="i >= 1" (removed)="remove(department)">
                 {{department.name}}
                 <mat-icon matChipRemove *ngIf="i >= 1">cancel</mat-icon>
               </mat-chip>
@@ -166,13 +170,13 @@
         </mat-expansion-panel-header>
         <div fxLayout="column">
           <mat-form-field fxFlex="100">
-            <textarea matInput placeholder="Schadenslage"></textarea>
+            <textarea matInput name="qualityOfDamage" placeholder="Schadenslage" [(ngModel)]="alarm.qualityOfDamage"></textarea>
           </mat-form-field>
           <mat-form-field fxFlex="100">
-            <textarea matInput placeholder="Vorkommnisse"></textarea>
+            <textarea matInput name="occurrences" placeholder="Vorkommnisse" [(ngModel)]="alarm.occurrences"></textarea>
           </mat-form-field>
           <mat-form-field fxFlex="100">
-            <textarea matInput placeholder="Tätigkeiten"></textarea>
+            <textarea matInput name="activities" placeholder="Tätigkeiten" [(ngModel)]="alarm.activities"></textarea>
           </mat-form-field>
         </div>
       </mat-expansion-panel>

@@ -23,7 +23,6 @@ export class GeneralComponent implements OnInit {
   public keywords: string[] = [];
   public filteredKeywords: string[] = [];
 
-  public departments = [{ name: "Marchtrenk" }];
   public visible: boolean = true;
   private separatorKeysCodes = [ENTER, COMMA];
 
@@ -72,7 +71,7 @@ export class GeneralComponent implements OnInit {
     let input = event.input;
     let value = event.value;
     if ((value || '').trim()) {
-      this.departments.push({ name: value.trim() });
+      this.alarm.departments.push({ name: value.trim() });
     }
     if (input) {
       input.value = '';
@@ -80,9 +79,9 @@ export class GeneralComponent implements OnInit {
   }
 
   private remove(department: any): void {
-    let index = this.departments.indexOf(department);
+    let index = this.alarm.departments.indexOf(department);
     if (index >= 0) {
-      this.departments.splice(index, 1);
+      this.alarm.departments.splice(index, 1);
     }
   }
 
@@ -92,6 +91,14 @@ export class GeneralComponent implements OnInit {
 
   private enableOthers(): void {
     this.isOthersSelected = this.alarm.alarmedBy != Alarmed.Andere;
+  }
+
+  private setAlarmedOver(index: number): void {
+    this.alarm.setAlarmedOver(index);
+  }
+
+  private setOrganisation(index: number): void {
+    this.alarm.setOrganisation(index);
   }
 
   private getDummyAlarmKeywords() {
