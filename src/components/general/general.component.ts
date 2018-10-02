@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Alarm } from '../../models/alarm';
 import { AlarmKeyword } from '../../models/alarmKeyword';
-import { RestService } from '../../services/rest.service';
 import { MatChipInputEvent } from '@angular/material';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { ENTER } from '@angular/cdk/keycodes';
 import { Alarmed } from '../../enums/alarmedBy';
 
 @Component({
@@ -20,10 +19,10 @@ export class GeneralComponent implements OnInit {
   public keywords: string[] = [];
   public filteredKeywords: string[] = [];
 
-  private separatorKeysCodes = [ENTER, COMMA];
+  private separatorKeysCodes = [ENTER];
   private isOthersSelected: boolean;
 
-  constructor(private rest: RestService) { }
+  constructor() { }
 
   public ngOnInit() { }
 
@@ -58,6 +57,14 @@ export class GeneralComponent implements OnInit {
         element.isHeadOfOperation = true;
       } else {
         element.isHeadOfOperation = false;
+      }
+    });
+  }
+
+  public selectOrganisation(organisation: any): void {
+    this.alarm.organisations.forEach(element => {
+      if (element.name === organisation.name) {
+        element.isSelected = !element.isSelected;
       }
     });
   }

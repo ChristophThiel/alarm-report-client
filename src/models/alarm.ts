@@ -18,13 +18,15 @@ export class Alarm {
   public end: Date;
   public alarmedBy: any;
   public other: string;
-  public organisations: any;
+  public organisations: Array<any>;
+  public departments: Array<any>;
   public qualityOfDamage: string;
   public occurrences: string;
   public activities: string;
   public temperature: number;
   public weather: string;
   public isPaid: boolean;
+  public injuredPeople: Array<any>;
   public rescuedPersonCount: number;
   public securedPersonCount: number;
   public rescuedAnimalCount: number;
@@ -37,7 +39,35 @@ export class Alarm {
 
   constructor() {
     this.start = new Date();
+    this.engaged = new Date();
+    this.firstVehicleAtOperation = new Date();
+    this.alarmStop = new Date();
+    this.operational = new Date();
+    this.end = new Date();
 
+    this.organisations = [{
+      name: 'Rettung',
+      isSelected: false
+    },
+    {
+      name: 'ÖBB',
+      isSelected: false
+    }];
+    this.departments = [{
+      name: 'Marchtrenk',
+      isHeadOfOperation: true
+    }];
+    this.injuredPeople = [{
+      firstname: 'Christoph',
+      lastname: 'Thiel',
+      isMale: true,
+      street: 'Berggasse 4',
+      parish: 'Marchtrenk',
+      postcode: 4614,
+      phoneNumber: '+43 664 3203606',
+      email: 'christoph.thiel@liwest.at',
+      passedOrganisation: 'Rettung'
+    }];
     this.vehicles = new Array();
     this.devices = new Array();
     this.team = new Array();
