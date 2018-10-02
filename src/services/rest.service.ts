@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment'
+import { environment } from '../environments/environment';
 import { Alarm } from '../models/alarm';
 import { AlarmKeyword } from '../models/alarmKeyword';
 import { Observable } from 'rxjs';

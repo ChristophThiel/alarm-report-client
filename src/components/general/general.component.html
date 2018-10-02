@@ -1,4 +1,179 @@
-<div class="content">
+<div class="container">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
+    <mat-card fxFlex="49%" fxFlex.lt-md="100">
+      <form fxLayout="row" fxLayoutGap="2%">
+        <mat-form-field fxFlex="74%" appearance="standard">
+          <mat-label>Einsatzstichwort</mat-label>
+          <input matInput placeholder="z.B. Brandmeldealarm">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="24%" appearance="standard">
+          <mat-select [value]="alarm.isFireAlarmType == true ? '1' : '0'">
+            <mat-option value="1">Brand</mat-option>
+            <mat-option value="0">Technisch</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </mat-card>
+
+    <mat-card fxFlex>
+      <form fxLayout="row" fxLayoutGap="2%">
+        <mat-form-field fxFlex="59%" appearance="standard">
+          <mat-label>Straße</mat-label>
+          <input matInput placeholder="z.B. Linzer Straße 43">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="39%" appearance="standard">
+          <mat-label>Gemeinde</mat-label>
+          <input matInput placeholder="Marchtrenk">
+        </mat-form-field>
+      </form>
+    </mat-card>
+  </div>
+
+  <br />
+
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Zeiten
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
+        <app-time-input fxFlex="32" [label]="'Alarmiert'" [dateTime]="alarm.preparednessTime"></app-time-input>
+        <app-time-input fxFlex="32" [label]="'Ausfahrt'" [dateTime]="alarm.preparednessTime"></app-time-input>
+        <app-time-input fxFlex="32" [label]="'Am Einsatzort'" [dateTime]="alarm.preparednessTime"></app-time-input>
+      </form>
+
+      <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
+        <app-time-input fxFlex="32" [label]="'Alarm Stopp'" [dateTime]="alarm.preparednessTime"></app-time-input>
+        <app-time-input fxFlex="32" [label]="'Wieder Einsatzbereit'" [dateTime]="alarm.preparednessTime"></app-time-input>
+        <app-time-input fxFlex="32" [label]="'Einsatz Ende'" [dateTime]="alarm.preparednessTime"></app-time-input>
+      </form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Alarmierung
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
+        <mat-form-field fxFlex appearance="standard">
+          <mat-select name="alarmedBy" placeholder="Alarmiert von" [(ngModel)]="alarm.alarmedBy" (ngModelChange)="enableOthers()">
+            <mat-option value="0">BWST/LWZ</mat-option>
+            <mat-option value="1">OvD</mat-option>
+            <mat-option value="2">Andere</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="60%" appearance="standard">
+          <mat-label>Andere</mat-label>
+          <input matInput placeholder="z.B. Telefon" disabled="{{isOthersSelected}}">
+        </mat-form-field>
+      </form>
+
+      <form fxLayout="row" fxLayout.lt-md="column">
+        <mat-form-field fxFlex appearance="standard">
+          <mat-label>Eingesetzte Feuerwehren</mat-label>
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let department of alarm.departments; let i = index" selected="{{department.isHeadOfOperation}}"
+              (click)="setHeadOfOperation(department)" [removable]="i >= 1" (removed)="remove(department)">
+              {{department.name}}
+              <mat-icon matChipRemove *ngIf="i >= 1">cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)" appearance="standard" />
+          </mat-chip-list>
+        </mat-form-field>
+      </form>
+
+      <form fxLayout="row" fxLayout-lt-md="column">
+        <mat-form-field fxFlex appearance="standard">
+          <mat-label>Eingesetzte Organisationen</mat-label>
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let department of alarm.departments; let i = index" selected="{{department.isHeadOfOperation}}"
+              (click)="setHeadOfOperation(department)" [removable]="i >= 1" (removed)="remove(department)">
+              {{department.name}}
+              <mat-icon matChipRemove *ngIf="i >= 1">cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)" appearance="standard" />
+          </mat-chip-list>
+        </mat-form-field>
+      </form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Ablauf
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form fxLayout="column">
+        <mat-form-field fxFlex>
+          <textarea matInput name="qualityOfDamage" placeholder="Schadenslage" [(ngModel)]="alarm.qualityOfDamage"></textarea>
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <textarea matInput name="occurrences" placeholder="Vorkommnisse" [(ngModel)]="alarm.occurrences"></textarea>
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <textarea matInput name="activities" placeholder="Tätigkeiten" [(ngModel)]="alarm.activities"></textarea>
+        </mat-form-field>
+      </form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Sonstiges
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form fxLayout="row" fxLayoutGap="2%">
+        <mat-form-field fxFlex="29%" appearance="standard">
+          <mat-label>Temperatur</mat-label>
+          <input matInput placeholder="15.6" type="number" style="text-align: right">
+          <span matSuffix>° C</span>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="69%" appearance="standard">
+          <input matInput placeholder="Wetter">
+        </mat-form-field>
+      </form>
+
+      <mat-checkbox color="primary" appearance="standard">Kosten bereits bezahlt</mat-checkbox>
+
+      <form fxFlex="100" fxLayout="row">
+        <mat-form-field fxFlex="25">
+          <input matInput placeholder="Anzahl geretteter Menschen" min="0" type="number" style="text-align: right">
+        </mat-form-field>
+        <mat-form-field fxFlex="25" fxFlexOffset="1">
+          <input matInput placeholder="Anzahl der geborgener Menschen" min="0" type="number" style="text-align: right">
+        </mat-form-field>
+        <mat-form-field fxFlex="25" fxFlexOffset="1">
+          <input matInput placeholder="Anzahl der geretteten Tiere" min="0" type="number" style="text-align: right">
+        </mat-form-field>
+        <mat-form-field fxFlex="25" fxFlexOffset="1">
+          <input matInput placeholder="Anzahl der geborgenen Tiere" min="0" type="number" style="text-align: right">
+        </mat-form-field>
+      </form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Einsatzspezifische Informationen
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>Not implemented yet!</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<!--<div class="content">
   <form fxLayout="row">
     <mat-card fxFlex="50" fxLayout="row">
       <mat-form-field fxFlex="75">
@@ -28,6 +203,7 @@
       </mat-form-field>
     </mat-card>
   </form>
+
   <form fxLayout="row">
     <mat-accordion fxFlex>
       <mat-expansion-panel>
@@ -223,4 +399,4 @@
       </mat-expansion-panel>
     </mat-accordion>
   </form>
-</div>
+</div>-->

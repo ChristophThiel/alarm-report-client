@@ -1,7 +1,19 @@
-.content {
+.container {
+  width: 80vw;
+  margin: 2.5vw 10vw;
+}
+
+@media screen and (max-width: 959px) {
+  .container {
+    width: 95vw;
+    margin: 2.5vw 2.5vw;
+  }
+}
+
+/*.content {
     width: 70%;
     margin: 0 15% 0 15%;
-}
+}*/
 
 .time {
     visibility: collapse;
@@ -9,8 +21,7 @@
     width: 0;
 }
 
-/* sm */
-@media screen and (max-width: 959px) {
+/*@media screen and (max-width: 959px) {
     .content {
         width: 100%;
         margin: 0;
@@ -27,4 +38,4 @@ mat-accordion {
 
 button {
     margin-top: 12px;
-}
+}*/

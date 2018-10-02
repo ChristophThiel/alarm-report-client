@@ -3,6 +3,7 @@
 @import "https://fonts.googleapis.com/css?family=Roboto:300,400,500";
 
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: hidden;
 }

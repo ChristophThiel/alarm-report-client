@@ -1,0 +1,8 @@
+<mat-form-field appearance="standard" style="width: 100%">
+  <mat-label>{{label}}</mat-label>
+  <input matInput placeholder="{{placeholder}}">
+  <input matInput [matDatepicker]="timePicker" [(ngModel)]="dateTime" class="time">
+  <mat-hint>{{formatDate(dateTime)}}</mat-hint>
+  <mat-datepicker-toggle matSuffix [for]="timePicker"></mat-datepicker-toggle>
+  <mat-datepicker #timePicker></mat-datepicker>
+</mat-form-field>
