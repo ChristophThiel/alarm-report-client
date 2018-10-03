@@ -4,7 +4,12 @@
       <form fxLayout="row" fxLayoutGap="2%">
         <mat-form-field fxFlex="74%" appearance="standard">
           <mat-label>Einsatzstichwort</mat-label>
-          <input matInput name="alarmKeyword" placeholder="z.B. Brandmeldealarm" [(ngModel)]="alarm.alarmKeyword">
+          <input matInput name="alarmKeyword" placeholder="z.B. Brandmeldealarm" [formControl]="alarmKeywordFormControl"
+            (ngModelChanged)="setAlarmType()" [(ngModel)]="alarm.alarmKeyword">
+          <mat-error *ngIf="alarmKeywordFormControl.hasError('required')">Einsatzstichwort wird benötigt</mat-error>
+          <mat-error *ngIf="alarmKeywordFormControl.hasError('validKeyword') && !alarmKeywordFormControl.hasError('required')">
+            Ungültiges Stichwort
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex="24%" appearance="standard">

@@ -5,6 +5,8 @@ import { MatChipInputEvent, MatDialog } from '@angular/material';
 import { ENTER } from '@angular/cdk/keycodes';
 import { Alarmed } from '../../enums/alarmedBy';
 import { GeneralDialog } from '../../dialogs/general/general.dialog';
+import { FormControl, Validators } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-general',
@@ -22,6 +24,11 @@ export class GeneralComponent implements OnInit {
 
   public separatorKeysCodes = [ENTER];
   public isOthersSelected: boolean;
+
+  public alarmKeywordFormControl = new FormControl('', [
+    Validators.required,
+    this.validKeyword
+  ]);
 
   public windowWidth: number;
 
@@ -115,4 +122,25 @@ export class GeneralComponent implements OnInit {
     });
   }
 
+  public setAlarmType(): void {
+    debugger
+    for (let i = 0; i < environment.keywords.length; i++) {
+      if (environment.keywords[i].name === this.alarm.alarmKeyword) {
+        this.alarm.isFireAlarmType = environment.keywords[i].isFire;
+      }
+    }
+  }
+
+  public validKeyword(control: FormControl): any {
+    for (let i = 0; i < environment.keywords.length; i++) {
+      if (environment.keywords[i].name === control.value) {
+        return null;
+      }
+    }
+    return {
+      validKeyword: {
+        valid: false
+      }
+    };
+  }
 }

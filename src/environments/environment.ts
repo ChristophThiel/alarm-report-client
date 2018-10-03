@@ -4,9 +4,18 @@
 
 export const environment = {
   production: false,
-  restApiUrl: "http://localhost:5000/api",
-  defaultParish: "Marchtrenk",
-  defaultDistrict: "Wels-Land"
+  keywords: [{
+    name: 'Brandmeldealarm',
+    isFire: true
+  },
+  {
+    name: 'Verkehrsunfall Aufräumarbeiten',
+    isFire: false
+  },
+  {
+    name: 'Türöffnung',
+    isFire: false
+  }]
 };
 
 /*
