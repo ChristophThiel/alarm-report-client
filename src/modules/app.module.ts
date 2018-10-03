@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from '../components/app/app.component';
 import { GeneralComponent } from '../components/general/general.component';
+import { GeneralDialog } from '../dialogs/general/general.dialog';
 import { VehiclesComponent } from '../components/vehicles/vehicles.component';
 import { InstrumentsComponent } from '../components/instruments/instruments.component';
 import { InstrumentDialog } from '../dialogs/instruments/instruments.dialog';
@@ -23,6 +24,7 @@ import { MaterialModule } from './material.module';
   declarations: [
     AppComponent,
     GeneralComponent,
+    GeneralDialog,
     VehiclesComponent,
     InstrumentsComponent,
     InstrumentDialog,
@@ -40,7 +42,7 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     FlexLayoutModule
   ],
-  entryComponents: [InstrumentDialog, TeamDialog, ProtocolDialog],
+  entryComponents: [GeneralDialog, InstrumentDialog, TeamDialog, ProtocolDialog],
   providers: [],
   bootstrap: [AppComponent]
 })

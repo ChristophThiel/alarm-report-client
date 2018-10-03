@@ -1,0 +1,77 @@
+<mat-dialog-content>
+  <h1 class="mat-h1">Geschädigte Person</h1>
+  <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%" fxLayoutGap.lt-md="0">
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>Vorname</mat-label>
+      <input matInput name="firstname" [(ngModel)]="data.firstname">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="32%" appearance="standard">
+      <mat-label>Nachname</mat-label>
+      <input matInput name="lastname" [(ngModel)]="data.lastname">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="32%" appearance="standard">
+      <mat-label>Geschlecht</mat-label>
+      <mat-select [(value)]="data.isMale">
+        <mat-option [value]="true">Männlich</mat-option>
+        <mat-option [value]="false">Weiblich</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="row">
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>Straße</mat-label>
+      <input matInput name="street" [(ngModel)]="data.street">
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%" fxLayoutGap.lt-md="0">
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>Gemeinde</mat-label>
+      <input matInput name="parish" [(ngModel)]="data.parish">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%" appearance="standard">
+      <mat-label>PLZ</mat-label>
+      <input matInput name="postcode" [(ngModel)]="data.postcode">
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%" fxLayoutGap.lt-md="0">
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>Telefonnummer</mat-label>
+      <input matInput name="phonenumber" [(ngModel)]="data.phoneNumber">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%" appearance="standard">
+      <mat-label>E-Mail</mat-label>
+      <input matInput name="email" [(ngModel)]="data.email">
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="row">
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>Übergebene Organisation</mat-label>
+      <mat-select [(value)]="data.passedOrganisation">
+        <mat-option [value]=""></mat-option>
+        <mat-option *ngFor="let organisation of data.organisations" [value]="organisation.name">
+          {{organisation.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <br />
+
+  <form fxLayout="row" fxHide.lt-md>
+    <button fxFlex="20" fxFlexOffset="5" mat-raised-button color="primary" [mat-dialog-close]="data">Speichern</button>
+    <button fxFlex="20" fxFlexOffset="50" mat-raised-button color="primary" (click)="onNoClick()">Schließen</button>
+  </form>
+
+  <form fxLayout="row" fxHide.gt-md>
+    <button fxFlex="35" mat-raised-button color="primary" [mat-dialog-close]="data">Speichern</button>
+    <button fxFlex="35" fxFlexOffset="30" mat-raised-button color="primary" (click)="onNoClick()">Schließen</button>
+  </form>
+</mat-dialog-content>
