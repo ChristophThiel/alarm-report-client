@@ -147,9 +147,12 @@
       </mat-expansion-panel-header>
       <form>
         <mat-chip-list>
-          <mat-chip>Christoph Thiel</mat-chip>
-          <mat-chip>Max Mustermann</mat-chip>
-          <mat-chip>Maria Musterfrau</mat-chip>
+          <mat-chip *ngFor="let person of alarm.injuredPeople" (click)="openDialog(person)">
+            {{person.firstname}} {{person.lastname}}
+          </mat-chip>
+          <mat-chip selected (click)="openDialog({id: -1, firstname: '', lastname: '', isMale: true, street: '', parish: '', postcode: 4614, phoneNumber: '', email: '', passedOrganisation: ''})">
+            <mat-icon>add</mat-icon>
+          </mat-chip>
         </mat-chip-list>
       </form>
     </mat-expansion-panel>

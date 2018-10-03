@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Alarm } from '../../models/alarm';
 import { AlarmKeyword } from '../../models/alarmKeyword';
-import { MatChipInputEvent } from '@angular/material';
+import { MatChipInputEvent, MatDialog } from '@angular/material';
 import { ENTER } from '@angular/cdk/keycodes';
 import { Alarmed } from '../../enums/alarmedBy';
+import { GeneralDialog } from '../../dialogs/general/general.dialog';
 
 @Component({
   selector: 'app-general',
@@ -19,10 +20,19 @@ export class GeneralComponent implements OnInit {
   public keywords: string[] = [];
   public filteredKeywords: string[] = [];
 
-  private separatorKeysCodes = [ENTER];
-  private isOthersSelected: boolean;
+  public separatorKeysCodes = [ENTER];
+  public isOthersSelected: boolean;
 
-  constructor() { }
+  public windowWidth: number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+    this.windowWidth = window.innerWidth;
+  }
+
+  constructor(public dialog: MatDialog, /* private ref: ChangeDetectorRef*/) {
+    this.windowWidth = window.innerWidth;
+  }
 
   public ngOnInit() { }
 
@@ -71,6 +81,38 @@ export class GeneralComponent implements OnInit {
 
   public enableOthers(): void {
     this.isOthersSelected = this.alarm.alarmedBy !== Alarmed.Andere;
+  }
+
+  public openDialog(injuredPerson: any): void {
+    const data = {
+      id: this.alarm.injuredPeople.indexOf(injuredPerson),
+      firstname: injuredPerson.firstname,
+      lastname: injuredPerson.lastname,
+      isMale: injuredPerson.isMale,
+      street: injuredPerson.street,
+      parish: injuredPerson.parish,
+      postcode: injuredPerson.postcode,
+      phoneNumber: injuredPerson.phoneNumber,
+      email: injuredPerson.email,
+      passedOrganisation: injuredPerson.passedOrganisation,
+      organisations: this.alarm.organisations
+    };
+    const dialogRef = this.dialog.open(GeneralDialog, {
+      width: this.windowWidth <= 959 ? '100%' : '60%',
+      maxWidth: this.windowWidth,
+      data: data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        const id = result.id;
+        delete result.id;
+        if (id === -1) {
+          this.alarm.injuredPeople.push(result);
+        } else {
+          this.alarm.injuredPeople[id] = result;
+        }
+      }
+    });
   }
 
 }
