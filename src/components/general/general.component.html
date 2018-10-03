@@ -4,13 +4,13 @@
       <form fxLayout="row" fxLayoutGap="2%">
         <mat-form-field fxFlex="74%" appearance="standard">
           <mat-label>Einsatzstichwort</mat-label>
-          <input matInput placeholder="z.B. Brandmeldealarm">
+          <input matInput name="alarmKeyword" placeholder="z.B. Brandmeldealarm" [(ngModel)]="alarm.alarmKeyword">
         </mat-form-field>
 
         <mat-form-field fxFlex="24%" appearance="standard">
-          <mat-select [value]="alarm.isFireAlarmType == true ? '1' : '0'">
-            <mat-option value="1">Brand</mat-option>
-            <mat-option value="0">Technisch</mat-option>
+          <mat-select [(value)]="alarm.isFireAlarmType">
+            <mat-option [value]="true">Brand</mat-option>
+            <mat-option [value]="false">Technisch</mat-option>
           </mat-select>
         </mat-form-field>
       </form>
@@ -20,12 +20,12 @@
       <form fxLayout="row" fxLayoutGap="2%">
         <mat-form-field fxFlex="59%" appearance="standard">
           <mat-label>Straße</mat-label>
-          <input matInput placeholder="z.B. Linzer Straße 43">
+          <input matInput name="street" placeholder="z.B. Linzer Straße 43" [(ngModel)]="alarm.street">
         </mat-form-field>
 
         <mat-form-field fxFlex="39%" appearance="standard">
           <mat-label>Gemeinde</mat-label>
-          <input matInput placeholder="Marchtrenk">
+          <input matInput name="parish" placeholder="Marchtrenk" [(ngModel)]="alarm.parish">
         </mat-form-field>
       </form>
     </mat-card>
@@ -104,16 +104,19 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <form fxLayout="column">
-        <mat-form-field fxFlex>
-          <textarea matInput name="qualityOfDamage" placeholder="Schadenslage" [(ngModel)]="alarm.qualityOfDamage"></textarea>
+        <mat-form-field fxFlex appearance="standard">
+          <mat-label>Schadenslage</mat-label>
+          <textarea matInput name="qualityOfDamage" [(ngModel)]="alarm.qualityOfDamage"></textarea>
         </mat-form-field>
 
-        <mat-form-field fxFlex>
-          <textarea matInput name="occurrences" placeholder="Vorkommnisse" [(ngModel)]="alarm.occurrences"></textarea>
+        <mat-form-field fxFlex appearance="standard">
+          <mat-label>Tätigkeiten</mat-label>
+          <textarea matInput name="occurrences" [(ngModel)]="alarm.occurrences"></textarea>
         </mat-form-field>
 
-        <mat-form-field fxFlex>
-          <textarea matInput name="activities" placeholder="Tätigkeiten" [(ngModel)]="alarm.activities"></textarea>
+        <mat-form-field fxFlex appearance="standard">
+          <mat-label>Probleme</mat-label>
+          <textarea matInput name="activities" [(ngModel)]="alarm.activities"></textarea>
         </mat-form-field>
       </form>
     </mat-expansion-panel>
@@ -127,16 +130,16 @@
       <form fxLayout="row" fxLayoutGap="2%">
         <mat-form-field fxFlex="29%" appearance="standard">
           <mat-label>Temperatur</mat-label>
-          <input matInput placeholder="15.6" type="number" style="text-align: right">
+          <input matInput name="temperature" placeholder="15.6" type="number" style="text-align: right" [(ngModel)]="alarm.temperature">
           <span matSuffix>° C</span>
         </mat-form-field>
 
         <mat-form-field fxFlex="69%" appearance="standard">
           <mat-label>Wetter</mat-label>
-          <input matInput placeholder="sonnig">
+          <input matInput name="weather" placeholder="sonnig" [(ngModel)]="alarm.weather">
         </mat-form-field>
       </form>
-      <mat-checkbox color="primary" appearance="standard">Kosten bereits bezahlt</mat-checkbox>
+      <mat-checkbox color="primary" appearance="standard" [(ngModel)]="alarm.isPaid">Kosten bereits bezahlt</mat-checkbox>
     </mat-expansion-panel>
 
     <mat-expansion-panel>
@@ -151,7 +154,7 @@
             {{person.firstname}} {{person.lastname}}
           </mat-chip>
           <mat-chip selected (click)="openDialog({id: -1, firstname: '', lastname: '', isMale: true, street: '', parish: '', postcode: 4614, phoneNumber: '', email: '', passedOrganisation: ''})">
-            <mat-icon>add</mat-icon>
+            +
           </mat-chip>
         </mat-chip-list>
       </form>
