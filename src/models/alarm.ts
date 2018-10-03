@@ -37,6 +37,8 @@ export class Alarm {
   public team: Array<TeamMember>;
   public protocol: Array<ProtocolEntry>;
 
+  public extras: Array<any>;
+
   constructor() {
     this.start = new Date();
     this.engaged = new Date();
@@ -72,6 +74,9 @@ export class Alarm {
     this.devices = new Array();
     this.team = new Array();
     this.protocol = new Array();
+    this.extras = [{
+
+    }];
   }
 
 }
