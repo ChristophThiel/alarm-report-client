@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 const dateOptions = {
   year: 'numeric',
@@ -21,12 +21,23 @@ export class TimeInputComponent {
   @Input() public placeholder: string;
   @Input() public dateTime: Date;
 
+  @Output() public dateTimeChange = new EventEmitter();
+
+  public time: string;
+  public date: string;
+
   constructor() {
     this.placeholder = new Date().toLocaleTimeString('de-DE', timeOptions);
+    this.date = new Date().toLocaleDateString('de-DE', dateOptions);
   }
 
   public formatDate(date: Date): string {
     return this.dateTime.toLocaleDateString('de-DE', dateOptions);
+  }
+
+  public onValueChanged(): void {
+    const value = new Date(`${this.time} ${this.date}`);
+    alert(value);
   }
 
 }

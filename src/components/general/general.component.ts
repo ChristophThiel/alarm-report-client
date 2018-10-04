@@ -29,6 +29,12 @@ export class GeneralComponent implements OnInit {
     Validators.required,
     this.validKeyword
   ]);
+  public streetFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  public parishFormControl = new FormControl('', [
+    Validators.required
+  ]);
 
   public windowWidth: number;
 
@@ -123,7 +129,7 @@ export class GeneralComponent implements OnInit {
   }
 
   public setAlarmType(): void {
-    debugger
+    alert(this.alarm.start.toString());
     for (let i = 0; i < environment.keywords.length; i++) {
       if (environment.keywords[i].name === this.alarm.alarmKeyword) {
         this.alarm.isFireAlarmType = environment.keywords[i].isFire;

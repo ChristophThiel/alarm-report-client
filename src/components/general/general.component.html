@@ -5,7 +5,7 @@
         <mat-form-field fxFlex="74%" appearance="standard">
           <mat-label>Einsatzstichwort</mat-label>
           <input matInput name="alarmKeyword" placeholder="z.B. Brandmeldealarm" [formControl]="alarmKeywordFormControl"
-            (ngModelChanged)="setAlarmType()" [(ngModel)]="alarm.alarmKeyword">
+            (keyup)="setAlarmType()" [(ngModel)]="alarm.alarmKeyword">
           <mat-error *ngIf="alarmKeywordFormControl.hasError('required')">Einsatzstichwort wird benötigt</mat-error>
           <mat-error *ngIf="alarmKeywordFormControl.hasError('validKeyword') && !alarmKeywordFormControl.hasError('required')">
             Ungültiges Stichwort
@@ -13,7 +13,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="24%" appearance="standard">
-          <mat-select [(value)]="alarm.isFireAlarmType">
+          <mat-select name="alarmType" [(ngModel)]="alarm.isFireAlarmType">
             <mat-option [value]="true">Brand</mat-option>
             <mat-option [value]="false">Technisch</mat-option>
           </mat-select>
@@ -25,12 +25,15 @@
       <form fxLayout="row" fxLayoutGap="2%">
         <mat-form-field fxFlex="59%" appearance="standard">
           <mat-label>Straße</mat-label>
-          <input matInput name="street" placeholder="z.B. Linzer Straße 43" [(ngModel)]="alarm.street">
+          <input matInput name="street" placeholder="z.B. Linzer Straße 43" [formControl]="streetFormControl"
+            [(ngModel)]="alarm.street">
+          <mat-error *ngIf="streetFormControl.hasError('required')">Straße wird benötigt</mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex="39%" appearance="standard">
           <mat-label>Gemeinde</mat-label>
-          <input matInput name="parish" placeholder="Marchtrenk" [(ngModel)]="alarm.parish">
+          <input matInput name="parish" placeholder="Marchtrenk" [formControl]="parishFormControl" [(ngModel)]="alarm.parish">
+          <mat-error *ngIf="parishFormControl.hasError('required')">Gemeinde wird benötigt</mat-error>
         </mat-form-field>
       </form>
     </mat-card>
