@@ -1,8 +1,12 @@
 <mat-form-field appearance="standard" style="width: 100%">
   <mat-label>{{label}}</mat-label>
-  <input matInput placeholder="{{placeholder}}" [(ngModel)]="time" (keyup)="onValueChanged()">
-  <input matInput [matDatepicker]="timePicker" [(ngModel)]="date" (keyup)="onValueChanged()" class="time" type="datetime">
-  <mat-hint>{{formatDate(dateTime)}}</mat-hint>
+  <input matInput placeholder="{{placeholder}}" [formControl]="timeFormControl" [(ngModel)]="time" (keyup)="onValueChange()">
+  <input matInput [matDatepicker]="timePicker" [(ngModel)]="dateTime" class="time" type="datetime">
+  <mat-hint>{{formatDate()}}</mat-hint>
   <mat-datepicker-toggle matSuffix [for]="timePicker"></mat-datepicker-toggle>
   <mat-datepicker #timePicker></mat-datepicker>
+
+  <mat-error *ngIf="(timeFormControl.hasError('pattern') || !timeFormControl.valid ) && !timeFormControl.hasError('required')">Ungültige
+    Uhrzeit</mat-error>
+  <mat-error *ngIf="timeFormControl.hasError('required')">Zeit wird benötigt</mat-error>
 </mat-form-field>

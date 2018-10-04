@@ -24,6 +24,9 @@ export class GeneralComponent implements OnInit {
 
   public separatorKeysCodes = [ENTER];
   public isOthersSelected: boolean;
+  public fire: boolean;
+
+  public times: Array<any>;
 
   public alarmKeywordFormControl = new FormControl('', [
     Validators.required,
@@ -129,7 +132,6 @@ export class GeneralComponent implements OnInit {
   }
 
   public setAlarmType(): void {
-    alert(this.alarm.start.toString());
     for (let i = 0; i < environment.keywords.length; i++) {
       if (environment.keywords[i].name === this.alarm.alarmKeyword) {
         this.alarm.isFireAlarmType = environment.keywords[i].isFire;

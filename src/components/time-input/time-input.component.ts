@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 const dateOptions = {
   year: 'numeric',
@@ -20,24 +21,32 @@ export class TimeInputComponent {
   @Input() public label: string;
   @Input() public placeholder: string;
   @Input() public dateTime: Date;
-
   @Output() public dateTimeChange = new EventEmitter();
 
+  public timeFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^[0-2][0-9]\:[0-5][0-9]$'),
+  ]);
+
   public time: string;
-  public date: string;
 
   constructor() {
     this.placeholder = new Date().toLocaleTimeString('de-DE', timeOptions);
-    this.date = new Date().toLocaleDateString('de-DE', dateOptions);
   }
 
-  public formatDate(date: Date): string {
+  public formatDate(): string {
     return this.dateTime.toLocaleDateString('de-DE', dateOptions);
   }
 
-  public onValueChanged(): void {
-    const value = new Date(`${this.time} ${this.date}`);
-    alert(value);
+  public onValueChange(): void {
+    if (!this.timeFormControl.invalid) {
+      const values = this.time.split(':');
+      if (+values[0] <= 23 && +values[1] <= 59) {
+        this.dateTime.setHours(+values[0], +values[1]);
+      } else {
+        this.timeFormControl.setErrors({ incorrect: true });
+      }
+    }
   }
 
 }

@@ -78,7 +78,7 @@
 
         <mat-form-field fxFlex="60%" appearance="standard">
           <mat-label>Andere</mat-label>
-          <input matInput placeholder="z.B. Telefon" disabled="{{isOthersSelected}}">
+          <input matInput name="otherAlert" placeholder="z.B. Telefon" [(ngModel)]="alarm.other" disabled="{{isOthersSelected}}">
         </mat-form-field>
       </form>
 
@@ -175,6 +175,30 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
+        <mat-form-field fxFlex appearance="standard">
+          <mat-label>Gerettete Personen</mat-label>
+          <input matInput name="rescuedPeople" type="number" [(ngModel)]="alarm.rescuedPersonCount">
+        </mat-form-field>
+
+        <mat-form-field fxFlex appearance="standard">
+          <mat-label>Gerettete Tiere</mat-label>
+          <input matInput name="rescuedAnmials" type="number" [(ngModel)]="alarm.rescuedAnimalCount">
+        </mat-form-field>
+
+        <mat-form-field fxFlex appearance="standard">
+          <mat-label>Geborgene Personen</mat-label>
+          <input matInput name="securedPeople" type="number" [(ngModel)]="alarm.securedPersonCount">
+        </mat-form-field>
+
+        <mat-form-field fxFlex appearance="standard">
+          <mat-label>Geborgene Personen</mat-label>
+          <input matInput name="securedAnmials" type="number" [(ngModel)]="alarm.securedAnimalCount">
+        </mat-form-field>
+      </form>
+
+      <mat-checkbox color="primary" [(ngModel)]="fire" *ngIf="alarm.isFireAlarmType">Realbrand</mat-checkbox>
+
+      <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
         <mat-form-field fxFlex appearance="standard" *ngIf="alarm.alarmKeyword === 'Brandmeldealarm'">
           <mat-label>Alarmart</mat-label>
           <mat-select>
@@ -183,7 +207,7 @@
             <mat-option value="Täuschungsalarm">Täuschungsalarm</mat-option>
           </mat-select>
         </mat-form-field>
-        <app-time-input fxFlex [label]="'Brand aus'" [dateTime]="alarm.start" *ngIf="alarm.isFireAlarmType"></app-time-input>
+        <app-time-input fxFlex [label]="'Brand aus'" [dateTime]="alarm.start" *ngIf="fire"></app-time-input>
       </form>
     </mat-expansion-panel>
   </mat-accordion>
