@@ -40,6 +40,7 @@ export class Alarm {
   public extras: Array<any>;
 
   constructor() {
+    this.isFireAlarmType = true;
     this.start = new Date();
     this.engaged = new Date();
     this.firstVehicleAtOperation = new Date();
@@ -47,19 +48,12 @@ export class Alarm {
     this.operational = new Date();
     this.end = new Date();
 
-    this.organisations = [{
-      name: 'Rettung',
-      isSelected: false
-    },
-    {
-      name: 'ÖBB',
-      isSelected: false
-    }];
+    this.organisations = new Array();
     this.departments = [{
       name: 'Marchtrenk',
       isHeadOfOperation: true
     }];
-    this.injuredPeople = [{
+    this.injuredPeople = [/*{
       firstname: 'Christoph',
       lastname: 'Thiel',
       isMale: true,
@@ -69,7 +63,7 @@ export class Alarm {
       phoneNumber: '+43 664 3203606',
       email: 'christoph.thiel@liwest.at',
       passedOrganisation: 'Rettung'
-    }];
+    }*/];
     this.vehicles = new Array();
     this.devices = new Array();
     this.team = new Array();

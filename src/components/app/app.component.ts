@@ -20,11 +20,11 @@ export class AppComponent {
     this.alarms = new Array();
 
     this.alarm = new Alarm();
-    this.alarm.alarmKeyword = 'Türöffnung';
+    /*this.alarm.alarmKeyword = 'Türöffnung';
     this.alarm.isFireAlarmType = false;
     this.alarm.street = 'Berggasse 4';
     this.alarm.parish = 'Marchtrenk';
-    this.alarm.district = 'Wels-Land';
+    this.alarm.district = 'Wels-Land';*/
   }
   /* this.currentAlarm = new Alarm();
   this.currentAlarm.alarmKeyword = 'Türöffnung';

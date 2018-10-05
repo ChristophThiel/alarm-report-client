@@ -98,7 +98,7 @@
       </form>
 
       <mat-chip-list fxLayout="row" fxLayout-lt-md="column" #organisationList>
-        <mat-chip *ngFor="let organisation of alarm.organisations" [color]="organisation.isSelected ? 'primary' : 'default'"
+        <mat-chip *ngFor="let organisation of organisations" [color]="organisation.isSelected ? 'primary' : 'default'"
           (click)="selectOrganisation(organisation)" selected>
           {{organisation.name}}
         </mat-chip>
@@ -158,8 +158,9 @@
       </mat-expansion-panel-header>
       <form>
         <mat-chip-list>
-          <mat-chip *ngFor="let person of alarm.injuredPeople" (click)="openDialog(person)">
-            {{person.firstname}} {{person.lastname}}
+          <mat-chip *ngFor="let person of alarm.injuredPeople" [removable]="true" (removed)="removePerson(person)">
+            <div (click)="openDialog(person)">{{person.firstname}} {{person.lastname}}</div>
+            <mat-icon matChipRemove>cancel</mat-icon>
           </mat-chip>
           <mat-chip selected (click)="openDialog({id: -1, firstname: '', lastname: '', isMale: true, street: '', parish: '', postcode: 4614, phoneNumber: '', email: '', passedOrganisation: ''})">
             +

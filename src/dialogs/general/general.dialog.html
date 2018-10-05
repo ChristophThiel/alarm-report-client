@@ -55,7 +55,6 @@
     <mat-form-field fxFlex appearance="standard">
       <mat-label>Übergebene Organisation</mat-label>
       <mat-select [(value)]="data.passedOrganisation">
-        <mat-option [value]=""></mat-option>
         <mat-option *ngFor="let organisation of data.organisations" [value]="organisation.name">
           {{organisation.name}}
         </mat-option>

@@ -25,6 +25,14 @@ export class GeneralComponent implements OnInit {
   public separatorKeysCodes = [ENTER];
   public isOthersSelected: boolean;
   public fire: boolean;
+  public organisations = [{
+    name: 'Rettung',
+    isSelected: false
+  },
+  {
+    name: 'ÖBB',
+    isSelected: false
+  }];
 
   public times: Array<any>;
 
@@ -46,7 +54,7 @@ export class GeneralComponent implements OnInit {
     this.windowWidth = window.innerWidth;
   }
 
-  constructor(public dialog: MatDialog, /* private ref: ChangeDetectorRef*/) {
+  constructor(public dialog: MatDialog) {
     this.windowWidth = window.innerWidth;
   }
 
@@ -88,9 +96,15 @@ export class GeneralComponent implements OnInit {
   }
 
   public selectOrganisation(organisation: any): void {
-    this.alarm.organisations.forEach(element => {
+    this.organisations.forEach(element => {
       if (element.name === organisation.name) {
         element.isSelected = !element.isSelected;
+        if (element.isSelected) {
+          this.alarm.organisations.push(organisation);
+        } else {
+          const position = this.alarm.organisations.indexOf(organisation);
+          this.alarm.organisations.splice(position, 1);
+        }
       }
     });
   }
@@ -111,7 +125,7 @@ export class GeneralComponent implements OnInit {
       phoneNumber: injuredPerson.phoneNumber,
       email: injuredPerson.email,
       passedOrganisation: injuredPerson.passedOrganisation,
-      organisations: this.alarm.organisations
+      organisations: this.organisations.filter((organisation) => organisation.isSelected)
     };
     const dialogRef = this.dialog.open(GeneralDialog, {
       width: this.windowWidth <= 959 ? '100%' : '60%',
@@ -129,6 +143,11 @@ export class GeneralComponent implements OnInit {
         }
       }
     });
+  }
+
+  public removePerson(person: any): void {
+    const index = this.alarm.injuredPeople.indexOf(person);
+    this.alarm.injuredPeople.splice(index, 1);
   }
 
   public setAlarmType(): void {
