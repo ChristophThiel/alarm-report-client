@@ -1,9 +1,33 @@
-.content {
+.container {
+  width: 80vw;
+  margin: 2.5vw 10vw;
+}
+
+@media screen and (max-width: 959px) {
+  .container {
+    width: 95vw;
+    margin: 2.5vw 2.5vw;
+  }
+}
+
+.button-add {
+  height: 36px;
+  margin-top: calc(81px / 2 - 36px / 2);
+}
+
+@media screen and (max-width: 600px) {
+  .button-add {
+    height: 36px;
+    margin-top: 0;
+  }
+}
+
+/*.content {
     width: 70%;
     margin: 0 15% 0 15%;
 }
 
-/* sm */
+/* sm 
 @media screen and (max-width: 959px) {
     .content {
         width: 100%;
@@ -21,4 +45,4 @@ mat-chip {
 
 button {
     margin-top: 12px;
-}
+}*/

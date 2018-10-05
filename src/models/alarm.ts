@@ -32,15 +32,15 @@ export class Alarm {
   public rescuedAnimalCount: number;
   public securedAnimalCount: number;
 
-  public vehicles: Array<Vehicle>;
-  public devices: Array<Device>;
+  public instruments: Array<any>;
+  // public vehicles: Array<Vehicle>;
+  // public devices: Array<Device>;
   public team: Array<TeamMember>;
   public protocol: Array<ProtocolEntry>;
 
-  public extras: Array<any>;
-
   constructor() {
     this.isFireAlarmType = true;
+
     this.start = new Date();
     this.engaged = new Date();
     this.firstVehicleAtOperation = new Date();
@@ -48,29 +48,16 @@ export class Alarm {
     this.operational = new Date();
     this.end = new Date();
 
-    this.organisations = new Array();
+    this.organisations = [];
     this.departments = [{
       name: 'Marchtrenk',
       isHeadOfOperation: true
     }];
-    this.injuredPeople = [/*{
-      firstname: 'Christoph',
-      lastname: 'Thiel',
-      isMale: true,
-      street: 'Berggasse 4',
-      parish: 'Marchtrenk',
-      postcode: 4614,
-      phoneNumber: '+43 664 3203606',
-      email: 'christoph.thiel@liwest.at',
-      passedOrganisation: 'Rettung'
-    }*/];
-    this.vehicles = new Array();
-    this.devices = new Array();
+    this.injuredPeople = [];
+    // this.vehicles = new Array();
+    // this.devices = new Array();
     this.team = new Array();
     this.protocol = new Array();
-    this.extras = [{
-
-    }];
   }
 
 }

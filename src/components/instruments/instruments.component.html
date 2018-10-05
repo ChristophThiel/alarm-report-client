@@ -1,41 +1,76 @@
-<div class="content">
-  <form>
-    <mat-card fxLayout="row">
-      <mat-form-field fxFlex="10">
-        <mat-select placeholder="Typ" name="instrumentType" [(ngModel)]="instrumentType" (selectionChange)="checkType()">
-          <mat-option value="0">Gerät</mat-option>
-          <mat-option value="1">Fahrzeug</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field fxFlex fxFlexOffset="1">
-        <input matInput placeholder="{{isVehicle ? 'Fahrzeugname' : 'Gerätename' }}" name="instrumentName" [(ngModel)]="instrumentName">
-      </mat-form-field>
-      <mat-form-field fxFlex="20">
-        <input matInput placeholder="Anzahl" type="number" min="1" name="instrumentCount" [(ngModel)]="instrumentCount" [style.text-align]="isVehicle ? 'right' : 'left'">
-        <span matSuffix *ngIf="isVehicle">km</span>
-      </mat-form-field>
-      <mat-form-field fxFlex="10" *ngIf="!isVehicle">
-        <mat-select placeholder="Einheit" [value]="instrumentUnit.toString()">
-          <mat-option value="Stück">Stück</mat-option>
-          <mat-option value="Sack">Sack</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button mat-raised-button fxHide fxShow.gt-sm fxFlex="none" fxFlexOffset="2" color="primary" (click)="add()" style="height: 36px">Hinzufügen</button>
-      <button mat-mini-fab fxHide fxShow.lt-md fxFlex="none" fxFlexOffset="2" color="primary" (click)="add()">
-        <mat-icon>add</mat-icon>
-      </button>
-    </mat-card>
-  </form>
+<div class="container">
+  <div fxLayout="column" fxLayoutGap="2%">
+    <mat-card>
+      <form fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="2%">
+        <mat-form-field fxFlex="60%" appearance="standard">
+          <mat-label>Fahrzeug- oder Gerätename</mat-label>
+          <input matInput name="name" [(ngModel)]="name" [formControl]="nameFormControl">
+          <mat-error *ngIf="nameFormControl.hasError('required')">Fahrzeug- oder Gerätename wird benötigt</mat-error>
+        </mat-form-field>
 
-  <form>
-    <mat-card fxFlex="grow">
+        <mat-form-field fxFlex appearance="standard">
+          <mat-label>Anzahl oder KM</mat-label>
+          <input matInput name="amount" type="number" [(ngModel)]="amount" [formControl]="amountFormControl">
+          <mat-error *ngIf="amountFormControl.hasError('required')">Fahrzeug- oder Gerätename wird benötigt</mat-error>
+        </mat-form-field>
+
+        <button fxFlex="20%" mat-raised-button color="primary" class="button-add" (click)="add()">Hinzufügen</button>
+      </form>
+    </mat-card>
+
+    <mat-card *ngIf="alarm.instruments.length != 0">
       <mat-chip-list>
-        <mat-chip *ngFor="let instrument of instruments" (click)="openDialog(instrument)" color="{{getColor(instrument)}}"
-          selected="isVehicle">
-          {{instrument.display()}}
-          <mat-icon matChipRemove (click)="delete(instrument)">cancel</mat-icon>
+        <mat-chip *ngFor="let instrument of alarm.instruments" selected="{{instrument.isVehicle}}" (removed)="remove(instrument)">
+          <div (click)="openDialog(instrument)">{{!instrument.isVehicle ? instrument.amount + 'x ' :
+            ''}}{{instrument.name}}</div>
+          <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
       </mat-chip-list>
     </mat-card>
-  </form>
+  </div>
 </div>
+<!-- <div class="
+        content">
+        <form>
+          <mat-card fxLayout="row">
+            <mat-form-field fxFlex="10">
+              <mat-select placeholder="Typ" name="instrumentType" [(ngModel)]="instrumentType" (selectionChange)="checkType()">
+                <mat-option value="0">Gerät</mat-option>
+                <mat-option value="1">Fahrzeug</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex fxFlexOffset="1">
+              <input matInput placeholder="{{isVehicle ? 'Fahrzeugname' : 'Gerätename' }}" name="instrumentName"
+                [(ngModel)]="instrumentName">
+            </mat-form-field>
+            <mat-form-field fxFlex="20">
+              <input matInput placeholder="Anzahl" type="number" min="1" name="instrumentCount" [(ngModel)]="instrumentCount"
+                [style.text-align]="isVehicle ? 'right' : 'left'">
+              <span matSuffix *ngIf="isVehicle">km</span>
+            </mat-form-field>
+            <mat-form-field fxFlex="10" *ngIf="!isVehicle">
+              <mat-select placeholder="Einheit" [value]="instrumentUnit.toString()">
+                <mat-option value="Stück">Stück</mat-option>
+                <mat-option value="Sack">Sack</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-raised-button fxHide fxShow.gt-sm fxFlex="none" fxFlexOffset="2" color="primary" (click)="add()"
+              style="height: 36px">Hinzufügen</button>
+            <button mat-mini-fab fxHide fxShow.lt-md fxFlex="none" fxFlexOffset="2" color="primary" (click)="add()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-card>
+        </form>
+
+        <form>
+          <mat-card fxFlex="grow">
+            <mat-chip-list>
+              <mat-chip *ngFor="let instrument of instruments" (click)="openDialog(instrument)" color="{{getColor(instrument)}}"
+                selected="isVehicle">
+                {{instrument.display()}}
+                <mat-icon matChipRemove (click)="delete(instrument)">cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </mat-card>
+        </form>
+</div> -->

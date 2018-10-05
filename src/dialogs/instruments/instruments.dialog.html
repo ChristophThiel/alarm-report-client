@@ -1,20 +1,24 @@
-<h1 class="mat-h2">Eintrag bearbeiten</h1>
-<div mat-dialog-content fxLayout="row">
-    <mat-form-field fxFlex>
-        <input matInput placeholder="{{data.type ? 'Fahrzeugname' : 'Gerätename'}}" [(ngModel)]="data.instrument.name">
+<mat-dialog-content>
+  <h1 class="mat-h1">{{data.isVehicle ? 'Fahrzeug bearbeiten' : 'Gerät bearbeiten'}}</h1>
+  <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%" fxLayoutGap.lt-md="0">
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>{{data.isVehicle ? 'Fahrzeugname' : 'Gerätename'}}</mat-label>
+      <input matInput name="firstname" [(ngModel)]="data.name">
     </mat-form-field>
-    <mat-form-field fxFlex="20">
-        <input matInput placeholder="Anzahl" type="number" min="1" [(ngModel)]="data.instrument.count" [style.text-align]="data.type ? 'right' : 'left'">
-        <span matSuffix *ngIf="data.type">km</span>
+
+    <mat-form-field fxFlex="32%" appearance="standard">
+      <mat-label>{{data.isVehicle ? 'KM' : 'Anzahl' }}</mat-label>
+      <input matInput name="lastname" [(ngModel)]="data.amount" type="number">
     </mat-form-field>
-    <mat-form-field fxFlex="10" *ngIf="!data.type">
-        <mat-select placeholder="Einheit" name="unit" [(ngModel)]="data.instrument.unit">
-            <mat-option value="Stück">Stück</mat-option>
-            <mat-option value="Sack">Sack</mat-option>
-        </mat-select>
-    </mat-form-field>
-</div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Abbrechen</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
-</div>
+  </form>
+
+  <form fxLayout="row" fxHide.lt-md>
+    <button fxFlex="20" fxFlexOffset="5" mat-raised-button color="primary" [mat-dialog-close]="data">Speichern</button>
+    <button fxFlex="20" fxFlexOffset="50" mat-raised-button color="primary" (click)="onNoClick()">Schließen</button>
+  </form>
+
+  <form fxLayout="row" fxHide.gt-md>
+    <button fxFlex="35" mat-raised-button color="primary" [mat-dialog-close]="data">Speichern</button>
+    <button fxFlex="35" fxFlexOffset="30" mat-raised-button color="primary" (click)="onNoClick()">Schließen</button>
+  </form>
+</mat-dialog-content>

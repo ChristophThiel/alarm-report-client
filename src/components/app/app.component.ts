@@ -20,6 +20,16 @@ export class AppComponent {
     this.alarms = new Array();
 
     this.alarm = new Alarm();
+    this.alarm.instruments = [{
+      name: 'Tank 2',
+      amount: 10,
+      isVehicle: true
+    },
+    {
+      name: 'Schaufel',
+      amount: 2,
+      isVehicle: false
+    }];
     /*this.alarm.alarmKeyword = 'Türöffnung';
     this.alarm.isFireAlarmType = false;
     this.alarm.street = 'Berggasse 4';
