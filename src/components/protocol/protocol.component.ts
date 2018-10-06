@@ -1,52 +1,88 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
-import { ProtocolEntry } from '../../models/protocolEntry';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ProtocolDialog } from '../../dialogs/protocol/protocol.dialog';
+import { Component, Input, HostListener, ViewChild } from '@angular/core';
+import { MatDialog, MatTable } from '@angular/material';
 import { Alarm } from '../../models/alarm';
+import { ProtocolDialog } from '../../dialogs/protocol/protocol.dialog';
+import { FormControl, Validators } from '@angular/forms';
+
+const options = {
+  hour: 'numeric',
+  minute: 'numeric'
+};
 
 @Component({
   selector: 'app-protocol',
   templateUrl: './protocol.component.html',
   styleUrls: ['./protocol.component.css']
 })
-export class ProtocolComponent implements OnInit {
+export class ProtocolComponent {
 
   @Input() public alarm: Alarm;
 
-  private time: string = "";
-  private text: string = "";
+  public dateTime: Date;
+  public text: string;
 
-  private displayedColumns = ["time", "text", "edit", "delete"];
-  private entries: ProtocolEntry[] = [];
+  public windowWidth: number;
+  public columns = [
+    'time',
+    'text',
+    'delete'
+  ];
 
-  constructor(private dialog: MatDialog) { }
+  @ViewChild(MatTable) table: MatTable<any>;
 
-  ngOnInit() { }
+  public timeFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  public textFormControl = new FormControl('', [
+    Validators.required
+  ]);
 
-  private openDialog(entry: ProtocolEntry): void {
-    let dialogRef = this.dialog.open(ProtocolDialog, {
-      width: '40%',
-      data: { id: this.entries.indexOf(entry), time: entry.time, text: entry.text }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.windowWidth = window.innerWidth;
+  }
+
+  constructor(public dialog: MatDialog) {
+    this.windowWidth = window.innerWidth;
+    this.dateTime = new Date();
+  }
+
+  public openDialog(entry: any): void {
+    const dialogRef = this.dialog.open(ProtocolDialog, {
+      width: this.windowWidth <= 959 ? '100%' : '60%',
+      maxWidth: this.windowWidth,
+      data: {
+        id: this.alarm.protocol.indexOf(entry),
+        time: entry.time,
+        text: entry.text
+      }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      this.update(result);
+      if (result !== undefined) {
+        const id = result.id;
+        delete result.id;
+        this.alarm.protocol[id] = result;
+      }
     });
   }
 
-  private add(): void {
-    this.entries = this.entries.concat(new ProtocolEntry(this.time, this.text));
+  public add(): void {
+    if (!this.textFormControl.invalid && !this.timeFormControl.invalid) {
+      this.alarm.protocol.push({
+        time: this.dateTime,
+        text: this.text
+      });
+      this.table.renderRows();
+    }
   }
 
-  private delete(entry: ProtocolEntry): void {
-    let deleted = this.entries.splice(this.entries.indexOf(entry), 1);
-    this.entries = this.entries.filter(member => member != deleted[0]);
+  public delete(entry: any): void {
+    this.alarm.protocol.splice(this.alarm.protocol.indexOf(entry), 1);
+    this.table.renderRows();
   }
 
-  private update(entry: any): void {
-    let update = this.entries.slice(0, this.entries.length - 1);
-    update[entry.id] = new ProtocolEntry(entry.time, entry.text);
-    this.entries = update;
+  public formatTime(dateTime: Date): string {
+    return dateTime.toLocaleTimeString('de-DE', options);
   }
 
 }

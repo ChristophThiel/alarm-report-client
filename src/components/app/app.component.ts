@@ -32,6 +32,10 @@ export class AppComponent {
       vehicle: '',
       function: 'F'
     }];
+    this.alarm.protocol = [{
+      time: new Date(),
+      text: 'Das ist ein Beispieltext!'
+    }];
     /*this.alarm.alarmKeyword = 'Türöffnung';
     this.alarm.isFireAlarmType = false;
     this.alarm.street = 'Berggasse 4';

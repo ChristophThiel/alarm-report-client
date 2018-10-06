@@ -1,20 +1,21 @@
-<h1 class="mat-h2">Eintrag bearbeiten</h1>
-<div mat-dialog-content>
-    <mat-form-field style="width: 30%;">
-        <input matInput
-               placeholder="Zeit"
-               [(ngModel)]="data.time">
+<mat-dialog-content>
+  <h1 class="mat-h1">Eintrag bearbeiten</h1>
+  <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%" fxLayoutGap.lt-md="0">
+    <app-time-input fxFlex="33%" [label]="Zeit" [dateTime]="data.time"></app-time-input>
+
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>Text</mat-label>
+      <input matInput name="text" [(ngModel)]="data.text">
     </mat-form-field>
-    <mat-form-field style="width: 70%;">
-        <input matInput
-               placeholder="Text"
-               [(ngModel)]="data.text">
-    </mat-form-field>
-</div>
-<div mat-dialog-actions>
-    <button mat-button
-            (click)="onNoClick()">Abbrechen</button>
-    <button mat-button
-            [mat-dialog-close]="data"
-            cdkFocusInitial>Speichern</button>
-</div>
+  </form>
+
+  <form fxLayout="row" fxHide.lt-md>
+    <button fxFlex="20" fxFlexOffset="5" mat-raised-button color="primary" [mat-dialog-close]="data">Speichern</button>
+    <button fxFlex="20" fxFlexOffset="50" mat-raised-button color="primary" (click)="onNoClick()">Schließen</button>
+  </form>
+
+  <form fxLayout="row" fxHide.gt-md>
+    <button fxFlex="35" mat-raised-button color="primary" [mat-dialog-close]="data">Speichern</button>
+    <button fxFlex="35" fxFlexOffset="30" mat-raised-button color="primary" (click)="onNoClick()">Schließen</button>
+  </form>
+</mat-dialog-content>

@@ -34,7 +34,7 @@ export class Alarm {
 
   public instruments: Array<any>;
   public team: Array<any>;
-  public protocol: Array<ProtocolEntry>;
+  public protocol: Array<any>;
 
   public extras: any;
 

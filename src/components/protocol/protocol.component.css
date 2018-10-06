@@ -1,25 +1,40 @@
-.content {
-    width: 70%;
-    margin: 0 15% 0 15%;
+.container {
+  width: 80vw;
+  margin: 2.5vw 10vw;
 }
 
-/* sm */
 @media screen and (max-width: 959px) {
-    .content {
-        width: 100%;
-        margin: 0;
-    }
+  .container {
+    width: 95vw;
+    margin: 2.5vw 2.5vw;
+  }
 }
 
-mat-card {
-    margin: 10px !important;
+.button-add {
+  height: 36px;
+  margin-top: calc(81px / 2 - 36px / 2);
+}
+
+@media screen and (max-width: 600px) {
+  .button-add {
+    height: 36px;
+    margin-top: 0;
+  }
 }
 
 table {
-    margin: 10px !important;
-    width: calc(100% - 20px);
+  width: 100%;
 }
 
-.add {
-    margin-top: 12px;
+.has-text-centered {
+  text-align: center;
+}
+
+.has-size-10 {
+  width: 10%;
+}
+
+.has-hover:hover {
+  background-color: hsl(229, 44%, 95%);
+  cursor: pointer;
 }

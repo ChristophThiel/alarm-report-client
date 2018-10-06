@@ -33,18 +33,18 @@
       </form>
     </mat-card>
 
-    <mat-card *ngIf="alarm.instruments.length != 0">
+    <mat-card *ngIf="alarm.team.length != 0">
       <div *ngFor="let vehicle of vehicles">
-        <h2>{{vehicle.name}}</h2>
+        <h2 *ngIf="(alarm.team | filter: vehicle.name:'vehicle').length != 0">{{vehicle.name}}</h2>
         <button *ngFor="let member of alarm.team | filter: vehicle.name:'vehicle'" mat-raised-button matBadge="{{member.function}}"
           (click)="openDialog(member)">{{member.firstname}} {{member.lastname}}</button>
       </div>
 
-      <h2>Zentrale</h2>
+      <h2 *ngIf="(alarm.team | filter: 'F':'function').length != 0">Zentrale</h2>
       <button *ngFor="let member of alarm.team | filter: 'F':'function'" mat-raised-button (click)="openDialog(member)">{{member.firstname}}
         {{member.lastname}}</button>
 
-      <h2>Reserve</h2>
+      <h2 *ngIf="(alarm.team | filter: 'R':'function').length != 0">Reserve</h2>
       <button *ngFor="let member of alarm.team | filter: 'R':'function'" mat-raised-button (click)="openDialog(member)">{{member.firstname}}
         {{member.lastname}}</button>
     </mat-card>

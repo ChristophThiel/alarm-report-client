@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { isNullOrUndefined } from 'util';
 
 const dateOptions = {
   year: 'numeric',
@@ -16,11 +17,12 @@ const timeOptions = {
   templateUrl: './time-input.component.html',
   styleUrls: ['./time-input.component.css']
 })
-export class TimeInputComponent {
+export class TimeInputComponent implements OnInit {
 
   @Input() public label: string;
   @Input() public placeholder: string;
   @Input() public dateTime: Date;
+  @Input() public customFormControl?: FormControl;
   @Output() public dateTimeChange = new EventEmitter();
 
   public timeFormControl = new FormControl('', [
@@ -32,6 +34,12 @@ export class TimeInputComponent {
 
   constructor() {
     this.placeholder = new Date().toLocaleTimeString('de-DE', timeOptions);
+  }
+
+  public ngOnInit(): void {
+    if (!isNullOrUndefined(this.customFormControl)) {
+      this.timeFormControl = this.customFormControl;
+    }
   }
 
   public formatDate(): string {
