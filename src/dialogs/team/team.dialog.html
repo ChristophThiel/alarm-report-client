@@ -1,31 +1,41 @@
-<h1 class="mat-h2">Eintrag bearbeiten</h1>
-<div mat-dialog-content>
-    <mat-form-field style="width: calc(50% - 0.5%);">
-        <input matInput
-               placeholder="Nachname"
-               [(ngModel)]="data.lastname">
+<mat-dialog-content>
+  <h1 class="mat-h1">Einsatzkraft</h1>
+  <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%" fxLayoutGap.lt-md="0">
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>Vorname</mat-label>
+      <input matInput name="firstname" [(ngModel)]="data.firstname">
     </mat-form-field>
-    <mat-form-field style="width: calc(50% - 0.5%);margin-left: 1%;">
-        <input matInput
-               placeholder="Vorname"
-               [(ngModel)]="data.firstname">
+
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>Nachname</mat-label>
+      <input matInput name="lastname" [(ngModel)]="data.lastname">
     </mat-form-field>
-    <br/>
-    <mat-form-field style="width: calc(50% - 0.5%);">
-        <input matInput
-               placeholder="Fahrzeug"
-               [(ngModel)]="data.vehicle">
+
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>Fahrzeug</mat-label>
+      <mat-select name="vehicle" [(ngModel)]="data.vehicle">
+        <mat-option [value]=""></mat-option>
+        <mat-option *ngFor="let vehicle of data.vehicles" [value]="vehicle.name">{{vehicle.name}}</mat-option>
+      </mat-select>
     </mat-form-field>
-    <mat-form-field style="width: calc(50% - 0.5%);margin-left: 1%;">
-        <input matInput
-               placeholder="Position"
-               [(ngModel)]="data.position">
+
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label>Funktion</mat-label>
+      <mat-select name="function" [(ngModel)]="data.function">
+        <mat-option *ngFor="let function of functions" [value]="function.abbreviation">{{function.name}}</mat-option>
+      </mat-select>
     </mat-form-field>
-</div>
-<div mat-dialog-actions>
-    <button mat-button
-            (click)="onNoClick()">Abbrechen</button>
-    <button mat-button
-            [mat-dialog-close]="data"
-            cdkFocusInitial>Speichern</button>
-</div>
+  </form>
+
+  <br />
+
+  <form fxLayout="row" fxHide.lt-md>
+    <button fxFlex="20" fxFlexOffset="5" mat-raised-button color="primary" [mat-dialog-close]="data">Speichern</button>
+    <button fxFlex="20" fxFlexOffset="50" mat-raised-button color="primary" (click)="onNoClick()">Schließen</button>
+  </form>
+
+  <form fxLayout="row" fxHide.gt-md>
+    <button fxFlex="35" mat-raised-button color="primary" [mat-dialog-close]="data">Speichern</button>
+    <button fxFlex="35" fxFlexOffset="30" mat-raised-button color="primary" (click)="onNoClick()">Schließen</button>
+  </form>
+</mat-dialog-content>

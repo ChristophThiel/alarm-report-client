@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TimeInputComponent } from '../components/time-input/time-input.component';
 
 import { MaterialModule } from './material.module';
+import { FilterPipe } from '../pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MaterialModule } from './material.module';
     TeamDialog,
     ProtocolComponent,
     ProtocolDialog,
-    TimeInputComponent
+    TimeInputComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

@@ -11,7 +11,7 @@
         <mat-form-field fxFlex appearance="standard">
           <mat-label>Anzahl oder KM</mat-label>
           <input matInput name="amount" type="number" [(ngModel)]="amount" [formControl]="amountFormControl">
-          <mat-error *ngIf="amountFormControl.hasError('required')">Fahrzeug- oder Gerätename wird benötigt</mat-error>
+          <mat-error *ngIf="amountFormControl.hasError('required')">Anzahl oder Kilometer werden benötigt</mat-error>
         </mat-form-field>
 
         <button fxFlex="20%" mat-raised-button color="primary" class="button-add" (click)="add()">Hinzufügen</button>

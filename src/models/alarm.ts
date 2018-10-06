@@ -33,10 +33,10 @@ export class Alarm {
   public securedAnimalCount: number;
 
   public instruments: Array<any>;
-  // public vehicles: Array<Vehicle>;
-  // public devices: Array<Device>;
-  public team: Array<TeamMember>;
+  public team: Array<any>;
   public protocol: Array<ProtocolEntry>;
+
+  public extras: any;
 
   constructor() {
     this.isFireAlarmType = true;
@@ -54,10 +54,12 @@ export class Alarm {
       isHeadOfOperation: true
     }];
     this.injuredPeople = [];
-    // this.vehicles = new Array();
-    // this.devices = new Array();
     this.team = new Array();
     this.protocol = new Array();
+    this.extras = {
+      fireDetectorAlarmType: '',
+      fireOut: new Date()
+    };
   }
 
 }

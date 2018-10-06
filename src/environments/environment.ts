@@ -15,7 +15,44 @@ export const environment = {
   {
     name: 'Türöffnung',
     isFire: false
-  }]
+  }],
+  functions: [{
+    name: 'Maschinist',
+    abbreviation: 'MA'
+  },
+  {
+    name: 'Fahrzeugkommandant',
+    abbreviation: 'FK'
+  },
+  {
+    name: 'Mann',
+    abbreviation: 'M'
+  },
+  {
+    name: 'Reserve',
+    abbreviation: 'R'
+  },
+  {
+    name: 'Zentralist',
+    abbreviation: 'F'
+  },
+  {
+    name: 'Atemschutzträger',
+    abbreviation: 'AS'
+  },
+  {
+    name: 'Vollschutzträger',
+    abbreviation: 'VS'
+  },
+  {
+    name: 'FMD',
+    abbreviation: 'FMD'
+  },
+  {
+    name: 'Einsatzleiter',
+    abbreviation: 'EL'
+  },
+  ]
 };
 
 /*

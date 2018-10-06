@@ -1,9 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { TeamMember } from '../../models/teamMember';
 import { MatDialog } from '@angular/material';
 import { TeamDialog } from '../../dialogs/team/team.dialog';
 import { Alarm } from '../../models/alarm';
 import { Vehicle } from '../../models/vehicle';
+import { environment } from '../../environments/environment';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-team',
@@ -14,7 +16,76 @@ export class TeamComponent implements OnInit {
 
   @Input() public alarm: Alarm;
 
-  private lastname: string;
+  public firstname: string;
+  public lastname: string;
+  public vehicle: string;
+  public function: string;
+
+  public vehicles: Array<any>;
+  public functions: Array<any>;
+
+  public windowWidth: number;
+
+  public lastnameFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  public firstnameFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  public functionFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.windowWidth = window.innerWidth;
+  }
+
+  constructor(public dialog: MatDialog) {
+    this.windowWidth = window.innerWidth;
+  }
+
+  public ngOnInit(): void {
+    this.vehicles = this.alarm.instruments.filter((instrument) => instrument.isVehicle);
+    this.functions = environment.functions;
+  }
+
+  public add(): void {
+    this.alarm.team.push({
+      firstname: this.firstname,
+      lastname: this.lastname,
+      vehicle: this.vehicle,
+      function: this.function
+    });
+    this.firstname = '';
+    this.lastname = '';
+    this.vehicle = '';
+    this.function = '';
+  }
+
+  public openDialog(member: any): void {
+    const dialogRef = this.dialog.open(TeamDialog, {
+      width: this.windowWidth <= 959 ? '100%' : '60%',
+      maxWidth: this.windowWidth,
+      data: {
+        id: this.alarm.team.indexOf(member),
+        firstname: member.firstname,
+        lastname: member.lastname,
+        vehicle: member.vehicle,
+        function: member.function,
+        vehicles: this.alarm.instruments.filter((instrument) => instrument.isVehicle)
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        const id = result.id;
+        delete result.id;
+        this.alarm.team[id] = result;
+      }
+    });
+  }
+
+  /* private lastname: string;
   private firstname: string;
   private vehicle: Vehicle;
   private position: string;
@@ -52,6 +123,6 @@ export class TeamComponent implements OnInit {
     let update = this.team.slice(0, this.team.length - 1);
     update[member.id] = new TeamMember(member.lastname, member.firstname, member.vehicle, member.position);
     this.team = update;
-  }
+  }*/
 
 }

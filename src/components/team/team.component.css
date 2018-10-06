@@ -1,9 +1,64 @@
-.content {
+.container {
+  width: 80vw;
+  margin: 2.5vw 10vw;
+}
+
+@media screen and (max-width: 959px) {
+  .container {
+    width: 95vw;
+    margin: 2.5vw 2.5vw;
+  }
+}
+
+.button-add {
+  height: 36px;
+  margin-top: calc(81px / 2 - 36px / 2);
+}
+
+@media screen and (max-width: 600px) {
+  .button-add {
+    height: 36px;
+    margin-top: 0;
+  }
+}
+
+span {
+  position: relative;
+  z-index: 2;
+}
+
+.badge {
+  height: 22px;
+  max-height: 22px;
+  width: 22px;
+  max-width: 22px;
+  font-size: 9pt;
+  font-weight: bold;
+  color: white;
+  background-color: hsl(231, 48%, 48%);
+  border: 3.5px solid hsl(231, 48%, 48%);
+  border-radius: 100%;
+  /*height: 22px;
+  max-height: 22px;
+  width: 22px;
+  max-width: 22px;
+  margin: calc(22px / 2 - 9pt) 0 -15px -14px;
+  position: relative;
+  left: 100%;
+  z-index: 1;
+  text-align: center;
+  font-size: 9pt;
+  font-weight: bold;
+  color: white;
+  background-color: hsl(231, 48%, 48%); */
+}
+
+/*.content {
     width: 70%;
     margin: 0 15% 0 15%;
 }
 
-/* sm */
+/* sm 
 @media screen and (max-width: 959px) {
     .content {
         width: 100%;
@@ -22,4 +77,4 @@ table {
 
 .add {
     margin-top: 12px;
-}
+}*/

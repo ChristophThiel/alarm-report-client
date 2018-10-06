@@ -13,6 +13,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="24%" appearance="standard">
+          <mat-label>Alarmart</mat-label>
           <mat-select name="alarmType" [(ngModel)]="alarm.isFireAlarmType">
             <mat-option [value]="true">Brand</mat-option>
             <mat-option [value]="false">Technisch</mat-option>
@@ -69,6 +70,7 @@
       </mat-expansion-panel-header>
       <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
         <mat-form-field fxFlex appearance="standard">
+          <mat-label>Alarmiert von</mat-label>
           <mat-select name="alarmedBy" placeholder="Alarmiert von" [(ngModel)]="alarm.alarmedBy" (ngModelChange)="enableOthers()">
             <mat-option value="0">BWST/LWZ</mat-option>
             <mat-option value="1">OvD</mat-option>
@@ -202,13 +204,13 @@
       <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
         <mat-form-field fxFlex appearance="standard" *ngIf="alarm.alarmKeyword === 'Brandmeldealarm'">
           <mat-label>Alarmart</mat-label>
-          <mat-select>
+          <mat-select [(ngModel)]="alarm.extras.fireDetectorAlarmType">
             <mat-option value="Echtalarm">Echtalarm</mat-option>
             <mat-option value="Fehlalarm">Fehlalarm</mat-option>
             <mat-option value="Täuschungsalarm">Täuschungsalarm</mat-option>
           </mat-select>
         </mat-form-field>
-        <app-time-input fxFlex [label]="'Brand aus'" [dateTime]="alarm.start" *ngIf="fire"></app-time-input>
+        <app-time-input fxFlex [label]="'Brand aus'" [dateTime]="alarm.extras.fireOut" *ngIf="fire"></app-time-input>
       </form>
     </mat-expansion-panel>
   </mat-accordion>
