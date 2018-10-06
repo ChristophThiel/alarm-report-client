@@ -41,12 +41,12 @@ export class Alarm {
   constructor() {
     this.isFireAlarmType = true;
 
-    this.start = new Date();
+    /* this.start = new Date();
     this.engaged = new Date();
     this.firstVehicleAtOperation = new Date();
     this.alarmStop = new Date();
     this.operational = new Date();
-    this.end = new Date();
+    this.end = new Date(); */
 
     this.organisations = [];
     this.departments = [{

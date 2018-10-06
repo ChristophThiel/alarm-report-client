@@ -16,6 +16,8 @@ export class AppComponent {
     this.alarms = new Array();
 
     this.alarm = new Alarm();
+    this.alarm.start = new Date(2018, 10, 7, 0, 13, 0);
+
     this.alarm.instruments = [{
       name: 'Tank 2',
       amount: 10,
