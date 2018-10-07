@@ -59,9 +59,11 @@ export class ProtocolComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
+        debugger
         const id = result.id;
         delete result.id;
         this.alarm.protocol[id] = result;
+        this.table.renderRows();
       }
     });
   }
