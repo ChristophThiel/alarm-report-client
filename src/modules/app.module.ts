@@ -16,6 +16,7 @@ import { ProtocolDialog } from '../dialogs/protocol/protocol.dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TimeInputComponent } from '../components/time-input/time-input.component';
+import { DateTimeFormComponent } from '../components/datetime-form/datetime-form.component';
 
 import { MaterialModule } from './material.module';
 import { FilterPipe } from '../pipes/filter.pipe';
@@ -32,6 +33,7 @@ import { FilterPipe } from '../pipes/filter.pipe';
     ProtocolComponent,
     ProtocolDialog,
     TimeInputComponent,
+    DateTimeFormComponent,
     FilterPipe
   ],
   imports: [

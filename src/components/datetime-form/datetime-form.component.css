@@ -1,0 +1,27 @@
+.datetime-form-input-container {
+  display: flex;
+}
+
+.datetime-form-input-element {
+  border: none;
+  background: none;
+  padding: 0;
+  outline: none;
+  font: inherit;
+  text-align: center;
+  width: 50%;
+}
+
+.datetime-form-input-spacer {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+span {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+:host.floating span {
+  opacity: 1;
+}
