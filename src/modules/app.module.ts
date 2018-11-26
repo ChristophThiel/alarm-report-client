@@ -17,12 +17,17 @@ import { ProtocolDialog } from '../dialogs/protocol/protocol.dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TimeInputComponent } from '../components/time-input/time-input.component';
+<<<<<<< HEAD
 import { DateTimeComponent, TimeComponent } from '../controls/datetime/datetime.component';
+=======
+import { DateTimeFormComponent } from '../components/datetime-form/datetime-form.component';
+>>>>>>> eed0dd16f026f5819449e9392b626b4686569e02
 
 import { MaterialModule } from './material.module';
 import { FilterPipe } from '../pipes/filter.pipe';
 
 @NgModule({
+<<<<<<< HEAD
     declarations: [
         AppComponent,
         GeneralComponent,
@@ -51,5 +56,33 @@ import { FilterPipe } from '../pipes/filter.pipe';
     entryComponents: [GeneralDialog, InstrumentDialog, TeamDialog, ProtocolDialog],
     providers: [],
     bootstrap: [AppComponent]
+=======
+  declarations: [
+    AppComponent,
+    GeneralComponent,
+    GeneralDialog,
+    InstrumentsComponent,
+    InstrumentDialog,
+    TeamComponent,
+    TeamDialog,
+    ProtocolComponent,
+    ProtocolDialog,
+    TimeInputComponent,
+    DateTimeFormComponent,
+    FilterPipe
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    FlexLayoutModule
+  ],
+  entryComponents: [GeneralDialog, InstrumentDialog, TeamDialog, ProtocolDialog],
+  providers: [],
+  bootstrap: [AppComponent]
+>>>>>>> eed0dd16f026f5819449e9392b626b4686569e02
 })
 export class AppModule { }
