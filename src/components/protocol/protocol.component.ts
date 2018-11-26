@@ -48,18 +48,18 @@ export class ProtocolComponent {
   }
 
   public openDialog(entry: any): void {
+    const time = new Date(entry.time.toString());
     const dialogRef = this.dialog.open(ProtocolDialog, {
       width: this.windowWidth <= 959 ? '100%' : '60%',
       maxWidth: this.windowWidth,
       data: {
         id: this.alarm.protocol.indexOf(entry),
-        time: entry.time,
+        time: time,
         text: entry.text
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        debugger
         const id = result.id;
         delete result.id;
         this.alarm.protocol[id] = result;

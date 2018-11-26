@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { isNullOrUndefined } from 'util';
 
 const dateOptions = {
   year: 'numeric',
@@ -19,7 +18,53 @@ const timeOptions = {
 })
 export class TimeInputComponent implements OnInit {
 
+  @Input() public value: Date;
   @Input() public label: string;
+  @Output() public valueChange: EventEmitter<Date> = new EventEmitter();
+
+  public date: Date;
+  public time: string;
+
+  public placeholder: string;
+
+  public formControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^[0-2][0-9]\:[0-5][0-9]$')
+  ]);
+
+  constructor() {
+    this.date = new Date();
+    this.placeholder = this.date.toLocaleTimeString('de-DE', timeOptions);
+  }
+
+  public ngOnInit(): void {
+    this.time = this.value.toLocaleTimeString('de-DE', timeOptions);
+  }
+
+  public format(): string {
+    return this.date.toLocaleDateString('de-DE', dateOptions);
+  }
+
+  public onTimeChanged(event: string): void {
+    if (this.formControl.valid) {
+      const times = event.split(':');
+      this.value.setHours(+times[0], +times[1]);
+      this.onDateChanged(this.value);
+    }
+  }
+
+  public onDateChanged(event: any): void {
+    let changed: Date;
+    if (event instanceof Date) {
+      changed = event;
+    } else {
+      changed = event.value;
+    }
+    this.value = new Date(changed.getFullYear(), changed.getMonth(), changed.getDate(), this.value.getHours(), this.value.getMinutes());
+    this.valueChange.emit(this.value);
+  }
+
+  /* @Input() public label: string;
   @Input() public placeholder: string;
   @Input() public dateTime?: Date;
   @Input() public customFormControl?: FormControl;
@@ -61,5 +106,5 @@ export class TimeInputComponent implements OnInit {
         this.timeFormControl.setErrors({ incorrect: true });
       }
     }
-  }
+  } */
 }
