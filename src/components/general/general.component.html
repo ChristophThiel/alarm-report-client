@@ -44,24 +44,24 @@
     <br />
 
     <mat-accordion>
-        <!-- <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Zeiten
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
-        <app-time-input fxFlex="32" [label]="'Alarmiert'" [dateTime]="alarm.start"></app-time-input>
-        <app-time-input fxFlex="32" [label]="'Ausfahrt'" [dateTime]="alarm.engaged"></app-time-input>
-        <app-time-input fxFlex="32" [label]="'Am Einsatzort'" [dateTime]="alarm.firstVehicleAtOperation"></app-time-input>
-      </form>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Zeiten
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
+                <app-datetime fxFlex="32" [placeholder]="'Alarmiert'" [dateTime]="alarm.start"></app-datetime>
+                <app-datetime fxFlex="32" [placeholder]="'Ausfahrt'" [dateTime]="alarm.engaged"></app-datetime>
+                <app-datetime fxFlex="32" [placeholder]="'Am Einsatzort'" [dateTime]="alarm.firstVehicleAtOperation"></app-datetime>
+            </form>
 
-      <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
-        <app-time-input fxFlex="32" [label]="'Alarm Stopp'" [dateTime]="alarm.alarmStop"></app-time-input>
-        <app-time-input fxFlex="32" [label]="'Wieder Einsatzbereit'" [dateTime]="alarm.operational"></app-time-input>
-        <app-time-input fxFlex="32" [label]="'Einsatz Ende'" [dateTime]="alarm.end"></app-time-input>
-      </form>
-    </mat-expansion-panel> -->
+            <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
+                <app-datetime fxFlex="32" [placeholder]="'Alarm Stopp'" [dateTime]="alarm.alarmStop"></app-datetime>
+                <app-datetime fxFlex="32" [placeholder]="'Wieder Einsatzbereit'" [dateTime]="alarm.operational"></app-datetime>
+                <app-datetime fxFlex="32" [placeholder]="'Einsatz Ende'" [dateTime]="alarm.end"></app-datetime>
+            </form>
+        </mat-expansion-panel>
 
         <mat-expansion-panel>
             <mat-expansion-panel-header>

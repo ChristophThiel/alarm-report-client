@@ -2,9 +2,10 @@ import { Component, OnDestroy, Input, ElementRef } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material';
 import { Subject } from 'rxjs';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'app-datetime',
@@ -12,11 +13,22 @@ import { Subject } from 'rxjs';
     styleUrls: ['./datetime.component.css']
 })
 export class DateTimeComponent {
-    public date = new Date();
-    public isMobile: boolean;
+    @Input() public placeholder: string;
+    @Input() public dateTime: Date;
+    public date: Date;
+    public time: Time;
+
+    public formControl = new FormControl('', [
+        Validators.required
+    ]);
 
     constructor(private breakpointObserver: BreakpointObserver) {
-        this.isMobile = this.breakpointObserver.isMatched('(max-width: 1024px)');
+        if (!isNullOrUndefined(this.dateTime)) {
+            this.date = this.dateTime;
+            this.time = new Time(this.dateTime.getMinutes().toString(), this.dateTime.getSeconds().toString());
+        } else {
+            this.date = new Date();
+        }
     }
 }
 
