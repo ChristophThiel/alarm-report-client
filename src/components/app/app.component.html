@@ -1,14 +1,17 @@
 <mat-toolbar color="primary">
     <span>{{alarm.alarmKeyword}} {{alarm.street}}</span>
     <span class="spacer"></span>
-    <button mat-button fxHide.lt-md>Bericht erstellen</button>
+    <button mat-button fxHide.lt-md (click)="createReport()">Bericht erstellen</button>
     <button mat-button fxHide.lt-md>Bericht öffnen</button>
     <button mat-button fxHide.lt-md>Bericht speichern</button>
 </mat-toolbar>
 
 <mat-sidenav-container class="container">
-    <mat-sidenav mode="side" opened *ngIf="alarms.length != 0">
-        <button mat-button md-truncate *ngFor="let identifier of alarms">{{identifier}}</button>
+    <mat-sidenav class="sidenav" mode="side" opened>
+        <div *ngFor="let element of alarms">
+            <p class="mat-title item" [style.background-color]="element == selectedAlarm ? '#EFEFF0' : ''"
+                [style.color]="element == selectedAlarm ? '#4251B1' : ''" (click)="selectAlarm(element)">{{element.id}}</p>
+        </div>
     </mat-sidenav>
 
     <mat-sidenav-content>

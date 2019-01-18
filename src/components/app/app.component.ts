@@ -9,40 +9,37 @@ import { Alarm } from '../../models/alarm';
 })
 export class AppComponent {
 
-  public alarms: Array<string>;
+  public alarms: Array<Alarm>;
   public alarm: Alarm;
+
+  public selectedAlarm: Alarm;
 
   constructor() {
     this.alarms = new Array();
-
     this.alarm = new Alarm();
-    this.alarm.start = new Date(2018, 10, 7, 0, 13, 0);
+    this.alarm.id = '01-01-18-30';
+    this.alarms.push(this.alarm);
+    const help = new Alarm();
+    help.id = '01-02-12-34';
+    this.alarms.push(help);
 
-    this.alarm.instruments = [{
-      name: 'Tank 2',
-      amount: 10,
-      isVehicle: true
-    },
-    {
-      name: 'Schaufel',
-      amount: 2,
-      isVehicle: false
-    }];
-    this.alarm.team = [{
-      firstname: 'Christoph',
-      lastname: 'Thiel',
-      vehicle: '',
-      function: 'F'
-    }];
-    this.alarm.protocol = [{
-      time: new Date(),
-      text: 'Das ist ein Beispieltext!'
-    }];
-    /*this.alarm.alarmKeyword = 'Türöffnung';
-    this.alarm.isFireAlarmType = false;
-    this.alarm.street = 'Berggasse 4';
-    this.alarm.parish = 'Marchtrenk';
-    this.alarm.district = 'Wels-Land';*/
+    this.alarm.instruments = [];
+    this.alarm.team = [];
+    this.alarm.protocol = [];
+
+    this.selectedAlarm = this.alarm;
+  }
+
+  public selectAlarm(selected: Alarm): void {
+    this.selectedAlarm = selected;
+  }
+
+  public createReport(): void {
+    const date = new Date();
+    const create = new Alarm();
+    create.id = `${date.getMonth() + 1}-${date.getDate()}`;
+    this.alarms.push(create);
+
   }
 
 }

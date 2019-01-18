@@ -1,11 +1,6 @@
-/*.content {
-    width: 70%;
-    margin: 0 15% 0 15%;
-}*/
-
 .container {
-  width: 80vw;
-  margin: 2.5vw 10vw;
+  width: 80%;
+  margin: 2.5% 10%;
 }
 
 @media screen and (max-width: 959px) {
@@ -20,22 +15,3 @@
     height: 0;
     width: 0;
 }
-
-/*@media screen and (max-width: 959px) {
-    .content {
-        width: 100%;
-        margin: 0;
-    }
-}
-
-mat-card {
-    margin: 10px !important;
-}
-
-mat-accordion {
-    margin: 10px !important;
-}
-
-button {
-    margin-top: 12px;
-}*/
