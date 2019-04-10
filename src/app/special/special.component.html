@@ -1,0 +1,77 @@
+<div class="container">
+    <form fxLayout="column" [formGroup]="formGroup">
+        <mat-form-field fxFlex appearance="outline">
+            <mat-label>In Einsatz involviert (mehrfach)</mat-label>
+            <mat-chip-list #chipList>
+                <mat-chip>Verletzte Personen</mat-chip>
+                <mat-chip>Getötete Personen</mat-chip>
+                <mat-chip color="accent" selected>Verletzte Tiere</mat-chip>
+                <mat-chip>Getötete Tiere</mat-chip>
+            </mat-chip-list>
+        </mat-form-field>
+    </form>
+
+    <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2.5%" [formGroup]="formGroup">
+        <mat-form-field fxFlex="23.125" appearance="outline">
+            <mat-label>Verletzte Personen</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field fxFlex="23.125" appearance="outline">
+            <mat-label>Getötete Personen</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field fxFlex="23.125" appearance="outline">
+            <mat-label>Verletzte Tiere</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field fxFlex="23.125" appearance="outline">
+            <mat-label>Getötete Tiere</mat-label>
+            <input matInput>
+        </mat-form-field>
+    </form>
+
+    <form fxLayout="row" [formGroup]="formGroup">
+        <mat-form-field fxFlex appearance="outline" floatLabel="always">
+            <mat-label>Wetter</mat-label>
+            <button mat-stroked-button matTooltip="Sonne" color="accent">
+                <mat-icon svgIcon="sun"></mat-icon>
+            </button>
+            <button mat-stroked-button matTooltip="Regen">
+                <mat-icon svgIcon="rain"></mat-icon>
+            </button>
+            <button mat-stroked-button matTooltip="Schnee">
+                <mat-icon svgIcon="snow"></mat-icon>
+            </button>
+            <button mat-stroked-button matTooltip="Nebel">
+                <mat-icon svgIcon="fog"></mat-icon>
+            </button>
+            <button mat-stroked-button matTooltip="Bewölkt">
+                <mat-icon svgIcon="cloud"></mat-icon>
+            </button>
+            <button mat-stroked-button matTooltip="Sturm">
+                <mat-icon svgIcon="bolt"></mat-icon>
+            </button>
+            <mat-chip-list visiblity="hidden"></mat-chip-list>
+        </mat-form-field>
+    </form>
+
+    <form [formGroup]="formGroup">
+        <mat-form-field fxFlex appearance="outline">
+            <mat-chip-list>
+                <mat-chip>Echtalarm</mat-chip>
+                <mat-chip>Kein Brand</mat-chip>
+                <mat-chip color="accent" selected>Fehlalarm</mat-chip>
+                <mat-chip>Täuschungsalarm</mat-chip>
+                <mat-chip>Böswilliger Alarm</mat-chip>
+            </mat-chip-list>
+            <mat-label>Alarmart</mat-label>
+        </mat-form-field>
+    </form>
+
+    <form fxLayout="row" [formGroup]="formGroup">
+        <mat-form-field fxFlex="33" fxFlex.lt-md appearance="outline">
+            <mat-label>Brand aus</mat-label>
+            <input matInput>
+        </mat-form-field>
+    </form>
+</div>

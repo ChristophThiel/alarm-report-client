@@ -1,0 +1,42 @@
+<div class="container">
+    <form fxLayout="row" [formGroup]="formGroup">
+        <mat-form-field fxFlex appearance="outline">
+            <mat-label>Eingesetzte Feuerwehren</mat-label>
+            <mat-chip-list #chipList>
+                <mat-chip color="accent" selected>Marchtrenk</mat-chip>
+                <mat-chip>
+                    Kappern
+                    <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+                </mat-chip>
+                <mat-chip>
+                    Holzhausen
+                    <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+                </mat-chip>
+                <input [matChipInputFor]="chipList">
+            </mat-chip-list>
+            <mat-hint>Hinweis: Einsatzleiter ist von der ausgewählten Feuerwehr.</mat-hint>
+        </mat-form-field>
+    </form>
+
+    <br />
+
+    <form fxLayout="row" [formGroup]="formGroup">
+        <mat-form-field fxFlex appearance="outline">
+            <mat-label>Eingesetzte Organisationen (mehrfach)</mat-label>
+            <mat-chip-list #chipList>
+                <mat-chip>Rotes Kreuz</mat-chip>
+                <mat-chip>Polizei</mat-chip>
+                <mat-chip color="accent" selected>Abschleppdienst</mat-chip>
+                <mat-chip>Gemeinde</mat-chip>
+                <mat-chip>Behörde</mat-chip>
+                <mat-chip>Stromversorger</mat-chip>
+                <mat-chip color="accent" selected>Gasunternehmen</mat-chip>
+                <mat-chip>ÖBB</mat-chip>
+                <mat-chip>Straßenmeisterei</mat-chip>
+                <mat-chip>Bestatter</mat-chip>
+                <mat-chip color="accent" selected>AFK</mat-chip>
+                <mat-chip>BFK</mat-chip>
+            </mat-chip-list>
+        </mat-form-field>
+    </form>
+</div>

@@ -1,0 +1,25 @@
+button {
+  height: 59.5px;
+  margin-top: 4px;
+}
+
+table {
+  width: 100%;
+  background-color: #FAFAFA;
+
+  th, td {
+    font-size: 14pt !important;
+  }
+}
+
+.table-row:hover {
+  background-color: white;
+}
+
+.fab-button {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 100;
+  backface-visibility: hidden;
+}

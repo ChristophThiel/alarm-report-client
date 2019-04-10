@@ -1,0 +1,37 @@
+<div class="container">
+    <form fxLayout="row" fxLayoutGap="2.5%" fxHide fxShow.gt-md [formGroup]="formGroup">
+        <mat-form-field fxFlex="50" appearance="outline">
+            <mat-label>Nachricht</mat-label>
+            <input matInput>
+            <mat-error>Feld wird benötigt</mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="outline">
+            <mat-label>Zeit</mat-label>
+            <input matInput>
+            <mat-error>Feld wird benötigt</mat-error>
+        </mat-form-field>
+        <button mat-button fxFlex="15" color="accent" class="add-button">Hinzufügen</button>
+    </form>
+
+    <table mat-table [dataSource]="protocol">
+        <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef>Zeit</th>
+            <td mat-cell *matCellDef="let entry" [style.text-decoration]="entry.valid ? 'none' : 'line-through'">
+                {{entry.time}}
+                Uhr</td>
+        </ng-container>
+
+        <ng-container matColumnDef="message">
+            <th mat-header-cell *matHeaderCellDef>Nachricht</th>
+            <td mat-cell *matCellDef="let entry" [style.text-decoration]="entry.valid ? 'none' : 'line-through'">
+                {{entry.message}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" class="table-row"></tr>
+    </table>
+</div>
+
+<button mat-fab fxHide fxShow.lt-md fxShow.md class="fab-button">
+    <mat-icon svgIcon="add"></mat-icon>
+</button>

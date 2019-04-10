@@ -1,8 +1,0 @@
-<mat-form-field appearance="standard">
-    <mat-label>{{placeholder}}</mat-label>
-    <app-time [(value)]="time"></app-time>
-    <input matInput [matDatepicker]="picker" style="visibility: collapse" hidden [(ngModel)]="date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker touchUi #picker></mat-datepicker>
-    <mat-hint>{{date | date:'dd. MMMM yyyy'}}</mat-hint>
-</mat-form-field>

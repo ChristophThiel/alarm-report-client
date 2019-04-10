@@ -1,0 +1,53 @@
+<div class="container">
+  <form fxLayout="row" [formGroup]="formGroup">
+    <mat-form-field fxFlex appearance="outline">
+      <mat-label>Einsatzstichwort</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
+    <mat-form-field fxFlex="60" appearance="outline">
+      <mat-label>Einsatzort</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="37.5" appearance="outline">
+      <mat-label>Gemeinde</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
+    <mat-form-field fxFlex="37.5" appearance="outline">
+      <mat-label>Alarmiert von</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="60" appearance="outline">
+      <mat-label>Andere</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
+    <mat-form-field fxFlex appearance="outline">
+      <mat-label>Schadenslage</mat-label>
+      <textarea matInput></textarea>
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
+    <mat-form-field fxFlex appearance="outline">
+      <mat-label>Vorkommnisse</mat-label>
+      <textarea matInput></textarea>
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
+    <mat-form-field fxFlex appearance="outline">
+      <mat-label>Tätigkeiten</mat-label>
+      <textarea matInput></textarea>
+    </mat-form-field>
+  </form>
+</div>

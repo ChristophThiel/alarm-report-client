@@ -1,0 +1,87 @@
+<div class="container">
+    <form fxLayout="row" fxLayoutGap="2.5%" fxHide fxShow.gt-md [formGroup]="formGroup">
+        <mat-form-field fxFlex="50" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput>
+            <mat-error>Feld wird benötigt</mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="outline">
+            <mat-label>Funktion</mat-label>
+            <input matInput>
+            <mat-error>Feld wird benötigt</mat-error>
+        </mat-form-field>
+        <button mat-button fxFlex="15" color="accent" class="add-button">Hinzufügen</button>
+    </form>
+
+    <mat-chip-list>
+        <mat-chip>
+            Christoph Thiel
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip>
+            Hans-Christian Andersen
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip color="primary" selected>
+            Alexander Koblmüller
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip color="accent" selected>
+            Thomas Fraungruber
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip color="primary" selected>
+            Andreas Weinzierl
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip color="accent" selected>
+            Oliver Deutsch
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip>
+            Christoph Eigenstuhler
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip>
+            Julia Reisinger
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip>
+            Hakan Ben Sahid
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip color="primary" selected>
+            Markus Ortmair
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip color="accent" selected>
+            Christoph Zimprich
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip color="primary" selected>
+            Daniel Himpsl
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip color="accent" selected>
+            Andreas Müller
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip>Max Mustermann</mat-chip>
+        <mat-chip color="primary" selected>
+            Maria Musterfrau
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip>
+            Lukas Heim
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+        <mat-chip color="warn" selected>
+            Rudolf Berger
+            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+</div>
+
+<button mat-fab fxHide fxShow.lt-md fxShow.md class="fab-button">
+    <mat-icon svgIcon="add"></mat-icon>
+</button>
