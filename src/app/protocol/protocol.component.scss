@@ -10,10 +10,12 @@ table {
   th, td {
     font-size: 14pt !important;
   }
-}
 
-.table-row:hover {
-  background-color: white;
+  td {
+    mat-checkbox {
+      margin-left: calc(50% - 8px);
+    }
+  }
 }
 
 .fab-button {

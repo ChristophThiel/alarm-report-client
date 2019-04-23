@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class ProtocolComponent {
 
-  public columnsToDisplay = ['time', 'message'];
+  public columnsToDisplay = ['time', 'message', 'valid'];
   public formGroup: FormGroup;
 
   public protocol = [{

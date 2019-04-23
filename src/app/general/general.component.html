@@ -2,52 +2,68 @@
   <form fxLayout="row" [formGroup]="formGroup">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Einsatzstichwort</mat-label>
-      <input matInput>
+      <input matInput formControlName="keyword" [matAutocomplete]="keyword" (keyup)="filter()">
+      <mat-autocomplete autoActiveFirstOption #keyword="matAutocomplete">
+        <mat-option *ngFor="let option of filteredKeywords" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+
+      <mat-error *ngIf="formGroup.get('keyword').hasError('required')">Feld wird benötigt</mat-error>
+      <mat-error
+        *ngIf="formGroup.get('keyword').hasError('invalidKeyword') && !formGroup.get('keyword').hasError('required')">
+        Unbekanntes Stichwort</mat-error>
     </mat-form-field>
   </form>
 
   <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
     <mat-form-field fxFlex="60" appearance="outline">
       <mat-label>Einsatzort</mat-label>
-      <input matInput>
+      <input matInput formControlName="location">
+      <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="37.5" appearance="outline">
       <mat-label>Gemeinde</mat-label>
-      <input matInput>
+      <input matInput formControlName="parish">
+      <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
   </form>
 
   <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
     <mat-form-field fxFlex="37.5" appearance="outline">
       <mat-label>Alarmiert von</mat-label>
-      <input matInput>
+      <mat-select formControlName="alarmed" (selectionChange)="onAlarmedChanged($event)">
+        <mat-option value="LWZ/BWST">LWZ/BWST</mat-option>
+        <mat-option value="Andere">Andere</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field fxFlex="60" appearance="outline">
       <mat-label>Andere</mat-label>
-      <input matInput>
+      <input matInput formControlName="others" disabled>
+      <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
   </form>
 
   <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Schadenslage</mat-label>
-      <textarea matInput></textarea>
+      <textarea matInput formControlName="damage"></textarea>
     </mat-form-field>
   </form>
 
   <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Vorkommnisse</mat-label>
-      <textarea matInput></textarea>
+      <textarea matInput formControlName="events"></textarea>
     </mat-form-field>
   </form>
 
   <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Tätigkeiten</mat-label>
-      <textarea matInput></textarea>
+      <textarea matInput formControlName="activities"></textarea>
     </mat-form-field>
   </form>
 </div>

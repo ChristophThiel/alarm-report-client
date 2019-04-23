@@ -4,6 +4,10 @@ mat-sidenav-container {
   mat-sidenav {
     width: 270px;
 
+    @media screen and (max-width: 599px) {
+        width: 85vw;
+    }
+
     h2 {
       margin: 20px;
     }
@@ -14,16 +18,15 @@ mat-sidenav-container {
       list-style-type: none;
 
       li {
-        padding: 2.5%;
+        padding: 2%;
 
         button {
-          padding: 2.5%;
+          padding: 2%;
           width: 100%;
           font-size: 16pt;
-          text-align: left;
 
           mat-icon {
-            margin: -6px 15px 0 0;
+            margin: -6px 5% 0 0;
           }
         }
       }
@@ -52,7 +55,7 @@ mat-progress-bar {
 }
 
 .burger-button {
-  margin-right: 16px;
+  margin: 0 16px 0 0;
 }
 
 .logo {

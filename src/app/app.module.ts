@@ -17,25 +17,25 @@ import { SpecialComponent } from './special/special.component';
 import { AlarmedComponent } from './alarmed/alarmed.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        GeneralComponent,
-        TimesComponent,
-        InstrumentsComponent,
-        TeamComponent,
-        ProtocolComponent,
-        SpecialComponent,
-        AlarmedComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        AppMaterialModule,
-        FlexLayoutModule
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    GeneralComponent,
+    TimesComponent,
+    InstrumentsComponent,
+    TeamComponent,
+    ProtocolComponent,
+    SpecialComponent,
+    AlarmedComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    AppMaterialModule,
+    FlexLayoutModule
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

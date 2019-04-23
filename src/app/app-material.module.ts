@@ -15,7 +15,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -34,7 +36,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatTableModule,
     MatSidenavModule,
     MatTooltipModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatToolbarModule,
@@ -52,7 +57,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatTableModule,
     MatSidenavModule,
     MatTooltipModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatAutocompleteModule
   ]
 })
 export class AppMaterialModule { }

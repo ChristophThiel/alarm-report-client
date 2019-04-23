@@ -1,34 +1,50 @@
 <div class="container">
-    <form fxLayout="row" fxLayoutGap="2.5%" fxHide fxShow.gt-md [formGroup]="formGroup">
-        <mat-form-field fxFlex="50" appearance="outline">
-            <mat-label>Fahrzeug- oder Gerätename</mat-label>
-            <input matInput>
-            <mat-error>Feld wird benötigt</mat-error>
-        </mat-form-field>
-        <mat-form-field fxFlex appearance="outline">
-            <mat-label>Kilometer- oder Anzahl</mat-label>
-            <input matInput>
-            <mat-error>Feld wird benötigt</mat-error>
-        </mat-form-field>
-        <button mat-button fxFlex="15" color="accent" class="add-button">Hinzufügen</button>
-    </form>
+  <form fxLayout="row" fxLayoutGap="2.5%" fxHide.lt-lg [formGroup]="formGroup">
+    <mat-form-field fxFlex="50" appearance="outline">
+      <mat-label>Funkruf- oder Gerätename</mat-label>
+      <input matInput>
+      <button mat-button matSuffix mat-icon-button>
+        <mat-icon svgIcon="truck"></mat-icon>
+      </button>
+      <mat-error>Feld wird benötigt</mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex appearance="outline">
+      <mat-label>Kilometer oder Anzahl</mat-label>
+      <input matInput>
+      <mat-error>Feld wird benötigt</mat-error>
+    </mat-form-field>
+    <button mat-button fxFlex="15" color="accent" class="add-button">Hinzufügen</button>
+  </form>
 
-    <mat-chip-list>
+  <form fxLayout="column" [formGroup]="formGroup">
+    <mat-form-field fxFlex appearance="outline" floatLabel="always">
+      <mat-label>Fahrzeuge</mat-label>
+      <mat-chip-list #chipList>
+        <mat-chip color="primary" selected matTooltip="Fahrzeug">
+          Tank 3 (20 km)
+          <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="column" [formGroup]="formGroup">
+    <mat-form-field fxFlex appearance="outline" floatLabel="always">
+      <mat-label>Geräte</mat-label>
+      <mat-chip-list #chipList>
         <mat-chip>
-            3x Besen
-            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+          3x Besen
+          <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
         </mat-chip>
         <mat-chip>
-            2x Ölbindemittel
-            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+          2x Ölbindemittel
+          <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
         </mat-chip>
-        <mat-chip color="primary" selected>
-            Tank 3 (20 km)
-            <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-        </mat-chip>
-    </mat-chip-list>
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
 </div>
 
-<button mat-fab fxHide fxShow.lt-md fxShow.md class="fab-button">
-    <mat-icon svgIcon="add"></mat-icon>
+<button mat-fab fxShow.md fxHide.gt-md class="fab-button">
+  <mat-icon svgIcon="add"></mat-icon>
 </button>

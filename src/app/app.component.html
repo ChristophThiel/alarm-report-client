@@ -1,123 +1,54 @@
 <mat-sidenav-container>
-    <mat-sidenav mode="over" opened>
-        <h2>Einsatzberichte</h2>
-        <ul>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="fire"></mat-icon>
-                    01-01-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button color="accent">
-                    <mat-icon svgIcon="technic"></mat-icon>
-                    01-02-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="fire"></mat-icon>
-                    01-03-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="technic"></mat-icon>
-                    01-04-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="fire"></mat-icon>
-                    01-05-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="technic"></mat-icon>
-                    01-06-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="fire"></mat-icon>
-                    01-07-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="technic"></mat-icon>
-                    01-08-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="fire"></mat-icon>
-                    01-09-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="technic"></mat-icon>
-                    01-10-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="fire"></mat-icon>
-                    01-11-08-00
-                </button>
-            </li>
-            <li>
-                <button mat-button>
-                    <mat-icon svgIcon="technic"></mat-icon>
-                    01-12-08-00
-                </button>
-            </li>
-        </ul>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <mat-toolbar color="primary">
-            <button mat-icon-button class="burger-button">
-                <mat-icon class="icon" svgIcon="bars"></mat-icon>
-            </button>
-            <span class="truncate">
-                01-02-08-00
-                <p>Brandmeldealarm - Sparstraße 1</p>
-            </span>
-            <span class="spacer"></span>
-            <button mat-icon-button fxHide fxShow.gt-xs>
-                <mat-icon class="icon" svgIcon="save"></mat-icon>
-            </button>
-            <button mat-icon-button fxHide fxShow.gt-xs>
-                <mat-icon class="icon" svgIcon="settings"></mat-icon>
-            </button>
-            <button mat-icon-button fxHide fxShow.xs>
-                <mat-icon class="icon" svgIcon="menu"></mat-icon>
-            </button>
-        </mat-toolbar>
-        <mat-tab-group>
-            <mat-tab label="Allgemein">
-                <app-general></app-general>
-            </mat-tab>
-            <mat-tab label="Alarmierung">
-                <app-alarmed></app-alarmed>
-            </mat-tab>
-            <mat-tab label="Zeiten">
-                <app-times></app-times>
-            </mat-tab>
-            <mat-tab label="Einsatzspezifisch">
-                <app-special></app-special>
-            </mat-tab>
-            <mat-tab label="Fahrzeuge und Material">
-                <app-instruments></app-instruments>
-            </mat-tab>
-            <mat-tab label="Mannschaft">
-                <app-team></app-team>
-            </mat-tab>
-            <mat-tab label="Protokoll">
-                <app-protocol></app-protocol>
-            </mat-tab>
-        </mat-tab-group>
-    </mat-sidenav-content>
+  <mat-sidenav #sidenav mode="over">
+    <h2>Einsatzberichte</h2>
+    <ul>
+      <li *ngFor="let alarm of alarms">
+        <button mat-flat-button>
+          <mat-icon [svgIcon]="isFire ? 'fire' : 'technic'"></mat-icon>
+          {{alarm.id}}
+        </button>
+      </li>
+    </ul>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-button class="burger-button">
+        <mat-icon class="icon" svgIcon="bars" (click)="toggleSidenav()"></mat-icon>
+      </button>
+      <span class="truncate">
+        01-02-08-00
+        <p>Brandmeldealarm - Sparstraße 1</p>
+      </span>
+      <span class="spacer"></span>
+      <button mat-button fxShow.md fxHide.lt-lg (click)="save()">Bericht speichern</button>
+      <button mat-icon-button fxHide.md fxHide.gt-md (click)="save()">
+        <mat-icon class="icon" svgIcon="save"></mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-tab-group>
+      <mat-tab label="Allgemein">
+        <app-general [alarm]="alarm"></app-general>
+      </mat-tab>
+      <mat-tab label="Alarmierung">
+        <app-alarmed [alarm]="alarm"></app-alarmed>
+      </mat-tab>
+      <mat-tab label="Zeiten">
+        <app-times [alarm]="alarm"></app-times>
+      </mat-tab>
+      <mat-tab label="Einsatzspezifisch">
+        <app-special></app-special>
+      </mat-tab>
+      <mat-tab label="Fahrzeuge und Material">
+        <app-instruments></app-instruments>
+      </mat-tab>
+      <mat-tab label="Mannschaft">
+        <app-team></app-team>
+      </mat-tab>
+      <mat-tab label="Protokoll">
+        <app-protocol></app-protocol>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-sidenav-content>
 </mat-sidenav-container>
