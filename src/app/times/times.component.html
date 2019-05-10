@@ -2,33 +2,75 @@
   <form fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="2.5%" fxLayoutGap.xs="0" [formGroup]="formGroup">
     <mat-form-field fxFlex="48.75" appearance="outline">
       <mat-label>Datum der Alarmierung</mat-label>
-      <input matInput>
+      <input matInput formControlName="startDate" (focusout)="manipulateDate('startDate')">
+      <mat-error *ngIf="formGroup.get('startDate').hasError('required')">Feld wird benötigt</mat-error>
+      <mat-error
+        *ngIf="formGroup.get('startDate').hasError('pattern') && !formGroup.get('startDate').hasError('required')">
+        Ungültiges Datum
+      </mat-error>
     </mat-form-field>
     <mat-form-field fxFlex="48.75" appearance="outline">
       <mat-label>Alarmiert</mat-label>
-      <input matInput>
+      <input matInput formControlName="alarmed" (focusout)="manipulateTime('alarmed')">
+      <mat-error *ngIf="formGroup.get('alarmed').hasError('required')">Feld wird benötigt</mat-error>
+      <mat-error *ngIf="formGroup.get('alarmed').hasError('pattern') && !formGroup.get('alarmed').hasError('required')">
+        Ungültige Uhrzeit
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48.75" appearance="outline">
       <mat-label>Ausgerückt</mat-label>
-      <input matInput>
+      <input matInput formControlName="engaged" (focusout)="manipulateTime('engaged')">
+      <mat-error *ngIf="formGroup.get('engaged').hasError('required')">Feld wird benötigt</mat-error>
+      <mat-error *ngIf="formGroup.get('engaged').hasError('pattern') && !formGroup.get('engaged').hasError('required')">
+        Ungültige Uhrzeit
+      </mat-error>
+      <mat-error
+        *ngIf="formGroup.get('engaged').hasError('invalidTime') && !formGroup.get('engaged').hasError('required')">
+        Uhrzeit muss größer sein
+      </mat-error>
     </mat-form-field>
   </form>
 
   <form fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="2.5%" fxLayoutGap.xs="0" [formGroup]="formGroup">
     <mat-form-field fxFlex="48.75" appearance="outline">
       <mat-label>Erstes Fahrzeug am Einsatzort</mat-label>
-      <input matInput>
+      <input matInput formControlName="firstVehicle" (focusout)="manipulateTime('firstVehicle')">
+      <mat-error *ngIf="formGroup.get('firstVehicle').hasError('required')">Feld wird benötigt</mat-error>
+      <mat-error
+        *ngIf="formGroup.get('firstVehicle').hasError('pattern') && !formGroup.get('firstVehicle').hasError('required')">
+        Ungültige Uhrzeit
+      </mat-error>
+      <mat-error
+        *ngIf="formGroup.get('firstVehicle').hasError('invalidTime') && !formGroup.get('firstVehicle').hasError('required')">
+        Uhrzeit muss größer sein
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48.75" appearance="outline">
       <mat-label>Rückkher letztes Fahrzeug</mat-label>
-      <input matInput>
+      <input matInput formControlName="returnLastVehicle" (focusout)="manipulateTime('returnLastVehicle')">
+      <mat-error *ngIf="formGroup.get('returnLastVehicle').hasError('required')">Feld wird benötigt</mat-error>
+      <mat-error
+        *ngIf="formGroup.get('returnLastVehicle').hasError('pattern') && !formGroup.get('returnLastVehicle').hasError('required')">
+        Ungültige Uhrzeit
+      </mat-error>
+      <mat-error
+        *ngIf="formGroup.get('returnLastVehicle').hasError('invalidTime') && !formGroup.get('returnLastVehicle').hasError('required')">
+        Uhrzeit muss größer sein
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48.75" appearance="outline">
       <mat-label>Einsatzbereitschaft wiederhergestellt</mat-label>
-      <input matInput>
+      <input matInput formControlName="ready" (focusout)="manipulateTime('ready')">
+      <mat-error *ngIf="formGroup.get('ready').hasError('required')">Feld wird benötigt</mat-error>
+      <mat-error *ngIf="formGroup.get('ready').hasError('pattern') && !formGroup.get('ready').hasError('required')">
+        Ungültige Uhrzeit
+      </mat-error>
+      <mat-error *ngIf="formGroup.get('ready').hasError('invalidTime') && !formGroup.get('ready').hasError('required')">
+        Uhrzeit muss größer sein
+      </mat-error>
     </mat-form-field>
   </form>
 </div>

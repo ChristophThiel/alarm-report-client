@@ -14,7 +14,7 @@ export class Alarm {
   public alarmedTime: string = '';
   public engagendTime: string = '';
   public firstVehicleTime: string = '';
-  public returnLastVehicle: string = '';
+  public returnLastVehicleTime: string = '';
   public readyTime: string = '';
 
   public alarmType: string;

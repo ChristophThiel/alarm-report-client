@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   }
 
   public save(): void {
-    alert(this.alarm.organisations[1].name);
+    alert(this.alarm.startDate);
   }
 
   private initializeIcons(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
