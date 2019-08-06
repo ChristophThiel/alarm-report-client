@@ -1,27 +1,28 @@
 <div class="container">
-  <form fxLayout="row" fxLayoutGap="2.5%" fxHide.lt-lg [formGroup]="formGroup">
+  <form fxLayout="row" fxLayoutGap="2.5%" fxHide.lt-lg #formDirective="ngForm" [formGroup]="formGroup"
+    (ngSubmit)="add(formDirective)">
     <mat-form-field fxFlex="50" appearance="outline">
       <mat-label>Funkruf- oder Gerätename</mat-label>
-      <input matInput>
-      <button mat-button matSuffix mat-icon-button>
-        <mat-icon svgIcon="truck"></mat-icon>
+      <input matInput formControlName="name">
+      <button type="button" mat-button matSuffix mat-icon-button (click)="toggle()">
+        <mat-icon [svgIcon]="isVehicle ? 'truck' : 'technic'"></mat-icon>
       </button>
       <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Kilometer oder Anzahl</mat-label>
-      <input matInput>
+      <input matInput formControlName="amount">
       <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
-    <button mat-button fxFlex="15" color="accent" class="add-button">Hinzufügen</button>
+    <button type="submit" mat-button fxFlex="15" color="accent" class="add-button">Hinzufügen</button>
   </form>
 
   <form fxLayout="column" [formGroup]="formGroup">
-    <mat-form-field fxFlex appearance="outline" floatLabel="always">
+    <mat-form-field *ngIf="alarm.vehicles.length != 0" fxFlex appearance="outline" floatLabel="always">
       <mat-label>Fahrzeuge</mat-label>
       <mat-chip-list #chipList>
-        <mat-chip color="primary" selected matTooltip="Fahrzeug">
-          Tank 3 (20 km)
+        <mat-chip *ngFor="let vehicle of alarm.vehicles" color="primary" selected (removed)="remove(vehicle)">
+          {{vehicle.name}} ({{vehicle.amount}} km)
           <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
         </mat-chip>
       </mat-chip-list>
@@ -29,15 +30,11 @@
   </form>
 
   <form fxLayout="column" [formGroup]="formGroup">
-    <mat-form-field fxFlex appearance="outline" floatLabel="always">
+    <mat-form-field *ngIf="alarm.devices.length != 0" fxFlex appearance="outline" floatLabel="always">
       <mat-label>Geräte</mat-label>
       <mat-chip-list #chipList>
-        <mat-chip>
-          3x Besen
-          <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-        </mat-chip>
-        <mat-chip>
-          2x Ölbindemittel
+        <mat-chip *ngFor="let device of alarm.devices" (removed)="remove(device)">
+          {{device.amount}}x {{device.name}}
           <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
         </mat-chip>
       </mat-chip-list>
@@ -45,6 +42,6 @@
   </form>
 </div>
 
-<button mat-fab fxShow.md fxHide.gt-md class="fab-button">
+<button mat-fab fxShow.md fxHide.gt-md class="fab-button" (click)="openDialog()">
   <mat-icon svgIcon="add"></mat-icon>
 </button>

@@ -1,120 +1,51 @@
 <div class="container">
-  <form fxLayout="row" fxLayoutGap="2.5%" fxHide.lt-lg [formGroup]="formGroup">
+  <form fxLayout="row" fxLayoutGap="2.5%" fxHide.lt-lg #formDirective="ngForm" [formGroup]="formGroup" (ngSubmit)="add(formDirective)">
     <mat-form-field fxFlex="30" appearance="outline">
       <mat-label>Name</mat-label>
-      <input matInput>
+      <input matInput formControlName="name">
       <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
-    <mat-form-field fxFlex="30" appearance="outline">
+    <mat-form-field fxFlex="25" appearance="outline">
       <mat-label>Funktion</mat-label>
-      <input matInput>
+      <mat-select formControlName="function">
+        <mat-option value="Feuerwehrmann">Feuerwehrmann</mat-option>
+        <mat-option value="FMD">FMD</mat-option>
+        <mat-option value="Atemschutzträger">Atemschutzträger</mat-option>
+        <mat-option value="Vollschutzträger">Vollschutzträger</mat-option>
+        <mat-option value="Maschinist">Maschinist</mat-option>
+        <mat-option value="Fahrzeugkommandant">Fahrzeugkommandant</mat-option>
+        <mat-option value="Zugskommandant">Zugskommandant</mat-option>
+        <mat-option value="Einsatzleiter">Einsatzleiter</mat-option>
+        <mat-option value="Zentralist">Zentralist</mat-option>
+        <mat-option value="Reserve">Reserve</mat-option>
+      </mat-select>
       <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
-    <mat-form-field fxFlex="20" appearance="outline">
+    <mat-form-field fxFlex="25" appearance="outline">
       <mat-label>Fahrzeug</mat-label>
-      <mat-select>
-        <mat-option>Kommando 1</mat-option>
+      <mat-select formControlName="vehicle">
+        <mat-option *ngFor="let vehicle of alarm.vehicles" [value]="vehicle.name">
+          {{vehicle.name}}
+        </mat-option>
       </mat-select>
+      <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
     <button mat-button fxFlex="15" color="accent" class="add-button">Hinzufügen</button>
   </form>
 
-  <form fxLayout="column" [formGroup]="formGroup">
+  <form fxLayout="column" [formGroup]="formGroup" *ngFor="let vehicle of alarm.vehicles">
     <mat-form-field fxFlex appearance="outline" floatLabel="always">
-      <mat-label>Tank 3</mat-label>
+      <mat-label>{{vehicle.name}}</mat-label>
       <mat-chip-list #chipList>
-        <mat-chip color="warn" selected matTooltip="Einsatzleiter">
-          Thomas Fraungruber
-          <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-        </mat-chip>
-        <mat-chip color="primary" selected matTooltip="Maschinist">
-          Alexander Koblmüller
-          <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-        </mat-chip>
-        <mat-chip matTooltip="Atemschutzträger">
-          Christoph Eigenstuhler
-          <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        <mat-chip *ngFor="let member of filter(vehicle.name)" [color]="member.function == 'Einsatzleiter' ? 'accent' : ''" [selected]="member.function == 'Einsatzleiter'">
+          {{member.name}} ({{member.function}})
+          <mat-icon matChipRemove svgIcon="cancel" (click)="remove(member)"></mat-icon>
         </mat-chip>
       </mat-chip-list>
     </mat-form-field>
   </form>
-
-  <form fxLayout="column" [formGroup]="formGroup">
-    <mat-form-field fxFlex appearance="outline" floatLabel="always">
-      <mat-label>Tank 1</mat-label>
-      <mat-chip-list #chipList>
-      </mat-chip-list>
-    </mat-form-field>
-  </form>
-  <!-- <mat-chip-list>
-    <mat-chip>
-      Christoph Thiel
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip>
-      Hans-Christian Andersen
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip color="primary" selected>
-      Alexander Koblmüller
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip color="accent" selected>
-      Thomas Fraungruber
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip color="primary" selected>
-      Andreas Weinzierl
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip color="accent" selected>
-      Oliver Deutsch
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip>
-      Christoph Eigenstuhler
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip>
-      Julia Reisinger
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip>
-      Hakan Ben Sahid
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip color="primary" selected>
-      Markus Ortmair
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip color="accent" selected>
-      Christoph Zimprich
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip color="primary" selected>
-      Daniel Himpsl
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip color="accent" selected>
-      Andreas Müller
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip>Max Mustermann</mat-chip>
-    <mat-chip color="primary" selected>
-      Maria Musterfrau
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip>
-      Lukas Heim
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-    <mat-chip color="warn" selected>
-      Rudolf Berger
-      <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
-    </mat-chip>
-  </mat-chip-list>-->
 </div>
 
-<button mat-fab fxShow.md fxHide.gt-md class="fab-button">
+<button mat-fab fxShow.md fxHide.gt-md class="fab-button" (click)="openDialog()">
   <mat-icon svgIcon="add"></mat-icon>
 </button>

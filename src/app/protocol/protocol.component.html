@@ -1,32 +1,33 @@
 <div class="container">
-  <form fxLayout="row" fxLayoutGap="2.5%" fxHide.lt-lg [formGroup]="formGroup">
+  <form fxLayout="row" fxLayoutGap="2.5%" fxHide.lt-lg #formDirective="ngForm" [formGroup]="formGroup"
+    (ngSubmit)="add(formDirective)">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Nachricht</mat-label>
-      <input matInput>
+      <input matInput formControlName="message">
       <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
-    <button mat-button fxFlex="15" color="accent" class="add-button">Hinzufügen</button>
+    <button type="submit" mat-button fxFlex="15" color="accent" class="add-button">Hinzufügen</button>
   </form>
 
-  <table mat-table [dataSource]="protocol">
+  <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="time">
       <th mat-header-cell *matHeaderCellDef>Zeit</th>
-      <td mat-cell *matCellDef="let entry" [style.text-decoration]="entry.valid ? 'none' : 'line-through'">
+      <td mat-cell *matCellDef="let entry" [style.text-decoration]="!entry.invalid ? 'none' : 'line-through'"
+        (click)="toggle(entry)">
         {{entry.time}}
         Uhr</td>
     </ng-container>
 
     <ng-container matColumnDef="message">
       <th mat-header-cell *matHeaderCellDef>Nachricht</th>
-      <td mat-cell *matCellDef="let entry" [style.text-decoration]="entry.valid ? 'none' : 'line-through'">
+      <td mat-cell *matCellDef="let entry" [style.text-decoration]="!entry.invalid ? 'none' : 'line-through'"
+        (click)="toggle(entry)">
         {{entry.message}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="valid">
-      <th mat-header-cell *matHeaderCellDef>Ungültig</th>
-      <td mat-cell *matCellDef="let entry">
-        <mat-checkbox></mat-checkbox>
-      </td>
+    <ng-container matColumnDef="invalid">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let entry" (click)="toggle(entry)"></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
@@ -35,5 +36,5 @@
 </div>
 
 <button mat-fab fxShow.md fxHide.gt-md class="fab-button">
-  <mat-icon svgIcon="add"></mat-icon>
+  <mat-icon svgIcon="add" (click)="openDialog()"></mat-icon>
 </button>

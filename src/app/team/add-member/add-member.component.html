@@ -1,0 +1,37 @@
+<mat-dialog-content fxLayout="column" [formGroup]="data.form" (ngSubmit)="add()">
+  <mat-form-field fxFlex="30" appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
+    <mat-error>Feld wird benötigt</mat-error>
+  </mat-form-field>
+  <mat-form-field fxFlex="25" appearance="outline">
+    <mat-label>Funktion</mat-label>
+    <mat-select formControlName="function">
+      <mat-option value="Feuerwehrmann">Feuerwehrmann</mat-option>
+      <mat-option value="FMD">FMD</mat-option>
+      <mat-option value="Atemschutzträger">Atemschutzträger</mat-option>
+      <mat-option value="Vollschutzträger">Vollschutzträger</mat-option>
+      <mat-option value="Maschinist">Maschinist</mat-option>
+      <mat-option value="Fahrzeugkommandant">Fahrzeugkommandant</mat-option>
+      <mat-option value="Zugskommandant">Zugskommandant</mat-option>
+      <mat-option value="Einsatzleiter">Einsatzleiter</mat-option>
+      <mat-option value="Zentralist">Zentralist</mat-option>
+      <mat-option value="Reserve">Reserve</mat-option>
+    </mat-select>
+    <mat-error>Feld wird benötigt</mat-error>
+  </mat-form-field>
+  <mat-form-field fxFlex="25" appearance="outline">
+    <mat-label>Fahrzeug</mat-label>
+    <mat-select formControlName="vehicle">
+      <mat-option *ngFor="let vehicle of data.alarm.vehicles" [value]="vehicle.name">
+        {{vehicle.name}}
+      </mat-option>
+    </mat-select>
+    <mat-error>Feld wird benötigt</mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutGap="2.5%">
+  <button type="submit" fxFlex mat-button class="add-button" (click)="close()">Schließen</button>
+  <button type="submit" fxFlex mat-button color="accent" class="add-button" (click)="add()">Hinzufügen</button>
+</mat-dialog-actions>

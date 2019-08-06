@@ -11,10 +11,8 @@ table {
     font-size: 14pt !important;
   }
 
-  td {
-    mat-checkbox {
-      margin-left: calc(50% - 8px);
-    }
+  tr:hover > td {
+    background-color: rgb(233, 233, 233);
   }
 }
 

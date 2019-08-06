@@ -4,11 +4,13 @@
       <mat-label>Einsatzstichwort</mat-label>
       <input matInput formControlName="keyword" [matAutocomplete]="keyword" (keyup)="filter()">
       <mat-autocomplete autoActiveFirstOption #keyword="matAutocomplete">
-        <mat-option *ngFor="let option of filteredKeywords" [value]="option">
-          {{option}}
+        <mat-option *ngFor="let option of filteredKeywords" [value]="option.name">
+          {{option.name}}
         </mat-option>
       </mat-autocomplete>
-
+      <button mat-button matSuffix mat-icon-button>
+        <mat-icon (click)="toggleType()" [svgIcon]="alarm.isFire ? 'fire' : 'technic'"></mat-icon>
+      </button>
       <mat-error *ngIf="formGroup.get('keyword').hasError('required')">Feld wird benötigt</mat-error>
       <mat-error
         *ngIf="formGroup.get('keyword').hasError('invalidKeyword') && !formGroup.get('keyword').hasError('required')">

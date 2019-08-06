@@ -12,13 +12,25 @@ export class GeneralComponent implements OnInit {
   @Input() alarm: Alarm;
 
   public formGroup: FormGroup;
-  public keywords: string[] = [
-    'Brandmeldealarm',
-    'Brand Wohnhaus',
-    'Türöffnung',
-    'Personenrettung'
+  public keywords: any[] = [
+    {
+      name: 'Brandmeldealarm',
+      isFire: true
+    },
+    {
+      name: 'Brand Wohnhaus',
+      isFire: true
+    },
+    {
+      name: 'Türöffnung',
+      isFire: false
+    },
+    {
+      name: 'Personenrettung',
+      isFire: false
+    }
   ];
-  public filteredKeywords: string[] = [];
+  public filteredKeywords: any[] = [];
 
   constructor() { }
 
@@ -38,6 +50,8 @@ export class GeneralComponent implements OnInit {
     });
     this.formGroup.valueChanges.subscribe(_ => {
       this.alarm.keyword = this.formGroup.controls['keyword'].value;
+      const currentKeyword = this.keywords.filter(keyword => keyword.name === this.alarm.keyword);
+      this.alarm.isFire = currentKeyword.length === 1 ? currentKeyword[0].isFire : false;
       this.alarm.location = this.formGroup.controls['location'].value;
       this.alarm.parish = this.formGroup.controls['parish'].value;
       this.alarm.alarmed = this.formGroup.controls['alarmed'].value;
@@ -50,10 +64,14 @@ export class GeneralComponent implements OnInit {
 
   public filter(): void {
     const value = this.formGroup.controls['keyword'].value.toLowerCase();
-    this.filteredKeywords = this.keywords.filter(keyword => keyword.toLowerCase().includes(value));
+    this.filteredKeywords = this.keywords.filter(keyword => keyword.name.toLowerCase().includes(value));
     if (value.length === 0) {
       this.filteredKeywords = [];
     }
+  }
+
+  public toggleType(): void {
+    this.alarm.isFire = !this.alarm.isFire;
   }
 
   public onAlarmedChanged(event: any): void {
@@ -67,9 +85,9 @@ export class GeneralComponent implements OnInit {
 
 }
 
-export function invalidKeywordValidator(keywords: string[]): ValidatorFn {
+export function invalidKeywordValidator(keywords: any[]): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
-    const invalid = !keywords.includes(control.value);
+    const invalid = keywords.filter(keyword => keyword.name === control.value).length === 0;
     return invalid ? { 'invalidKeyword': { value: control.value } } : null;
   }
 }

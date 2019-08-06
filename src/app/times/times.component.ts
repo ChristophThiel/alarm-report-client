@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Alarm } from '../core/alarm.model';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-times',
@@ -19,13 +20,19 @@ export class TimesComponent implements OnInit {
     this.formGroup = new FormGroup({
       startDate: new FormControl(this.alarm.startDate, [Validators.required, Validators.pattern('\\d{2}\.\\d{2}\.\\d{4}')]),
       alarmed: new FormControl(this.alarm.alarmedTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')]),
-      engaged: new FormControl(this.alarm.engagendTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')]),
+      engaged: new FormControl(this.alarm.engagedTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')]),
       firstVehicle: new FormControl(this.alarm.firstVehicleTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')]),
       returnLastVehicle: new FormControl(this.alarm.returnLastVehicleTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')]),
       ready: new FormControl(this.alarm.readyTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')])
     }, [invalidTimeValidator('engaged', 'alarmed'), invalidTimeValidator('firstVehicle', 'engaged'), invalidTimeValidator('returnLastVehicle', 'firstVehicle'), invalidTimeValidator('ready', 'returnLastVehicle')]);
     this.formGroup.valueChanges.subscribe(_ => {
       this.alarm.startDate = this.formGroup.controls['startDate'].value;
+      this.alarm.alarmedTime = this.formGroup.controls['alarmed'].value;
+      this.alarm.id = this.createId();
+      this.alarm.engagedTime = this.formGroup.controls['engaged'].value;
+      this.alarm.firstVehicleTime = this.formGroup.controls['firstVehicle'].value;
+      this.alarm.returnLastVehicleTime = this.formGroup.controls['returnLastVehicle'].value;
+      this.alarm.readyTime = this.formGroup.controls['ready'].value;
     });
   }
 
@@ -47,6 +54,21 @@ export class TimesComponent implements OnInit {
     if (regex.test(value)) {
       this.formGroup.get(formControlName).setValue(value.slice(0, 2) + ':' + value.slice(-2));
     }
+  }
+
+  private createId(): string {
+    debugger
+    if (this.alarm.startDate.length === 0 || this.alarm.alarmedTime.length === 0) {
+      return '';
+    }
+    if (this.alarm.startDate.indexOf('.') < 0) {
+      this.manipulateDate('startDate');
+    } else if (this.alarm.alarmedTime.indexOf(':') < 0) {
+      this.manipulateTime('alarmedTime');
+    }
+    let date = this.alarm.startDate.split('.');
+    let time = this.alarm.alarmedTime.split(':');
+    return `${date[1]}-${date[0]}-${time[0]}-${time[1]}`;
   }
 
 }

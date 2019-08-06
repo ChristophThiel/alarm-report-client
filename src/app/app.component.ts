@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Alarm } from './core/alarm.model';
+import * as jsPDF from '../../node_modules/jspdf';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,11 @@ export class AppComponent implements OnInit {
   }
 
   public save(): void {
-    alert(this.alarm.startDate);
+    var doc = new jsPDF();
+    doc.text(20, 20, 'Hello world!');
+    doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+
+    doc.save(`${this.alarm.id}.pdf`);
   }
 
   private initializeIcons(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {

@@ -1,77 +1,92 @@
 <div class="container">
-    <form fxLayout="column" [formGroup]="formGroup">
-        <mat-form-field fxFlex appearance="outline">
-            <mat-label>In Einsatz involviert (mehrfach)</mat-label>
-            <mat-chip-list #chipList>
-                <mat-chip>Verletzte Personen</mat-chip>
-                <mat-chip>Getötete Personen</mat-chip>
-                <mat-chip color="accent" selected>Verletzte Tiere</mat-chip>
-                <mat-chip>Getötete Tiere</mat-chip>
-            </mat-chip-list>
-        </mat-form-field>
-    </form>
+  <form fxLayout="column" [formGroup]="formGroup">
+    <mat-form-field fxFlex appearance="outline">
+      <mat-label>In Einsatz involviert (mehrfach)</mat-label>
+      <mat-chip-list #chipList multiple>
+        <mat-chip *ngFor="let entry of involved" [color]="entry.isSelected ? 'accent' : ''"
+          [selected]="entry.isSelected" (click)="toggle(entry)">{{entry.name}}</mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
 
-    <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2.5%" [formGroup]="formGroup">
-        <mat-form-field fxFlex="23.125" appearance="outline">
-            <mat-label>Verletzte Personen</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field fxFlex="23.125" appearance="outline">
-            <mat-label>Getötete Personen</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field fxFlex="23.125" appearance="outline">
-            <mat-label>Verletzte Tiere</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field fxFlex="23.125" appearance="outline">
-            <mat-label>Getötete Tiere</mat-label>
-            <input matInput>
-        </mat-form-field>
-    </form>
+  <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2.5%" [formGroup]="formGroup">
+    <mat-form-field *ngIf="involved[0].isSelected" fxFlex="23.125" appearance="outline">
+      <mat-label>Verletzte Personen</mat-label>
+      <input matInput formControlName="hurtPeople">
+    </mat-form-field>
+    <mat-form-field *ngIf="involved[1].isSelected" fxFlex="23.125" appearance="outline">
+      <mat-label>Getötete Personen</mat-label>
+      <input matInput formControlName="killedPeople">
+    </mat-form-field>
+    <mat-form-field *ngIf="involved[2].isSelected" fxFlex="23.125" appearance="outline">
+      <mat-label>Verletzte Tiere</mat-label>
+      <input matInput formControlName="hurtAnimals">
+    </mat-form-field>
+    <mat-form-field *ngIf="involved[3].isSelected" fxFlex="23.125" appearance="outline">
+      <mat-label>Getötete Tiere</mat-label>
+      <input matInput formControlName="killedAnimals">
+    </mat-form-field>
+  </form>
 
-    <form fxLayout="row" [formGroup]="formGroup">
-        <mat-form-field fxFlex appearance="outline" floatLabel="always">
-            <mat-label>Wetter</mat-label>
-            <button mat-stroked-button matTooltip="Sonne" color="accent">
-                <mat-icon svgIcon="sun"></mat-icon>
-            </button>
-            <button mat-stroked-button matTooltip="Regen">
-                <mat-icon svgIcon="rain"></mat-icon>
-            </button>
-            <button mat-stroked-button matTooltip="Schnee">
-                <mat-icon svgIcon="snow"></mat-icon>
-            </button>
-            <button mat-stroked-button matTooltip="Nebel">
-                <mat-icon svgIcon="fog"></mat-icon>
-            </button>
-            <button mat-stroked-button matTooltip="Bewölkt">
-                <mat-icon svgIcon="cloud"></mat-icon>
-            </button>
-            <button mat-stroked-button matTooltip="Sturm">
-                <mat-icon svgIcon="bolt"></mat-icon>
-            </button>
-            <mat-chip-list visiblity="hidden"></mat-chip-list>
-        </mat-form-field>
-    </form>
+  <form fxLayout="row" [formGroup]="formGroup">
+    <mat-form-field fxFlex appearance="outline" floatLabel="always">
+      <mat-label>Wetter</mat-label>
+      <button mat-stroked-button matTooltip="Sonne" [color]="alarm.weather == 'Sonnig' ? 'accent' : ''"
+        (click)="setWeather('Sonnig')">
+        <mat-icon svgIcon="sun"></mat-icon>
+      </button>
+      <button mat-stroked-button matTooltip="Regen" [color]="alarm.weather == 'Regen' ? 'accent' : ''"
+        (click)="setWeather('Regen')">
+        <mat-icon svgIcon="rain"></mat-icon>
+      </button>
+      <button mat-stroked-button matTooltip="Schnee" [color]="alarm.weather == 'Schnee' ? 'accent' : ''"
+        (click)="setWeather('Schnee')">
+        <mat-icon svgIcon="snow"></mat-icon>
+      </button>
+      <button mat-stroked-button matTooltip="Nebel" [color]="alarm.weather == 'Nebel' ? 'accent' : ''"
+        (click)="setWeather('Nebel')">
+        <mat-icon svgIcon="fog"></mat-icon>
+      </button>
+      <button mat-stroked-button matTooltip="Bewölkt" [color]="alarm.weather == 'Bewölkt' ? 'accent' : ''"
+        (click)="setWeather('Bewölkt')">
+        <mat-icon svgIcon="cloud"></mat-icon>
+      </button>
+      <button mat-stroked-button matTooltip="Sturm" [color]="alarm.weather == 'Sturm' ? 'accent' : ''"
+        (click)="setWeather('Sturm')">
+        <mat-icon svgIcon="bolt"></mat-icon>
+      </button>
+      <mat-chip-list visiblity="hidden"></mat-chip-list>
+    </mat-form-field>
+  </form>
 
-    <form [formGroup]="formGroup">
-        <mat-form-field fxFlex appearance="outline">
-            <mat-chip-list>
-                <mat-chip>Echtalarm</mat-chip>
-                <mat-chip>Kein Brand</mat-chip>
-                <mat-chip color="accent" selected>Fehlalarm</mat-chip>
-                <mat-chip>Täuschungsalarm</mat-chip>
-                <mat-chip>Böswilliger Alarm</mat-chip>
-            </mat-chip-list>
-            <mat-label>Alarmart</mat-label>
-        </mat-form-field>
-    </form>
+  <form [formGroup]="formGroup">
+    <mat-form-field fxFlex appearance="outline">
+      <mat-chip-list>
+        <mat-chip (click)="setType('Echtalarm')" [color]="alarm.alarmType === 'Echtalarm' ? 'accent' : ''"
+          [selected]="alarm.alarmType === 'Echtalarm'">Echtalarm</mat-chip>
+        <mat-chip *ngIf="alarm.isFire" (click)="setType('Realbrand')"
+          [color]="alarm.alarmType === 'Realbrand' ? 'accent' : ''" [selected]="alarm.alarmType === 'Realbrand'">
+          Realbrand</mat-chip>
+        <mat-chip *ngIf="alarm.isFire" (click)="setType('Kein Brand')"
+          [color]="alarm.alarmType === 'Kein Brand' ? 'accent' : ''" [selected]="alarm.alarmType === 'Kein Brand'">Kein
+          Brand</mat-chip>
+        <mat-chip (click)="setType('Fehlalarm')" [color]="alarm.alarmType === 'Fehlalarm' ? 'accent' : ''"
+          [selected]="alarm.alarmType === 'Fehlalarm'">Fehlalarm</mat-chip>
+        <mat-chip (click)="setType('Täuschungsalarm')" [color]="alarm.alarmType === 'Täuschungsalarm' ? 'accent' : ''"
+          [selected]="alarm.alarmType === 'Täuschungsalarm'">Täuschungsalarm</mat-chip>
+        <mat-chip (click)="setType('Böswilliger Alarm')"
+          [color]="alarm.alarmType === 'Böswilliger Alarm' ? 'accent' : ''"
+          [selected]="alarm.alarmType === 'Böswilliger Alarm'">Böswilliger Alarm</mat-chip>
+      </mat-chip-list>
+      <mat-label>Alarmart</mat-label>
+    </mat-form-field>
+  </form>
 
-    <form fxLayout="row" [formGroup]="formGroup">
-        <mat-form-field fxFlex="33" fxFlex.lt-md appearance="outline">
-            <mat-label>Brand aus</mat-label>
-            <input matInput>
-        </mat-form-field>
-    </form>
+  <form fxLayout="row" [formGroup]="formGroup">
+    <mat-form-field *ngIf="alarm.isFire && alarm.alarmType == 'Realbrand'" fxFlex="33" fxFlex.lt-md
+      appearance="outline">
+      <mat-label>Brand aus</mat-label>
+      <input matInput formControlName="fireOut" (focusout)="manipulateTime('fireOut')">
+    </mat-form-field>
+  </form>
 </div>
