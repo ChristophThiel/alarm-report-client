@@ -1,6 +1,6 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="over">
-    <h2>Einsatzberichte</h2>
+    <!-- <h2>Einsatzberichte</h2>
     <ul>
       <li *ngFor="let alarm of alarms">
         <button mat-flat-button>
@@ -8,13 +8,13 @@
           {{alarm.id}}
         </button>
       </li>
-    </ul>
+    </ul> -->
   </mat-sidenav>
 
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button mat-button class="burger-button">
-        <mat-icon class="icon" svgIcon="bars" (click)="toggleSidenav()"></mat-icon>
+      <button mat-icon-button class="burger-button">
+        <mat-icon class="icon" svgIcon="bars" (click)="sidenav.toggle()"></mat-icon>
       </button>
       <span class="truncate">
         {{alarm.id}}
