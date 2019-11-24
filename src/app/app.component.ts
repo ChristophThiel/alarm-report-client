@@ -11,7 +11,7 @@ import * as jsPDF from '../../node_modules/jspdf';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('sidenav') sidenav: any;
+  @ViewChild('sidenav', { static: true }) sidenav: any;
 
   public alarm: Alarm;
   public alarms: Alarm[] = [];
