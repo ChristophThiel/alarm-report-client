@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, FormBuilder } from '@angular/forms';
 import { Alarm } from '../core/alarm.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-general',
@@ -12,42 +13,32 @@ export class GeneralComponent implements OnInit {
   @Input() alarm: Alarm;
 
   public formGroup: FormGroup;
-  public keywords: any[] = [
-    {
-      name: 'Brandmeldealarm',
-      isFire: true
-    },
-    {
-      name: 'Brand Wohnhaus',
-      isFire: true
-    },
-    {
-      name: 'Türöffnung',
-      isFire: false
-    },
-    {
-      name: 'Personenrettung',
-      isFire: false
-    }
-  ];
-  public filteredKeywords: any[] = [];
+  public keywords: any[];
+  public locations: any[];
+  public filteredKeywords: any[];
 
-  constructor() { }
+  constructor(private builder: FormBuilder, private http: HttpClient) {
+    this.keywords = [];
+    this.locations = [];
+    this.filteredKeywords = [];
+  }
 
   public ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      'keyword': new FormControl(this.alarm.keyword, [
-        Validators.required,
-        invalidKeywordValidator(this.keywords)
-      ]),
-      'location': new FormControl(this.alarm.location, [Validators.required]),
-      'parish': new FormControl(this.alarm.parish, [Validators.required]),
-      'alarmed': new FormControl(this.alarm.alarmed),
-      'others': new FormControl({ value: this.alarm.others, disabled: this.alarm.others.length == 0 }, [Validators.required]),
-      'damage': new FormControl(this.alarm.damage),
-      'events': new FormControl(this.alarm.events),
-      'activities': new FormControl(this.alarm.events)
+    this.initData();
+    this.formGroup = this.builder.group({
+      'keyword': ['', Validators.required],
+      'location': ['', Validators.required],
+      'parish': [this.alarm.parish, Validators.required],
+      'alarmed': [this.alarm.alarmed, Validators.required],
+      'others': ['', Validators.required],
+      'damage': [''],
+      'events': [''],
+      'activities': ['']
     });
+
+    this.formGroup.get('others').disable();
+
+    // TODO: Find "better" solution
     this.formGroup.valueChanges.subscribe(_ => {
       this.alarm.keyword = this.formGroup.controls['keyword'].value;
       const currentKeyword = this.keywords.filter(keyword => keyword.name === this.alarm.keyword);
@@ -74,13 +65,26 @@ export class GeneralComponent implements OnInit {
     this.alarm.isFire = !this.alarm.isFire;
   }
 
-  public onAlarmedChanged(event: any): void {
+  public onAlarmedChanged(): void {
     const others = this.formGroup.controls['others'];
     if (this.formGroup.controls['alarmed'].value === 'Andere') {
       others.enable();
     } else {
       others.disable();
     }
+  }
+
+  private initData(): void {
+    this.http.get<any[]>('/assets/keywords.json')
+      .subscribe(data => {
+        this.keywords = data;
+        this.formGroup.get('keyword')
+          .setValidators([Validators.required, invalidKeywordValidator(this.keywords)]);
+      });
+    this.http.get<any[]>('/assets/locations.json')
+      .subscribe(data => {
+        this.locations = data;
+      });
   }
 
 }

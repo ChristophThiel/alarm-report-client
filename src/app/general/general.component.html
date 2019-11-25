@@ -1,71 +1,62 @@
 <div class="container">
-  <form fxLayout="row" [formGroup]="formGroup">
-    <mat-form-field fxFlex appearance="outline">
-      <mat-label>Einsatzstichwort</mat-label>
-      <input matInput formControlName="keyword" [matAutocomplete]="keyword" (keyup)="filter()">
-      <mat-autocomplete autoActiveFirstOption #keyword="matAutocomplete">
-        <mat-option *ngFor="let option of filteredKeywords" [value]="option.name">
-          {{option.name}}
-        </mat-option>
-      </mat-autocomplete>
-      <button mat-button matSuffix mat-icon-button>
-        <mat-icon (click)="toggleType()" [svgIcon]="alarm.isFire ? 'fire' : 'technic'"></mat-icon>
-      </button>
-      <mat-error *ngIf="formGroup.get('keyword').hasError('required')">Feld wird benötigt</mat-error>
-      <mat-error
-        *ngIf="formGroup.get('keyword').hasError('invalidKeyword') && !formGroup.get('keyword').hasError('required')">
-        Unbekanntes Stichwort</mat-error>
+  <form fxLayoutGap="16px" [formGroup]="formGroup">
+    <custom-input fxFlex="60%" class="increase-error-space" fxFlex="60" label="Einsatzstichwort"
+      [formControl]="formGroup.get('keyword')" [options]="keywords" [showOptionsAlways]="true">
+    </custom-input>
+    <mat-form-field fxFlex="calc(35% - 16px)" appearance="outline">
+      <mat-label>Einsatzart</mat-label>
+      <mat-select [value]="alarm.isFire ? 'Brand' : 'Technisch'">
+        <mat-option value="Brand">Brand</mat-option>
+        <mat-option value="Technisch">Technisch</mat-option>
+      </mat-select>
     </mat-form-field>
   </form>
 
-  <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
-    <mat-form-field fxFlex="60" appearance="outline">
-      <mat-label>Einsatzort</mat-label>
-      <input matInput formControlName="location">
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
+  <form fxLayoutGap="16px" [formGroup]="formGroup">
+    <custom-input fxFlex="60%" label="Einsatzort" [formControl]="formGroup.get('location')" [options]="locations">
+    </custom-input>
 
-    <mat-form-field fxFlex="37.5" appearance="outline">
+    <mat-form-field fxFlex="calc(35% - 16px)" appearance="outline">
       <mat-label>Gemeinde</mat-label>
       <input matInput formControlName="parish">
       <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
   </form>
 
-  <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
-    <mat-form-field fxFlex="37.5" appearance="outline">
+  <form fxLayoutGap="16px" [formGroup]="formGroup">
+    <mat-form-field fxFlex="calc(35% - 16px)" appearance="outline">
       <mat-label>Alarmiert von</mat-label>
-      <mat-select formControlName="alarmed" (selectionChange)="onAlarmedChanged($event)">
+      <mat-select formControlName="alarmed" (selectionChange)="onAlarmedChanged()">
         <mat-option value="LWZ/BWST">LWZ/BWST</mat-option>
         <mat-option value="Andere">Andere</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="60" appearance="outline">
+    <mat-form-field fxFlex="60%" appearance="outline">
       <mat-label>Andere</mat-label>
-      <input matInput formControlName="others" disabled>
+      <input matInput formControlName="others">
       <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
   </form>
 
-  <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
+  <form [formGroup]="formGroup">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Schadenslage</mat-label>
-      <textarea matInput formControlName="damage"></textarea>
+      <textarea matInput formControlName="damage" cdkTextareaAutosize></textarea>
     </mat-form-field>
   </form>
 
-  <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
+  <form [formGroup]="formGroup">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Vorkommnisse</mat-label>
-      <textarea matInput formControlName="events"></textarea>
+      <textarea matInput formControlName="events" cdkTextareaAutosize></textarea>
     </mat-form-field>
   </form>
 
-  <form fxLayout="row" fxLayoutGap="2.5%" [formGroup]="formGroup">
+  <form [formGroup]="formGroup">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Tätigkeiten</mat-label>
-      <textarea matInput formControlName="activities"></textarea>
+      <textarea matInput formControlName="activities" cdkTextareaAutosize></textarea>
     </mat-form-field>
   </form>
 </div>

@@ -1,28 +1,18 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="over">
-    <!-- <h2>Einsatzberichte</h2>
-    <ul>
-      <li *ngFor="let alarm of alarms">
-        <button mat-flat-button>
-          <mat-icon [svgIcon]="isFire ? 'fire' : 'technic'"></mat-icon>
-          {{alarm.id}}
-        </button>
-      </li>
-    </ul> -->
-  </mat-sidenav>
-
+  <mat-sidenav #sidenav mode="over"></mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button mat-icon-button class="burger-button">
-        <mat-icon class="icon" svgIcon="bars" (click)="sidenav.toggle()"></mat-icon>
+      <button mat-icon-button style="margin-right: 16px;">
+        <!-- (click)="sidenav.toggle()" -->
+        <mat-icon class="icon" svgIcon="bars"></mat-icon>
       </button>
       <span class="truncate">
         {{alarm.id}}
         <p>{{alarm.keyword}} {{alarm.keyword.length !== 0 ? '-' : ''}} {{alarm.location}}</p>
       </span>
-      <span class="spacer"></span>
-      <button mat-button fxShow.md fxHide.lt-lg (click)="save()">Bericht speichern</button>
-      <button mat-icon-button fxHide.md fxHide.gt-md (click)="save()">
+      <span style="flex: 1 1 auto"></span>
+      <button mat-button fxShow.sm fxHide.lt-md (click)="save()">Bericht speichern</button>
+      <button mat-icon-button fxHide.sm fxHide.gt-sm (click)="save()">
         <mat-icon class="icon" svgIcon="save"></mat-icon>
       </button>
     </mat-toolbar>

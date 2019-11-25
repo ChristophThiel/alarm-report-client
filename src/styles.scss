@@ -3,41 +3,50 @@
 
 $primary: mat-palette($mat-blue-gray, 800);
 $accent: mat-palette($mat-teal);
-$warn: mat-palette($mat-red, A700);
+$error: mat-palette($mat-red, A700);
 
-$theme: mat-light-theme($primary, $accent, $warn);
+$theme: mat-light-theme($primary, $accent, $error);
 
 @include angular-material-theme($theme);
 
-html, body { height: 100%; }
-body { margin: 0;
+html, body { 
+  height: 100%;
+}
+
+body { 
+  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #FAFAFA; 
+  background-color: #FAFAFA;
 }
 
 .container {
-  margin: 2.5% 22.5%;
-  overflow: hidden;
+  min-width: 567.2px;
+  width: 60vw;
+  margin: 16px auto 16px auto;
+
+  @media screen and (max-width: 599px) {
+    min-width: 0;
+    max-width: calc(100vw - 32px);
+    width: calc(100vw - 32px);
+    margin: 16px 16px 0 16px;
+  }
 }
 
-@media screen and (max-width: 599px) {
-  .container {
-    margin: 5%;
-  }
+form {
+  padding-bottom: 13px !important;
 }
 
 .truncate {
   flex: 1;
   min-width: 0;
 
-  mat-card-title, mat-card-subtitle, p {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+  p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
-.add-button {
-  margin-top: 4px !important;
-  height: 73px !important;
+.mat-warning {
+  color: rgb(238, 201, 16);
 }

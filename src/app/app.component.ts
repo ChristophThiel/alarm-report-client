@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Alarm } from './core/alarm.model';
@@ -11,10 +11,8 @@ import * as jsPDF from '../../node_modules/jspdf';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('sidenav', { static: true }) sidenav: any;
-
   public alarm: Alarm;
-  public alarms: Alarm[] = [];
+  public alarms: Alarm[];
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     this.initializeIcons(iconRegistry, sanitizer);
@@ -22,10 +20,7 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.alarm = new Alarm();
-  }
-
-  public toggleSidenav(): void {
-    this.sidenav.toggle();
+    this.alarms = [];
   }
 
   public save(): void {
@@ -33,7 +28,8 @@ export class AppComponent implements OnInit {
     doc.text(20, 20, 'Hello world!');
     doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
 
-    doc.save(`${this.alarm.id}.pdf`);
+    console.log(this.alarm);
+    // doc.save(`${this.alarm.id}.pdf`);
   }
 
   private initializeIcons(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {

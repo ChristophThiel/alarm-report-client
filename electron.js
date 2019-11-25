@@ -1,13 +1,12 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 
-function createWindow () {
+function createWindow() {
   let win = new BrowserWindow({
     width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true
-    }
+    height: 600
   });
+  Menu.setApplicationMenu(null);
+  win.setMenuBarVisibility(false);
   win.loadFile('./dist/alarm-report-client/index.html');
   win.on('closed', () => win = null);
 }

@@ -4,6 +4,7 @@ export class Alarm {
   public keyword: string = '';
   public location: string = '';
   public parish: string = 'Marchtrenk';
+  public postCode: number = 4614;
   public alarmed: string = 'LWZ/BWST';
   public others: string = '';
   public damage: string = '';

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -20,6 +21,8 @@ import { SpecialComponent } from './special/special.component';
 import { AlarmedComponent } from './alarmed/alarmed.component';
 import { DatePipe } from '@angular/common';
 
+import { CustomInputComponent } from './shared/custom-input/custom-input.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +35,8 @@ import { DatePipe } from '@angular/common';
     ProtocolComponent,
     AddEntryComponent,
     SpecialComponent,
-    AlarmedComponent
+    AlarmedComponent,
+    CustomInputComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,8 @@ import { DatePipe } from '@angular/common';
     HttpClientModule,
     AppRoutingModule,
     AppMaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ScrollingModule
   ],
   providers: [DatePipe],
   entryComponents: [

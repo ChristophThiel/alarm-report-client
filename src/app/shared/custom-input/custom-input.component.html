@@ -1,0 +1,24 @@
+<mat-form-field fxFlex="100" appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <input matInput [formControl]="formControl" [matAutocomplete]="complete" (keyup)="filter()">
+    <mat-autocomplete autoActiveFirstOption #complete="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions" [value]="option.name">{{option.name}}</mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+</mat-form-field>
+<!-- <mat-form-field fxFlex appearance="outline">
+    <mat-label>Einsatzstichwort</mat-label>
+    <input matInput formControlName="keyword" [matAutocomplete]="keyword" (keyup)="filter()">
+    <mat-autocomplete autoActiveFirstOption #keyword="matAutocomplete">
+        <mat-option *ngFor="let option of filteredKeywords" [value]="option.name">
+            {{option.name}}
+        </mat-option>
+    </mat-autocomplete>
+    <button mat-button matSuffix mat-icon-button>
+        <mat-icon (click)="toggleType()" [svgIcon]="alarm.isFire ? 'fire' : 'technic'"></mat-icon>
+    </button>
+    <mat-error *ngIf="formGroup.get('keyword').hasError('required')">Feld wird benötigt</mat-error>
+    <mat-error
+        *ngIf="formGroup.get('keyword').hasError('invalidKeyword') && !formGroup.get('keyword').hasError('required')">
+        Unbekanntes Stichwort</mat-error>
+</mat-form-field> -->

@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Brandmeldealarm",
+        "isFire": true
+    },
+    {
+        "name": "Türöffnung",
+        "isFire": false
+    }
+]
