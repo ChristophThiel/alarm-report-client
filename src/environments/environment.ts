@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  keywords: '/assets/keywords.json',
+  parishes: '/assets/parishes.json',
+  locations: '/assets/locations.json',
+  organisations: '/assets/organisations.json'
 };
 
 /*

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn, FormBuilder } from '@angular/forms';
 import { Alarm } from '../core/alarm.model';
-import { isUndefined } from 'util';
+import { ValidatorsService } from '../core/validators.service';
 
 @Component({
   selector: 'app-times',
@@ -14,77 +14,93 @@ export class TimesComponent implements OnInit {
 
   public formGroup: FormGroup;
 
-  constructor() { }
+  public years: number[];
+  public months: any[];
+  public days: number[];
+
+  constructor(private builder: FormBuilder, private validators: ValidatorsService) {
+    this.years = [];
+    this.months = [];
+    this.days = [];
+  }
 
   public ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      startDate: new FormControl(this.alarm.startDate, [Validators.required, Validators.pattern('\\d{2}\.\\d{2}\.\\d{4}')]),
-      alarmed: new FormControl(this.alarm.alarmedTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')]),
-      engaged: new FormControl(this.alarm.engagedTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')]),
-      firstVehicle: new FormControl(this.alarm.firstVehicleTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')]),
-      returnLastVehicle: new FormControl(this.alarm.returnLastVehicleTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')]),
-      ready: new FormControl(this.alarm.readyTime, [Validators.required, Validators.pattern('\\d{2}:\\d{2}')])
-    }, [invalidTimeValidator('engaged', 'alarmed'), invalidTimeValidator('firstVehicle', 'engaged'), invalidTimeValidator('returnLastVehicle', 'firstVehicle'), invalidTimeValidator('ready', 'returnLastVehicle')]);
-    this.formGroup.valueChanges.subscribe(_ => {
-      this.alarm.startDate = this.formGroup.controls['startDate'].value;
-      this.alarm.alarmedTime = this.formGroup.controls['alarmed'].value;
-      this.alarm.id = this.createId();
-      this.alarm.engagedTime = this.formGroup.controls['engaged'].value;
-      this.alarm.firstVehicleTime = this.formGroup.controls['firstVehicle'].value;
-      this.alarm.returnLastVehicleTime = this.formGroup.controls['returnLastVehicle'].value;
-      this.alarm.readyTime = this.formGroup.controls['ready'].value;
+    const currentDate = new Date();
+    this.formGroup = this.builder.group({
+      year: currentDate.getFullYear(),
+      month: currentDate.getMonth(),
+      day: currentDate.getDay() + 1,
+      alarmed: ['', Validators.required],
+      engaged: ['', Validators.required],
+      reached: ['', Validators.required],
+      stop: ['', Validators.required],
+      indented: ['', Validators.required],
+      ready: ['', Validators.required]
+    });
+
+    for (let i = currentDate.getFullYear() - 1; i <= currentDate.getFullYear() + 1; i++)
+      this.years.push(i);
+    for (let i = 0; i < 12; i++)
+      this.months.push({
+        long: new Date(1, i, 1).toLocaleString('default', { month: 'long' }),
+        short: i
+      });
+    this.onValueChanged();
+  }
+
+  public createDateTimeValue(formControlName: string): Date {
+    const split = this.formGroup.get(formControlName).value.split(':');
+    const hour = +split[0];
+    const minute = +split[1];
+
+    const year = +this.formGroup.get('year').value
+    const month = +this.formGroup.get('month').value
+    const day = +this.formGroup.get('day').value;
+
+    if (formControlName === 'alarmed' || this.alarm.alarmed.getHours() <= Reflect.get(this.alarm, formControlName).getHours()) {
+      this.onValueChanged();
+      return new Date(year, month, day, hour, minute);
+    }
+    return new Date(year, month, day + 1, hour, minute);
+  }
+
+  public getErrorMessage(formControlName: string): string {
+    const control = this.formGroup.get(formControlName);
+    if (control.hasError('required')) {
+      return 'Feld wird benötigt';
+    }
+  }
+
+  public onValueChanged(): void {
+    this.updateDays(+this.formGroup.get('year').value, +this.formGroup.get('month').value);
+
+    const year = +this.formGroup.get('year').value;
+    const month = +this.formGroup.get('month').value;
+
+    let day = +this.formGroup.get('day').value;
+    this.alarm.startDate = `${year}-${(+month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+    this.alarm.alarmed = new Date(year, month, day, this.alarm.alarmed.getHours(), this.alarm.alarmed.getMinutes());
+
+    const fields = Alarm.getTimeFields();
+    fields.forEach(field => {
+      const fieldValue = Reflect.get(this.alarm, field);
+      let result = new Date(year, month, day, fieldValue.getHours(), fieldValue.getMinutes());
+      if (this.alarm.alarmed.getHours() > fieldValue.getHours())
+        result = new Date(year, month, day + 1, fieldValue.getHours(), fieldValue.getMinutes());
+      Reflect.set(this.alarm, field, result);
     });
   }
 
-  public manipulateDate(formControlName: string): void {
-    const value = this.formGroup.get(formControlName).value;
-    const regex = new RegExp('\\d{4}|\\d{6}');
-    if (regex.test(value)) {
-      if (value.length == 4) {
-        this.formGroup.get(formControlName).setValue(value.slice(0, 2) + '.' + value.slice(-2) + '.' + new Date().getFullYear());
-      } else if (value.length == 6) {
-        this.formGroup.get(formControlName).setValue(value.slice(0, 2) + '.' + value.slice(2, 4) + '.20' + value.slice(-2));
-      }
-    }
+  private updateDays(year: number, month: number): void {
+    this.days = [];
+    const daysCount = new Date(year, month + 1, 0).getDate();
+    for (let i = 1; i <= daysCount; i++)
+      this.days.push(i);
+
+    const control = this.formGroup.get('day');
+    if (+control.value > daysCount)
+      control.setValue(daysCount);
   }
 
-  public manipulateTime(formControlName: string): void {
-    const value = this.formGroup.get(formControlName).value;
-    const regex = new RegExp('\\d{4}');
-    if (regex.test(value)) {
-      this.formGroup.get(formControlName).setValue(value.slice(0, 2) + ':' + value.slice(-2));
-    }
-  }
-
-  private createId(): string {
-    debugger
-    if (this.alarm.startDate.length === 0 || this.alarm.alarmedTime.length === 0) {
-      return '';
-    }
-    if (this.alarm.startDate.indexOf('.') < 0) {
-      this.manipulateDate('startDate');
-    } else if (this.alarm.alarmedTime.indexOf(':') < 0) {
-      this.manipulateTime('alarmedTime');
-    }
-    let date = this.alarm.startDate.split('.');
-    let time = this.alarm.alarmedTime.split(':');
-    return `${date[1]}-${date[0]}-${time[0]}-${time[1]}`;
-  }
-
-}
-
-export function invalidTimeValidator(firstFormControl: string, secondFormControl: string): ValidatorFn {
-  return (group: FormGroup): { [key: string]: any } | null => {
-    const regex = new RegExp('\\d{2}:\\d{2}');
-    if (!regex.test(group.get(firstFormControl).value) || !group.get(secondFormControl).value) {
-      return null;
-    }
-    const time = group.get(firstFormControl).value.split(':');
-    const other = group.get(secondFormControl).value.split(':');
-
-    if (+time[0] <= +other[0] && +time[1] < +other[1]) {
-      group.get(firstFormControl).setErrors({ 'invalidTime': true });
-    }
-    return null;
-  };
 }

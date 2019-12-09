@@ -2,13 +2,17 @@
   <mat-sidenav #sidenav mode="over"></mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button mat-icon-button style="margin-right: 16px;">
+      <button mat-icon-button style="margin-right: 16px;" *ngIf="false">
         <!-- (click)="sidenav.toggle()" -->
         <mat-icon class="icon" svgIcon="bars"></mat-icon>
       </button>
-      <span class="truncate">
+      <span class="truncate" *ngIf="alarm.id.length !== 0 || alarm.keyword.length !== 0 || alarm.location.length !== 0">
         {{alarm.id}}
         <p>{{alarm.keyword}} {{alarm.keyword.length !== 0 ? '-' : ''}} {{alarm.location}}</p>
+      </span>
+      <span class="truncate" *ngIf="alarm.id.length === 0 && alarm.keyword.length === 0 && alarm.location.length === 0">
+        MM-TT-SS-MM
+        <p>Einsatzstichwort - Einsatzort</p>
       </span>
       <span style="flex: 1 1 auto"></span>
       <button mat-button fxShow.sm fxHide.lt-md (click)="save()">Bericht speichern</button>
@@ -18,14 +22,14 @@
     </mat-toolbar>
 
     <mat-tab-group>
+      <mat-tab label="Zeiten">
+        <app-times [alarm]="alarm"></app-times>
+      </mat-tab>
       <mat-tab label="Allgemein">
         <app-general [alarm]="alarm"></app-general>
       </mat-tab>
       <mat-tab label="Alarmierung">
         <app-alarmed [alarm]="alarm"></app-alarmed>
-      </mat-tab>
-      <mat-tab label="Zeiten">
-        <app-times [alarm]="alarm"></app-times>
       </mat-tab>
       <mat-tab label="Einsatzspezifisch">
         <app-special [alarm]="alarm"></app-special>

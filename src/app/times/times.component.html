@@ -1,4 +1,73 @@
-<div class="container" fxLayout="column">
+<div fxLayoutGap.gt-xs="16px" class="container" fxLayout.gt-xs="row">
+  <form fxFlex.gt-xs="calc(50% - 8px)" [formGroup]="formGroup">
+    <mat-form-field fxFlex="calc(100% / 3)" appearance="outline" class="left">
+      <mat-label>Jahr</mat-label>
+      <mat-select formControlName="year" (selectionChange)="onValueChanged()">
+        <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="calc(100% / 3)" appearance="outline" class="center">
+      <mat-label>Monat</mat-label>
+      <mat-select formControlName="month" (selectionChange)="onValueChanged()">
+        <mat-option *ngFor="let month of months" [value]="month.short">{{month.long}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="calc(100% / 3)" appearance="outline" class="right">
+      <mat-label>Tag</mat-label>
+      <mat-select formControlName="day" (selectionChange)="onValueChanged()">
+        <mat-option *ngFor="let day of days" [value]="day">{{day}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <form fxFlex.gt-xs="calc(50% - 8px)" [formGroup]="formGroup">
+    <mat-form-field fxFlex="50%" appearance="outline" class="left">
+      <mat-label>Alarmiert</mat-label>
+      <input matInput formControlName="alarmed" type="time" (input)="alarm.alarmed = createDateTimeValue('alarmed')">
+      <mat-error *ngIf="formGroup.get('alarmed').invalid">{{getErrorMessage('alarmed')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="50%" appearance="outline" class="right">
+      <mat-label>Ausgerückt</mat-label>
+      <input matInput formControlName="engaged" type="time" (input)="alarm.engaged = createDateTimeValue('engaged')">
+      <mat-error *ngIf="formGroup.get('engaged').invalid">{{getErrorMessage('engaged')}}</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<div fxLayoutGap.gt-xs="16px" class="container" style="margin-top: 0" fxLayout.gt-xs="row">
+  <form fxFlex.gt-xs="calc(50% - 8px)" [formGroup]="formGroup">
+    <mat-form-field fxFlex="50%" appearance="outline" class="left">
+      <mat-label>Einsatzort</mat-label>
+      <input matInput formControlName="reached" type="time" (input)="alarm.reached = createDateTimeValue('reached')">
+      <mat-error *ngIf="formGroup.get('reached').invalid">{{getErrorMessage('reached')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="50%" appearance="outline" class="right">
+      <mat-label>Alarmstopp</mat-label>
+      <input matInput formControlName="stop" type="time" (input)="alarm.stop = createDateTimeValue('stop')">
+      <mat-error *ngIf="formGroup.get('stop').invalid">{{getErrorMessage('stop')}}</mat-error>
+    </mat-form-field>
+  </form>
+
+  <form fxFlex.gt-xs="calc(50% - 8px)" [formGroup]="formGroup">
+    <mat-form-field fxFlex="50%" appearance="outline" class="left">
+      <mat-label>Eingerückt</mat-label>
+      <input matInput formControlName="indented" type="time" (input)="alarm.indented = createDateTimeValue('indented')">
+      <mat-error *ngIf="formGroup.get('indented').invalid">{{getErrorMessage('indented')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="50%" appearance="outline" class="right">
+      <mat-label>Einsatzbereit</mat-label>
+      <input matInput formControlName="ready" type="time" (input)="alarm.ready = createDateTimeValue('ready')">
+      <mat-error *ngIf="formGroup.get('ready').invalid">{{getErrorMessage('ready')}}</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<!-- <div class="container" fxLayout="column">
   <form fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="2.5%" fxLayoutGap.xs="0" [formGroup]="formGroup">
     <mat-form-field fxFlex="48.75" appearance="outline">
       <mat-label>Datum der Alarmierung</mat-label>
@@ -9,6 +78,7 @@
         Ungültiges Datum
       </mat-error>
     </mat-form-field>
+
     <mat-form-field fxFlex="48.75" appearance="outline">
       <mat-label>Alarmiert</mat-label>
       <input matInput formControlName="alarmed" (focusout)="manipulateTime('alarmed')">
@@ -73,4 +143,4 @@
       </mat-error>
     </mat-form-field>
   </form>
-</div>
+</div> -->

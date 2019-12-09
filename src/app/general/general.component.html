@@ -1,11 +1,11 @@
 <div class="container">
   <form fxLayoutGap="16px" [formGroup]="formGroup">
-    <custom-input fxFlex="60%" class="increase-error-space" fxFlex="60" label="Einsatzstichwort"
-      [formControl]="formGroup.get('keyword')" [options]="keywords" [showOptionsAlways]="true">
+    <custom-input fxFlex="60%" label="Einsatzstichwort" [control]="formGroup.get('keyword')" [options]="keywords"
+      [showOptionsAlways]="true" (valueChanged)="onKeywordChanged()">
     </custom-input>
     <mat-form-field fxFlex="calc(35% - 16px)" appearance="outline">
       <mat-label>Einsatzart</mat-label>
-      <mat-select [value]="alarm.isFire ? 'Brand' : 'Technisch'">
+      <mat-select formControlName="type">
         <mat-option value="Brand">Brand</mat-option>
         <mat-option value="Technisch">Technisch</mat-option>
       </mat-select>
@@ -13,14 +13,12 @@
   </form>
 
   <form fxLayoutGap="16px" [formGroup]="formGroup">
-    <custom-input fxFlex="60%" label="Einsatzort" [formControl]="formGroup.get('location')" [options]="locations">
+    <custom-input fxFlex="calc(35% - 16px)" label="Gemeinde" [control]="formGroup.get('parish')" [options]="parishes"
+      (valueChanged)="onParishChanged()">
     </custom-input>
-
-    <mat-form-field fxFlex="calc(35% - 16px)" appearance="outline">
-      <mat-label>Gemeinde</mat-label>
-      <input matInput formControlName="parish">
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
+    <custom-input fxFlex="60%" label="Einsatzort" [control]="formGroup.get('location')" [options]="filteredLocations"
+      (valueChanged)="alarm.location = formGroup.get('location').value">
+    </custom-input>
   </form>
 
   <form fxLayoutGap="16px" [formGroup]="formGroup">

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -9,14 +9,17 @@ import { FormControl } from '@angular/forms';
 export class CustomInputComponent implements OnInit {
 
   @Input() label: string;
-  @Input() formControl: FormControl;
+  @Input() control: FormControl;
   @Input() options: any[];
   @Input() showOptionsAlways: boolean = false;
+
+  @Output() valueChanged: EventEmitter<string>;
 
   public filteredOptions: any[];
   public errors: any[];
 
   constructor() {
+    this.valueChanged = new EventEmitter();
     this.filteredOptions = [];
     this.errors = [];
   }
@@ -26,23 +29,29 @@ export class CustomInputComponent implements OnInit {
   }
 
   public filter(): void {
-    const value = this.formControl.value.toLowerCase();
-    const values = this.options.filter(option => option.name.toLowerCase().includes(value));
+    const value = this.control.value.toLowerCase();
+    const values = this.options.filter(option => option.name.toLowerCase().startsWith(value));
     if (this.showOptionsAlways) {
       this.filteredOptions = values;
     } else {
-      this.filteredOptions = value.length === 0 ? [] : this.options.filter(option => option.name.toLowerCase().includes(value));
+      this.filteredOptions = value.length === 0 ? [] : values;
     }
   }
 
   public getErrorMessage(): string {
-    if (this.formControl.hasError('required')) {
+    if (this.control.hasError('required')) {
       return 'Feld wird benötigt';
-    } else if (this.formControl.hasError('invalidKeyword')) {
+    } else if (this.control.hasError('invalidKeyword')) {
       return 'Unbekanntes Einsatzstichwort'
-    } else if (this.formControl.hasError('invalidLocation')) {
+    } else if (this.control.hasError('invalidParish')) {
+      return 'Unbekannte Gemeinde';
+    } else if (this.control.hasError('invalidLocation')) {
       return 'Unbekannter Einsatzort';
     }
+  }
+
+  public onValueChanged(): void {
+    this.valueChanged.emit(this.control.value);
   }
 
 }

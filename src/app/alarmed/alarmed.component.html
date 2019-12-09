@@ -1,5 +1,5 @@
 <div class="container">
-  <form fxLayout="row" [formGroup]="formGroup">
+  <form [formGroup]="formGroup">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Eingesetzte Feuerwehren</mat-label>
       <mat-chip-list #chipList>
@@ -10,13 +10,11 @@
         </mat-chip>
         <input [matChipInputFor]="chipList" (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
-      <mat-hint>Hinweis: Einsatzleiter ist von der ausgewählten Feuerwehr.</mat-hint>
+      <!-- <mat-hint>Hinweis: Einsatzleiter ist von der ausgewählten Feuerwehr.</mat-hint> -->
     </mat-form-field>
   </form>
 
-  <br />
-
-  <form fxLayout="row" [formGroup]="formGroup">
+  <form [formGroup]="formGroup">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Eingesetzte Organisationen (mehrfach)</mat-label>
       <mat-chip-list multiple>

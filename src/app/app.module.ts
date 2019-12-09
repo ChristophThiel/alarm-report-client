@@ -19,7 +19,10 @@ import { ProtocolComponent } from './protocol/protocol.component';
 import { AddEntryComponent } from './protocol/add-entry/add-entry.component';
 import { SpecialComponent } from './special/special.component';
 import { AlarmedComponent } from './alarmed/alarmed.component';
+
 import { DatePipe } from '@angular/common';
+import { ValidatorsService } from './core/validators.service';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { CustomInputComponent } from './shared/custom-input/custom-input.component';
 
@@ -48,7 +51,14 @@ import { CustomInputComponent } from './shared/custom-input/custom-input.compone
     FlexLayoutModule,
     ScrollingModule
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    ValidatorsService,
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'de-AT'
+    }
+  ],
   entryComponents: [
     AddInstrumentComponent,
     AddMemberComponent,

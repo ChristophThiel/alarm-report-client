@@ -33,18 +33,27 @@ body {
 }
 
 form {
-  padding-bottom: 13px !important;
+  padding-bottom: 0;
+
+  @media screen and (max-width: 599px) {
+    padding-bottom: 13px;
+  }
 }
 
 .truncate {
   flex: 1;
   min-width: 0;
 
-  p {
+  p, mat-error {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
+
+.custom-button {
+  margin-top: 4px !important;
+  height: 59.1px;
 }
 
 .mat-warning {

@@ -1,0 +1,31 @@
+input, mat-select, mat-option {
+    text-align: center;
+}
+
+input[type="time"]::-webkit-clear-button {
+    display: none;
+}
+
+.left {
+    ::ng-deep {
+        .mat-form-field-outline-end {
+            border-radius: 0 !important;
+        }
+    }
+}
+
+.center {
+    ::ng-deep {
+        .mat-form-field-outline-start, .mat-form-field-outline-end {
+            border-radius: 0 !important;
+        }
+    }
+}
+
+.right {
+    ::ng-deep {
+        .mat-form-field-outline-start {
+            border-radius: 0 !important;
+        }
+    }
+}

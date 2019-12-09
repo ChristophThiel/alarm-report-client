@@ -1,6 +1,14 @@
 [
     {
         "name": "Berggasse 4",
-        "postCode": "Marchtrenk"
+        "postCode": 4614
+    },
+    {
+        "name": "Mozartstraße 19",
+        "postCode": 4614
+    },
+    {
+        "name": "Teichstraße 2",
+        "postCode": 4615
     }
 ]

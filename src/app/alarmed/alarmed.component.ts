@@ -2,6 +2,9 @@ import { ENTER } from '@angular/cdk/keycodes';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Alarm } from '../core/alarm.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-alarmed',
@@ -14,65 +17,30 @@ export class AlarmedComponent implements OnInit {
 
   public formGroup: FormGroup;
   public departments: any[];
-  public organisations: any[] = [
-    {
-      name: 'Rotes Kreuz',
-      isSelected: false,
-    },
-    {
-      name: 'Polizei',
-      isSelected: false,
-    },
-    {
-      name: 'Abschleppdienst',
-      isSelected: false,
-    },
-    {
-      name: 'Gemeinde',
-      isSelected: false,
-    },
-    {
-      name: 'Behörde',
-      isSelected: false,
-    },
-    {
-      name: 'Stromversorger',
-      isSelected: false,
-    },
-    {
-      name: 'Gasunternehmen',
-      isSelected: false,
-    },
-    {
-      name: 'ÖBB',
-      isSelected: false,
-    },
-    {
-      name: 'Straßenmeisterei',
-      isSelected: false,
-    },
-    {
-      name: 'Bestatter',
-      isSelected: false,
-    },
-    {
-      name: 'AFK',
-      isSelected: false,
-    },
-    {
-      name: 'BFK',
-      isSelected: false,
-    }
-  ]
+  public organisations: any[];
 
-  constructor() { }
+  constructor(private http: HttpClient) {
+    this.departments = [];
+    this.organisations = [];
+  }
 
   public ngOnInit(): void {
     this.formGroup = new FormGroup({});
     this.departments = this.alarm.departments;
-    this.alarm.organisations = this.organisations;
+    this.http.get<any[]>(environment.organisations)
+      .subscribe(data => {
+        data.forEach(element => {
+          const help = this.alarm.organisations.filter(organisation => organisation.name === element)[0];
+          let isSelected = true;
+          if (isNullOrUndefined(help))
+            isSelected = false;
+          this.organisations.push({
+            name: element,
+            isSelected: isSelected
+          });
+        })
+      });
   }
-
 
   public add(event: any): void {
     const input = event.input;
@@ -109,6 +77,7 @@ export class AlarmedComponent implements OnInit {
     const index = this.organisations.indexOf(organisation);
     if (index >= 0) {
       this.organisations[index].isSelected = !this.organisations[index].isSelected;
+      this.alarm.organisations = this.organisations.filter(organisation => organisation.isSelected);
     }
   }
 
