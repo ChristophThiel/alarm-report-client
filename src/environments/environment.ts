@@ -7,7 +7,8 @@ export const environment = {
   keywords: '/assets/keywords.json',
   parishes: '/assets/parishes.json',
   locations: '/assets/locations.json',
-  organisations: '/assets/organisations.json'
+  organisations: '/assets/organisations.json',
+  members: '/assets/members.json'
 };
 
 /*

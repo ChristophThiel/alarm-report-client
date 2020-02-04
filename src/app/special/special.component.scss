@@ -1,3 +1,5 @@
+@import './src/styles.scss';
+
 button {
     margin: 4px 0 23.5px 2.5%;
     height: 64px;
@@ -5,4 +7,8 @@ button {
 
 mat-chip {
     cursor: pointer;
+}
+
+input {
+    text-align: center;
 }

@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <form fxLayout="row" fxLayoutGap="2.5%" fxHide.lt-lg #formDirective="ngForm" [formGroup]="formGroup" (ngSubmit)="add(formDirective)">
     <mat-form-field fxFlex="30" appearance="outline">
       <mat-label>Name</mat-label>
@@ -46,6 +46,19 @@
   </form>
 </div>
 
+
 <button mat-fab fxShow.md fxHide.gt-md class="fab-button" (click)="openDialog()">
   <mat-icon svgIcon="add"></mat-icon>
-</button>
+</button> -->
+
+<div class="container">
+  <mat-list>
+    <mat-list-item *ngFor="let member of members" fxLayout="column" matRipple (click)="openDialog(member)">
+      <h3 matLine [style.font-weight]="member.position.length !== 0 ? 'bold' : 'normal'">{{member.name}}</h3>
+      <p *ngIf="member.position.length !== 0" matLine>{{buildInfo(member)}}</p>
+      <mat-checkbox fxAlign="right" disableRipple (click)="$event.preventDefault()"
+        [checked]="member.position.length !== 0">
+      </mat-checkbox>
+    </mat-list-item>
+  </mat-list>
+</div>

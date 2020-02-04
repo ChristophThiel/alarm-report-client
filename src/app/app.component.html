@@ -22,23 +22,23 @@
     </mat-toolbar>
 
     <mat-tab-group>
-      <mat-tab label="Zeiten">
-        <app-times [alarm]="alarm"></app-times>
+      <mat-tab label="Mannschaft">
+        <app-team [alarm]="alarm"></app-team>
       </mat-tab>
       <mat-tab label="Allgemein">
         <app-general [alarm]="alarm"></app-general>
       </mat-tab>
-      <mat-tab label="Alarmierung">
-        <app-alarmed [alarm]="alarm"></app-alarmed>
-      </mat-tab>
       <mat-tab label="Einsatzspezifisch">
         <app-special [alarm]="alarm"></app-special>
       </mat-tab>
+      <mat-tab label="Zeiten">
+        <app-times [alarm]="alarm"></app-times>
+      </mat-tab>
+      <mat-tab label="Alarmierung">
+        <app-alarmed [alarm]="alarm"></app-alarmed>
+      </mat-tab>
       <mat-tab label="Fahrzeuge und Material">
         <app-instruments [alarm]="alarm"></app-instruments>
-      </mat-tab>
-      <mat-tab label="Mannschaft">
-        <app-team [alarm]="alarm"></app-team>
       </mat-tab>
       <mat-tab label="Protokoll">
         <app-protocol [alarm]="alarm"></app-protocol>

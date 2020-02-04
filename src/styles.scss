@@ -19,6 +19,24 @@ body {
   background-color: #FAFAFA;
 }
 
+form {
+  padding-bottom: 0;
+
+  @media screen and (max-width: 599px) {
+    padding-bottom: 13px;
+  }
+}
+
+.dialog-container {
+  width: 40vw !important;
+  min-width: 450px !important;
+
+  @media screen and (max-width: 599px) {
+    width: 80vw !important;
+    min-width: 0 !important;
+  }
+}
+
 .container {
   min-width: 567.2px;
   width: 60vw;
@@ -29,14 +47,6 @@ body {
     max-width: calc(100vw - 32px);
     width: calc(100vw - 32px);
     margin: 16px 16px 0 16px;
-  }
-}
-
-form {
-  padding-bottom: 0;
-
-  @media screen and (max-width: 599px) {
-    padding-bottom: 13px;
   }
 }
 
@@ -51,6 +61,10 @@ form {
   }
 }
 
+.form-submit-button {
+  height: 59.5px !important;
+}
+
 .custom-button {
   margin-top: 4px !important;
   height: 59.1px;
@@ -58,4 +72,28 @@ form {
 
 .mat-warning {
   color: rgb(238, 201, 16);
+}
+
+.left {
+  ::ng-deep {
+      .mat-form-field-outline-end {
+          border-radius: 0 !important;
+      }
+  }
+}
+
+.center {
+  ::ng-deep {
+      .mat-form-field-outline-start, .mat-form-field-outline-end {
+          border-radius: 0 !important;
+      }
+  }
+}
+
+.right {
+  ::ng-deep {
+      .mat-form-field-outline-start {
+          border-radius: 0 !important;
+      }
+  }
 }

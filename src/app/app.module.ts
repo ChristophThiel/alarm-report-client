@@ -14,6 +14,7 @@ import { TimesComponent } from './times/times.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { AddInstrumentComponent } from './instruments/add-instrument/add-instrument.component';
 import { TeamComponent } from './team/team.component';
+import { ChooseDialogComponent } from './team/choose-dialog/choose.dialog.component';
 import { AddMemberComponent } from './team/add-member/add-member.component';
 import { ProtocolComponent } from './protocol/protocol.component';
 import { AddEntryComponent } from './protocol/add-entry/add-entry.component';
@@ -34,6 +35,7 @@ import { CustomInputComponent } from './shared/custom-input/custom-input.compone
     InstrumentsComponent,
     AddInstrumentComponent,
     TeamComponent,
+    ChooseDialogComponent,
     AddMemberComponent,
     ProtocolComponent,
     AddEntryComponent,
@@ -61,6 +63,7 @@ import { CustomInputComponent } from './shared/custom-input/custom-input.compone
   ],
   entryComponents: [
     AddInstrumentComponent,
+    ChooseDialogComponent,
     AddMemberComponent,
     AddEntryComponent
   ],

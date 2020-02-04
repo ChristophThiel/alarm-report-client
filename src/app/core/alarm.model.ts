@@ -29,7 +29,7 @@ export class Alarm {
     isHead: true
   }];
   public organisations: any[] = [];
-  public invovled: any[] = [];
+  public involved: any[] = [];
   public devices: any[] = [];
   public vehicles: any[] = [
     {

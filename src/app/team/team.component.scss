@@ -12,3 +12,17 @@ mat-chip {
   z-index: 100;
   backface-visibility: hidden;
 }
+
+mat-list-item {
+  cursor: pointer !important;
+}
+
+mat-list-item:hover {
+  background-color: rgb(225, 225, 225) !important;
+}
+
+::ng-deep {
+  .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
+    background-color: white;
+  }
+}
