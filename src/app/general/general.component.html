@@ -1,60 +1,80 @@
 <div class="container">
-  <form fxLayoutGap="16px" [formGroup]="formGroup">
-    <custom-input fxFlex="60%" label="Einsatzstichwort" [control]="formGroup.get('keyword')" [options]="keywords"
-      [showOptionsAlways]="true" (valueChanged)="onKeywordChanged()">
-    </custom-input>
-    <mat-form-field fxFlex="calc(35% - 16px)" appearance="outline">
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="left" fxFlex="35">
       <mat-label>Einsatzart</mat-label>
-      <mat-select formControlName="type">
-        <mat-option value="Brand">Brand</mat-option>
-        <mat-option value="Technisch">Technisch</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
-
-  <form fxLayoutGap="16px" [formGroup]="formGroup">
-    <custom-input fxFlex="calc(35% - 16px)" label="Gemeinde" [control]="formGroup.get('parish')" [options]="parishes"
-      (valueChanged)="onParishChanged()">
-    </custom-input>
-    <custom-input fxFlex="60%" label="Einsatzort" [control]="formGroup.get('location')" [options]="filteredLocations"
-      (valueChanged)="alarm.location = formGroup.get('location').value">
-    </custom-input>
-  </form>
-
-  <form fxLayoutGap="16px" [formGroup]="formGroup">
-    <mat-form-field fxFlex="calc(35% - 16px)" appearance="outline">
-      <mat-label>Alarmiert von</mat-label>
-      <mat-select formControlName="alarmed" (selectionChange)="onAlarmedChanged()">
-        <mat-option value="LWZ/BWST">LWZ/BWST</mat-option>
-        <mat-option value="Andere">Andere</mat-option>
+      <mat-select formControlName="type" (selectionChange)="onTypeChanged()">
+        <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="60%" appearance="outline">
-      <mat-label>Andere</mat-label>
-      <input matInput formControlName="others">
+    <mat-form-field appearance="outline" class="right" fxFlex="65">
+      <mat-label>Einsatzstichwort</mat-label>
+      <mat-select formControlName="keyword" (selectionChange)="alarm.keyword = this.form.get('keyword').value">
+        <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword.name">{{keyword.name}}</mat-option>
+      </mat-select>
+      <mat-error>{{getErrorMessage('keyword')}}</mat-error>
+    </mat-form-field>
+  </form>
+
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="left" fxFlex="35">
+      <mat-label>Gemeinde</mat-label>
+      <input formControlName="parish" matInput (input)="this.alarm.parish = form.get('parish').value">
+      <mat-error>Feld wird benötigt</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="right" fxFlex>
+      <mat-label>Einsatzort</mat-label>
+      <input formControlName="location" matInput (input)="this.alarm.location = form.get('location').value">
       <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
   </form>
 
-  <form [formGroup]="formGroup">
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="left" fxFlex="35">
+      <mat-label>Alarmiert von</mat-label>
+      <mat-select formControlName="alarmed" (selectionChange)="onAlarmedChanged()">
+        <mat-option *ngFor="let option of alarmedByOptions" [value]="option">{{option}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="form.get('alarmed').value !== alarmedByOptions[1]" appearance="outline" class="right" fxFlex>
+      <mat-label>Information</mat-label>
+      <input matInput formControlName="others" (input)="alarm.others = form.get('others').value">
+      <mat-error>Feld wird benötigt</mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="form.get('alarmed').value === alarmedByOptions[1]" appearance="outline" class="right" fxFlex>
+      <mat-label>Information</mat-label>
+      <mat-select *ngIf="form.get('alarmed').value === alarmedByOptions[1]">
+        <mat-option value="OvDs hier einfügen">OvDs hier einfügen</mat-option>
+      </mat-select>
+      <mat-error>Feld wird benötigt</mat-error>
+    </mat-form-field>
+
+  </form>
+
+  <form [formGroup]="form">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Schadenslage</mat-label>
-      <textarea matInput formControlName="damage" cdkTextareaAutosize></textarea>
+      <textarea matInput formControlName="damage" cdkTextareaAutosize
+        (input)="alarm.damage = form.get('damage').value"></textarea>
     </mat-form-field>
   </form>
 
-  <form [formGroup]="formGroup">
+  <form [formGroup]="form">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Vorkommnisse</mat-label>
-      <textarea matInput formControlName="events" cdkTextareaAutosize></textarea>
+      <textarea matInput formControlName="events" cdkTextareaAutosize
+        (input)="alarm.events = form.get('events').value"></textarea>
     </mat-form-field>
   </form>
 
-  <form [formGroup]="formGroup">
+  <form [formGroup]="form">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Tätigkeiten</mat-label>
-      <textarea matInput formControlName="activities" cdkTextareaAutosize></textarea>
+      <textarea matInput formControlName="activities" cdkTextareaAutosize
+        (input)="alarm.activities = form.get('activities').value"></textarea>
     </mat-form-field>
   </form>
 </div>

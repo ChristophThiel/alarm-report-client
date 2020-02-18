@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormGroupDirective, FormBuilder } from '@angular/forms';
 import { Alarm } from '../core/alarm.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { AddEntryComponent } from './add-entry/add-entry.component';
+import { AddEntryComponent } from './add-dialog/add.dialog.component';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-protocol',
@@ -16,54 +17,57 @@ export class ProtocolComponent implements OnInit {
   @Input()
   public alarm: Alarm;
 
-  public columnsToDisplay = ['time', 'message', 'invalid'];
-  public dataSource;
-  public formGroup: FormGroup;
+  public form: FormGroup;
 
-  constructor(public datePipe: DatePipe, public dialog: MatDialog) { }
+  public readonly messages: any[];
 
-  public ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.alarm.protocol);
-    this.formGroup = new FormGroup({
-      message: new FormControl('', [Validators.required])
-    });
+  constructor(public dialog: MatDialog, private builder: FormBuilder) {
+    this.messages = [
+      {
+        value: '16:04 - Das ist eine Testnachricht',
+        valid: true
+      },
+      {
+        value: '16:12 - Das ist eine Testnachricht 2asdlöfkjas dölfjasdlfjasöldfjasdlfjas ödlfjasöldfjasödlfjasdl fjöasdlfjkasdölfjasdlfkj',
+        valid: true
+      }
+    ]
   }
 
-  public add(formDirective: FormGroupDirective): void {
-    if (this.formGroup.invalid) {
+  public ngOnInit(): void {
+    this.form = this.builder.group({
+      message: ['', Validators.required]
+    })
+  }
+
+  public add(): void {
+    if (this.form.invalid)
       return;
-    }
-
-    const message = this.formGroup.get('message').value;
-    const time = this.datePipe.transform(new Date(), 'HH:mm');
-
-    this.alarm.protocol.push({
-      message: message,
-      time: time,
-      invalid: false
+    this.messages.push({
+      value: this.buildMesssage(this.form.get('message').value),
+      vaid: true
     });
-
-    this.formGroup.reset();
-    formDirective.resetForm();
-    this.dataSource = new MatTableDataSource(this.alarm.protocol);
   }
 
   public openDialog(): void {
     const ref = this.dialog.open(AddEntryComponent, {
-      width: '80vw',
+      panelClass: 'dialog-container',
       disableClose: true,
-      data: this.formGroup
     });
     ref.afterClosed().subscribe(result => {
-      this.alarm.protocol.push(result);
-      this.dataSource = new MatTableDataSource(this.alarm.protocol);
+      if (isUndefined(result))
+        return;
+
+      this.messages.push({
+        value: this.buildMesssage(result.message),
+        valid: true
+      });
     });
   }
 
-  public toggle(entry: any): void {
-    const change = this.alarm.protocol[this.alarm.protocol.indexOf(entry)];
-    change.invalid = !change.invalid;
-    this.dataSource = new MatTableDataSource(this.alarm.protocol);
+  private buildMesssage(value: string): string {
+    const time = new Date();
+    return `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')} - ${value}`;
   }
 
 }

@@ -27,6 +27,20 @@ form {
   }
 }
 
+input::-webkit-clear-button, input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {
+  display: none;
+}
+
+textarea::-webkit-inner-spin-button {
+  display: none;
+}
+
+mat-chip {
+  cursor: pointer;
+  font-size: 12pt;
+  height: auto;
+}
+
 .dialog-container {
   width: 40vw !important;
   min-width: 450px !important;
@@ -50,28 +64,23 @@ form {
   }
 }
 
-.truncate {
-  flex: 1;
-  min-width: 0;
-
-  p, mat-error {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
 .form-submit-button {
   height: 59.5px !important;
 }
 
-.custom-button {
-  margin-top: 4px !important;
-  height: 59.1px;
+.fix-button {
+  margin-top: 4px;
 }
 
-.mat-warning {
-  color: rgb(238, 201, 16);
+.truncate {
+  flex: 1;
+  min-width: 0;
+
+  p, mat-error, mat-list-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .left {
@@ -92,8 +101,28 @@ form {
 
 .right {
   ::ng-deep {
-      .mat-form-field-outline-start {
-          border-radius: 0 !important;
+    .mat-form-field-outline-start {
+      border-radius: 0 !important;
+    }
+  }
+}
+
+.is-center {
+  input {
+    text-align: center;
+  }
+}
+
+// If input is of type time then its height will be increased by 5px
+// To fix this behaviour, the mat-form-field must have the class fix-time
+::ng-deep {
+  .mat-form-field.fix-time {
+    .mat-form-field-wrapper {
+      .mat-form-field-flex {
+        .mat-form-field-outline {
+          height: calc(100% - 5px) !important;
+        }
       }
+    }
   }
 }

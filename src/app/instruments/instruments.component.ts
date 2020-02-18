@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { FormGroup, Validators, FormGroupDirective, FormBuilder } from '@angular/forms';
 import { Alarm } from '../core/alarm.model';
 import { isUndefined } from 'util';
 import { MatDialog } from '@angular/material/dialog';
-import { AddInstrumentComponent } from './add-instrument/add-instrument.component';
+import { AddInstrumentComponent } from './add-dialog/add.dialog.component';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-instruments',
@@ -15,70 +17,58 @@ export class InstrumentsComponent implements OnInit {
   @Input()
   public alarm: Alarm;
 
-  public formGroup: FormGroup;
-  public isVehicle: boolean = false;
+  public form: FormGroup;
+  public vehicles: string[];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private builder: FormBuilder, private http: HttpClient, private dialog: MatDialog) { }
 
   public ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      amount: new FormControl('', [Validators.required])
+    this.form = this.builder.group({
+      name: ['', Validators.required],
+      amount: ['', Validators.required]
     });
+    this.http.get<string[]>(environment.vehicles).subscribe(data => this.vehicles = data);
   }
 
-  public toggle(): void {
-    this.isVehicle = !this.isVehicle;
-  }
-
-  public add(formDirective: FormGroupDirective): void {
-    if (this.formGroup.invalid) {
+  public onSubmit(directive: FormGroupDirective): void {
+    if (this.form.invalid)
       return;
-    }
-    const name = this.formGroup.get('name').value;
-    const amount = +this.formGroup.get('amount').value;
-    this.addInstrument({
-      name: name,
-      amount: amount,
-      isVehicle: this.isVehicle
+
+    this.add({
+      name: this.form.get('name').value,
+      amount: +this.form.get('amount').value
     });
-    formDirective.resetForm();
+    directive.resetForm();
   }
 
   public openDialog(): void {
     const ref = this.dialog.open(AddInstrumentComponent, {
-      width: '80vw',
+      panelClass: 'dialog-container',
       disableClose: true,
-      data: this.formGroup
+      autoFocus: false
     });
     ref.afterClosed().subscribe(result => {
-      this.addInstrument(result);
+      if (isUndefined(result))
+        return;
+
+      this.add(result);
     })
   }
 
-  public remove(instrument: any): void {
-    if (!isUndefined(this.alarm.vehicles.find(vehicle => vehicle.name === instrument.name))) {
-      this.alarm.vehicles.splice(this.alarm.vehicles.indexOf(instrument), 1);
-    } else {
-      this.alarm.devices.splice(this.alarm.devices.indexOf(instrument), 1);
-    }
+  public remove(remove: any): void {
+    this.alarm.devices.splice(this.alarm.devices.indexOf(remove), 1);
   }
 
-  private addInstrument(data: any): void {
-    let collection = this.alarm.devices;
-    if (data.isVehicle) {
-      collection = this.alarm.vehicles;
-    }
-    const contains = collection.find(instrument => instrument.name === data.name);
-    if (!isUndefined(contains)) {
-      contains.amount = +contains.amount + +data.amount;
-    } else {
-      collection.push({
-        name: data.name,
-        amount: data.amount
+  private add(add: any): void {
+    const found = this.alarm.devices.filter(device => device.name === add.name)[0];
+    if (isUndefined(found)) {
+      this.alarm.devices.push({
+        name: add.name,
+        amount: add.amount
       });
+    } else {
+      found.amount += add.amount;
     }
-    this.formGroup.reset();
   }
 
 }

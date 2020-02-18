@@ -1,3 +1,7 @@
-mat-chip {
-    cursor: pointer;
+@import '~src/styles.scss';
+
+// Not working in styles.scss
+.mat-stroked-button {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
 }

@@ -1,10 +1,29 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, ValidatorFn, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Alarm } from '../core/alarm.model';
-import { ValidatorsService } from '../core/validators.service';
+import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-times',
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: {
+        parse: {
+          dateInput: ['l', 'LL'],
+        },
+        display: {
+          dateInput: 'L',
+          monthYearLabel: 'MMM YYYY',
+          dateA11yLabel: 'LL',
+          monthYearA11yLabel: 'MMMM YYYY',
+        }
+      }
+    }
+  ],
   templateUrl: './times.component.html',
   styleUrls: ['./times.component.scss']
 })
@@ -12,95 +31,55 @@ export class TimesComponent implements OnInit {
 
   @Input() alarm: Alarm;
 
-  public formGroup: FormGroup;
+  public times = Alarm.getTimeFields();
 
-  public years: number[];
-  public months: any[];
-  public days: number[];
+  public form: FormGroup;
 
-  constructor(private builder: FormBuilder, private validators: ValidatorsService) {
-    this.years = [];
-    this.months = [];
-    this.days = [];
-  }
+  constructor(private builder: FormBuilder) { }
 
   public ngOnInit(): void {
-    const currentDate = new Date();
-    this.formGroup = this.builder.group({
-      year: currentDate.getFullYear(),
-      month: currentDate.getMonth(),
-      day: currentDate.getDay() + 1,
+    this.form = this.builder.group({
+      alarmedDate: [new Date()],
       alarmed: ['', Validators.required],
-      engaged: ['', Validators.required],
-      reached: ['', Validators.required],
-      stop: ['', Validators.required],
-      indented: ['', Validators.required],
-      ready: ['', Validators.required]
+      engagedDate: [new Date()],
+      engaged: [''],
+      reachedDate: [new Date()],
+      reached: [''],
+      stopDate: [new Date()],
+      stop: [''],
+      indentedDate: [new Date()],
+      indented: [''],
+      readyDate: [new Date()],
+      ready: ['']
     });
-
-    for (let i = currentDate.getFullYear() - 1; i <= currentDate.getFullYear() + 1; i++)
-      this.years.push(i);
-    for (let i = 0; i < 12; i++)
-      this.months.push({
-        long: new Date(1, i, 1).toLocaleString('default', { month: 'long' }),
-        short: i
-      });
-    this.onValueChanged();
-  }
-
-  public createDateTimeValue(formControlName: string): Date {
-    const split = this.formGroup.get(formControlName).value.split(':');
-    const hour = +split[0];
-    const minute = +split[1];
-
-    const year = +this.formGroup.get('year').value
-    const month = +this.formGroup.get('month').value
-    const day = +this.formGroup.get('day').value;
-
-    if (formControlName === 'alarmed' || this.alarm.alarmed.getHours() <= Reflect.get(this.alarm, formControlName).getHours()) {
-      this.onValueChanged();
-      return new Date(year, month, day, hour, minute);
-    }
-    return new Date(year, month, day + 1, hour, minute);
+    this.form.valueChanges.subscribe(() => this.onValueChanged());
   }
 
   public getErrorMessage(formControlName: string): string {
-    const control = this.formGroup.get(formControlName);
+    const control = this.form.get(formControlName);
     if (control.hasError('required')) {
       return 'Feld wird benötigt';
     }
   }
 
-  public onValueChanged(): void {
-    this.updateDays(+this.formGroup.get('year').value, +this.formGroup.get('month').value);
-
-    const year = +this.formGroup.get('year').value;
-    const month = +this.formGroup.get('month').value;
-
-    let day = +this.formGroup.get('day').value;
-    this.alarm.startDate = `${year}-${(+month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-
-    this.alarm.alarmed = new Date(year, month, day, this.alarm.alarmed.getHours(), this.alarm.alarmed.getMinutes());
-
-    const fields = Alarm.getTimeFields();
-    fields.forEach(field => {
-      const fieldValue = Reflect.get(this.alarm, field);
-      let result = new Date(year, month, day, fieldValue.getHours(), fieldValue.getMinutes());
-      if (this.alarm.alarmed.getHours() > fieldValue.getHours())
-        result = new Date(year, month, day + 1, fieldValue.getHours(), fieldValue.getMinutes());
-      Reflect.set(this.alarm, field, result);
-    });
+  public setCurrentTime(formControlName: string): void {
+    const time = new Date();
+    const control = this.form.get(formControlName);
+    if (control.value.length === 0)
+      control.setValue(`${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}`);
   }
 
-  private updateDays(year: number, month: number): void {
-    this.days = [];
-    const daysCount = new Date(year, month + 1, 0).getDate();
-    for (let i = 1; i <= daysCount; i++)
-      this.days.push(i);
+  private onValueChanged(): void {
+    for (let name of Alarm.getTimeFields()) {
+      const time = this.form.get(name).value;
+      if (time.length === 0)
+        continue;
 
-    const control = this.formGroup.get('day');
-    if (+control.value > daysCount)
-      control.setValue(daysCount);
+      const split = time.split(':');
+      const date = moment(this.form.get(`${name}Date`).value);
+
+      Reflect.set(this.alarm, name, new Date(date.year(), date.month(), date.date(), +split[0], +split[1]));
+    }
   }
 
 }

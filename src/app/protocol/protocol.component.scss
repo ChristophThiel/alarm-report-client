@@ -3,23 +3,18 @@ button {
   margin-top: 4px;
 }
 
-table {
-  width: 100%;
-  background-color: #FAFAFA;
+mat-list-item {
+  cursor: pointer !important;
+}
 
-  th, td {
-    font-size: 14pt !important;
-  }
-
-  tr:hover > td {
-    background-color: rgb(233, 233, 233);
-  }
+mat-list-item:hover {
+  background-color: rgb(225, 225, 225) !important;
 }
 
 .fab-button {
   position: fixed;
-  bottom: 15px;
-  right: 15px;
+  bottom: 32px;
+  right: 32px;
   z-index: 100;
   backface-visibility: hidden;
 }

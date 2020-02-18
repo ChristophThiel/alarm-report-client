@@ -4,7 +4,6 @@ export class Alarm {
   public keyword: string = '';
   public location: string = '';
   public parish: string = 'Marchtrenk';
-  public postCode: number = 4614;
   public alarmedBy: string = 'LWZ/BWST';
   public others: string = '';
   public damage: string = '';
@@ -18,9 +17,9 @@ export class Alarm {
   public stop: Date = new Date();
   public indented: Date = new Date();
   public ready: Date = new Date();
-  public fireOutTime: string = '';
+  public fireOut: Date = new Date();
 
-  public weather: string = '';
+  public weather: string = 'Sonnig';
 
   public alarmType: string = 'Echtalarm';
 
@@ -28,35 +27,15 @@ export class Alarm {
     name: 'Marchtrenk',
     isHead: true
   }];
-  public organisations: any[] = [];
+  public organisations: string[] = [];
   public involved: any[] = [];
   public devices: any[] = [];
-  public vehicles: any[] = [
-    {
-      name: 'Tank 3',
-      amount: 15
-    },
-    {
-      name: 'Rüst 2',
-      amount: 15
-    }
-  ];
-  public team: any[] = [
-    {
-      name: 'Christoph Thiel',
-      function: 'Einsatzleiter',
-      vehicle: 'Rüst 2'
-    },
-    {
-      name: 'Alexander Koblmüller',
-      function: 'Maschinist',
-      vehicle: 'Tank 3'
-    }
-  ]
+  public vehicles: string[] = [];
+  public team: any[] = []
   public protocol: any[] = [];
   public extra: any;
 
   public static getTimeFields(): string[] {
-    return ['engaged', 'reached', 'stop', 'indented', 'ready'];
+    return ['alarmed', 'engaged', 'reached', 'stop', 'indented', 'ready'];
   }
 }

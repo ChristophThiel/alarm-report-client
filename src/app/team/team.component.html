@@ -1,59 +1,11 @@
-<!-- <div class="container">
-  <form fxLayout="row" fxLayoutGap="2.5%" fxHide.lt-lg #formDirective="ngForm" [formGroup]="formGroup" (ngSubmit)="add(formDirective)">
-    <mat-form-field fxFlex="30" appearance="outline">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name">
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
-    <mat-form-field fxFlex="25" appearance="outline">
-      <mat-label>Funktion</mat-label>
-      <mat-select formControlName="function">
-        <mat-option value="Feuerwehrmann">Feuerwehrmann</mat-option>
-        <mat-option value="FMD">FMD</mat-option>
-        <mat-option value="Atemschutzträger">Atemschutzträger</mat-option>
-        <mat-option value="Vollschutzträger">Vollschutzträger</mat-option>
-        <mat-option value="Maschinist">Maschinist</mat-option>
-        <mat-option value="Fahrzeugkommandant">Fahrzeugkommandant</mat-option>
-        <mat-option value="Zugskommandant">Zugskommandant</mat-option>
-        <mat-option value="Einsatzleiter">Einsatzleiter</mat-option>
-        <mat-option value="Zentralist">Zentralist</mat-option>
-        <mat-option value="Reserve">Reserve</mat-option>
-      </mat-select>
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
-    <mat-form-field fxFlex="25" appearance="outline">
-      <mat-label>Fahrzeug</mat-label>
-      <mat-select formControlName="vehicle">
-        <mat-option *ngFor="let vehicle of alarm.vehicles" [value]="vehicle.name">
-          {{vehicle.name}}
-        </mat-option>
-      </mat-select>
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
-    <button mat-button fxFlex="15" color="accent" class="add-button">Hinzufügen</button>
-  </form>
-
-  <form fxLayout="column" [formGroup]="formGroup" *ngFor="let vehicle of alarm.vehicles">
-    <mat-form-field fxFlex appearance="outline" floatLabel="always">
-      <mat-label>{{vehicle.name}}</mat-label>
-      <mat-chip-list #chipList>
-        <mat-chip *ngFor="let member of filter(vehicle.name)" [color]="member.function == 'Einsatzleiter' ? 'accent' : ''" [selected]="member.function == 'Einsatzleiter'">
-          {{member.name}} ({{member.function}})
-          <mat-icon matChipRemove svgIcon="cancel" (click)="remove(member)"></mat-icon>
-        </mat-chip>
-      </mat-chip-list>
-    </mat-form-field>
-  </form>
-</div>
-
-
-<button mat-fab fxShow.md fxHide.gt-md class="fab-button" (click)="openDialog()">
-  <mat-icon svgIcon="add"></mat-icon>
-</button> -->
-
 <div class="container">
+  <mat-form-field appearance="outline" fxFlexFill>
+    <mat-label>Suchbegriff</mat-label>
+    <input matInput (keyup)="onValueChange()" [formControl]="search" />
+  </mat-form-field>
+
   <mat-list>
-    <mat-list-item *ngFor="let member of members" fxLayout="column" matRipple (click)="openDialog(member)">
+    <mat-list-item *ngFor="let member of filteredMembers" fxLayout="column" matRipple (click)="openDialog(member)">
       <h3 matLine [style.font-weight]="member.position.length !== 0 ? 'bold' : 'normal'">{{member.name}}</h3>
       <p *ngIf="member.position.length !== 0" matLine>{{buildInfo(member)}}</p>
       <mat-checkbox fxAlign="right" disableRipple (click)="$event.preventDefault()"

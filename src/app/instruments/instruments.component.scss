@@ -1,14 +1,15 @@
-mat-chip {
-  cursor: pointer;
-  font-size: 12pt;
-  height: auto;
-}
+@import '~src/styles.scss';
 
+// Not working in styles.scss
+.mat-stroked-button {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
 
 .fab-button {
   position: fixed;
-  bottom: 15px;
-  right: 15px;
+  bottom: 32px;
+  right: 32px;
   z-index: 100;
   backface-visibility: hidden;
 }

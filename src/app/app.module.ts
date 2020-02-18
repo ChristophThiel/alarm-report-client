@@ -12,12 +12,11 @@ import { AppComponent } from './app.component';
 import { GeneralComponent } from './general/general.component';
 import { TimesComponent } from './times/times.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
-import { AddInstrumentComponent } from './instruments/add-instrument/add-instrument.component';
+import { AddInstrumentComponent } from './instruments/add-dialog/add.dialog.component';
 import { TeamComponent } from './team/team.component';
 import { ChooseDialogComponent } from './team/choose-dialog/choose.dialog.component';
-import { AddMemberComponent } from './team/add-member/add-member.component';
 import { ProtocolComponent } from './protocol/protocol.component';
-import { AddEntryComponent } from './protocol/add-entry/add-entry.component';
+import { AddEntryComponent } from './protocol/add-dialog/add.dialog.component';
 import { SpecialComponent } from './special/special.component';
 import { AlarmedComponent } from './alarmed/alarmed.component';
 
@@ -36,7 +35,6 @@ import { CustomInputComponent } from './shared/custom-input/custom-input.compone
     AddInstrumentComponent,
     TeamComponent,
     ChooseDialogComponent,
-    AddMemberComponent,
     ProtocolComponent,
     AddEntryComponent,
     SpecialComponent,
@@ -64,7 +62,6 @@ import { CustomInputComponent } from './shared/custom-input/custom-input.compone
   entryComponents: [
     AddInstrumentComponent,
     ChooseDialogComponent,
-    AddMemberComponent,
     AddEntryComponent
   ],
   bootstrap: [AppComponent]

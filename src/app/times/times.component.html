@@ -1,146 +1,96 @@
-<div fxLayoutGap.gt-xs="16px" class="container" fxLayout.gt-xs="row">
-  <form fxFlex.gt-xs="calc(50% - 8px)" [formGroup]="formGroup">
-    <mat-form-field fxFlex="calc(100% / 3)" appearance="outline" class="left">
-      <mat-label>Jahr</mat-label>
-      <mat-select formControlName="year" (selectionChange)="onValueChanged()">
-        <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+<div class="container" fxLayout="column">
+  <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="0" fxLayoutGap.gt-md="16px">
+    <form fxFlex fxFlex.gt-md="calc(100% / 2 - 8px)" [formGroup]="form">
+      <mat-form-field appearance="outline" class="left" fxFlex="50">
+        <mat-label>Datum</mat-label>
+        <input formControlName="alarmedDate" matInput readonly [matDatepicker]="alarmedPicker"
+          (click)="alarmedPicker.open()" />
+        <mat-datepicker #alarmedPicker></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field fxFlex="calc(100% / 3)" appearance="outline" class="center">
-      <mat-label>Monat</mat-label>
-      <mat-select formControlName="month" (selectionChange)="onValueChanged()">
-        <mat-option *ngFor="let month of months" [value]="month.short">{{month.long}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="right fix-time" fxFlex="50" (click)="setCurrentTime('alarmed')">
+        <mat-label>Alarmiert</mat-label>
+        <input matInput formControlName="alarmed" type="time" />
+        <mat-error *ngIf="form.invalid">{{getErrorMessage('alarmed')}}</mat-error>
+      </mat-form-field>
+    </form>
 
-    <mat-form-field fxFlex="calc(100% / 3)" appearance="outline" class="right">
-      <mat-label>Tag</mat-label>
-      <mat-select formControlName="day" (selectionChange)="onValueChanged()">
-        <mat-option *ngFor="let day of days" [value]="day">{{day}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
+    <form fxFlex fxFlex.gt-md="calc(100% / 2 - 8px)" [formGroup]="form">
+      <mat-form-field appearance="outline" class="left" fxFlex="50">
+        <mat-label>Datum</mat-label>
+        <input formControlName="engagedDate" matInput readonly [matDatepicker]="engagedPicker"
+          (click)="engagedPicker.open()" />
+        <mat-datepicker #engagedPicker></mat-datepicker>
+      </mat-form-field>
 
-  <form fxFlex.gt-xs="calc(50% - 8px)" [formGroup]="formGroup">
-    <mat-form-field fxFlex="50%" appearance="outline" class="left">
-      <mat-label>Alarmiert</mat-label>
-      <input matInput formControlName="alarmed" type="time" (input)="alarm.alarmed = createDateTimeValue('alarmed')">
-      <mat-error *ngIf="formGroup.get('alarmed').invalid">{{getErrorMessage('alarmed')}}</mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="right fix-time" fxFlex="50" (click)="setCurrentTime('engaged')">
+        <mat-label>Ausgerückt</mat-label>
+        <input matInput formControlName="engaged" type="time" />
+        <mat-error *ngIf="form.invalid">{{getErrorMessage('engaged')}}</mat-error>
+      </mat-form-field>
+    </form>
+  </div>
 
-    <mat-form-field fxFlex="50%" appearance="outline" class="right">
-      <mat-label>Ausgerückt</mat-label>
-      <input matInput formControlName="engaged" type="time" (input)="alarm.engaged = createDateTimeValue('engaged')">
-      <mat-error *ngIf="formGroup.get('engaged').invalid">{{getErrorMessage('engaged')}}</mat-error>
-    </mat-form-field>
-  </form>
+  <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="0" fxLayoutGap.gt-md="16px">
+    <form fxFlex fxFlex.gt-md="calc(100% / 2 - 8px)" [formGroup]="form">
+      <mat-form-field appearance="outline" class="left" fxFlex="50">
+        <mat-label>Datum</mat-label>
+        <input formControlName="reachedDate" matInput readonly [matDatepicker]="reachedPicker"
+          (click)="reachedPicker.open()" />
+        <mat-datepicker #reachedPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="right fix-time" fxFlex="50" (click)="setCurrentTime('reached')">
+        <mat-label>Einsatzort</mat-label>
+        <input matInput formControlName="reached" type="time" />
+        <mat-error *ngIf="form.invalid">{{getErrorMessage('reached')}}</mat-error>
+      </mat-form-field>
+    </form>
+
+    <form fxFlex fxFlex.gt-md="calc(100% / 2 - 8px)" [formGroup]="form" (click)="setCurrentTime('stop')">
+      <mat-form-field appearance="outline" class="left" fxFlex="50">
+        <mat-label>Datum</mat-label>
+        <input formControlName="stopDate" matInput readonly [matDatepicker]="stopPicker" (click)="stopPicker.open()" />
+        <mat-datepicker #stopPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="right fix-time" fxFlex="50">
+        <mat-label>Alarmstopp</mat-label>
+        <input matInput formControlName="stop" type="time" />
+        <mat-error *ngIf="form.invalid">{{getErrorMessage('stop')}}</mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="0" fxLayoutGap.gt-md="16px">
+    <form fxFlex fxFlex.gt-md="calc(100% / 2 - 8px)" [formGroup]="form">
+      <mat-form-field appearance="outline" class="left" fxFlex="50">
+        <mat-label>Datum</mat-label>
+        <input formControlName="indentedDate" matInput readonly [matDatepicker]="indentedPicker"
+          (click)="indentedPicker.open()" />
+        <mat-datepicker #indentedPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="right fix-time" fxFlex="50" (click)="setCurrentTime('indented')">
+        <mat-label>Eingerückt</mat-label>
+        <input matInput formControlName="indented" type="time" />
+        <mat-error *ngIf="form.invalid">{{getErrorMessage('indented')}}</mat-error>
+      </mat-form-field>
+    </form>
+
+    <form fxFlex fxFlex.gt-md="calc(100% / 2 - 8px)" [formGroup]="form">
+      <mat-form-field appearance="outline" class="left" fxFlex="50">
+        <mat-label>Datum</mat-label>
+        <input formControlName="readyDate" matInput readonly [matDatepicker]="readyPicker"
+          (click)="readyPicker.open()" />
+        <mat-datepicker #readyPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="right fix-time" fxFlex="50" (click)="setCurrentTime('ready')">
+        <mat-label>Einsatzbereit</mat-label>
+        <input matInput formControlName="ready" type="time" />
+        <mat-error *ngIf="form.invalid">{{getErrorMessage('ready')}}</mat-error>
+      </mat-form-field>
+    </form>
+  </div>
 </div>
-
-<div fxLayoutGap.gt-xs="16px" class="container" style="margin-top: 0" fxLayout.gt-xs="row">
-  <form fxFlex.gt-xs="calc(50% - 8px)" [formGroup]="formGroup">
-    <mat-form-field fxFlex="50%" appearance="outline" class="left">
-      <mat-label>Einsatzort</mat-label>
-      <input matInput formControlName="reached" type="time" (input)="alarm.reached = createDateTimeValue('reached')">
-      <mat-error *ngIf="formGroup.get('reached').invalid">{{getErrorMessage('reached')}}</mat-error>
-    </mat-form-field>
-
-    <mat-form-field fxFlex="50%" appearance="outline" class="right">
-      <mat-label>Alarmstopp</mat-label>
-      <input matInput formControlName="stop" type="time" (input)="alarm.stop = createDateTimeValue('stop')">
-      <mat-error *ngIf="formGroup.get('stop').invalid">{{getErrorMessage('stop')}}</mat-error>
-    </mat-form-field>
-  </form>
-
-  <form fxFlex.gt-xs="calc(50% - 8px)" [formGroup]="formGroup">
-    <mat-form-field fxFlex="50%" appearance="outline" class="left">
-      <mat-label>Eingerückt</mat-label>
-      <input matInput formControlName="indented" type="time" (input)="alarm.indented = createDateTimeValue('indented')">
-      <mat-error *ngIf="formGroup.get('indented').invalid">{{getErrorMessage('indented')}}</mat-error>
-    </mat-form-field>
-
-    <mat-form-field fxFlex="50%" appearance="outline" class="right">
-      <mat-label>Einsatzbereit</mat-label>
-      <input matInput formControlName="ready" type="time" (input)="alarm.ready = createDateTimeValue('ready')">
-      <mat-error *ngIf="formGroup.get('ready').invalid">{{getErrorMessage('ready')}}</mat-error>
-    </mat-form-field>
-  </form>
-</div>
-
-<!-- <div class="container" fxLayout="column">
-  <form fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="2.5%" fxLayoutGap.xs="0" [formGroup]="formGroup">
-    <mat-form-field fxFlex="48.75" appearance="outline">
-      <mat-label>Datum der Alarmierung</mat-label>
-      <input matInput formControlName="startDate" (focusout)="manipulateDate('startDate')">
-      <mat-error *ngIf="formGroup.get('startDate').hasError('required')">Feld wird benötigt</mat-error>
-      <mat-error
-        *ngIf="formGroup.get('startDate').hasError('pattern') && !formGroup.get('startDate').hasError('required')">
-        Ungültiges Datum
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field fxFlex="48.75" appearance="outline">
-      <mat-label>Alarmiert</mat-label>
-      <input matInput formControlName="alarmed" (focusout)="manipulateTime('alarmed')">
-      <mat-error *ngIf="formGroup.get('alarmed').hasError('required')">Feld wird benötigt</mat-error>
-      <mat-error *ngIf="formGroup.get('alarmed').hasError('pattern') && !formGroup.get('alarmed').hasError('required')">
-        Ungültige Uhrzeit
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field fxFlex="48.75" appearance="outline">
-      <mat-label>Ausgerückt</mat-label>
-      <input matInput formControlName="engaged" (focusout)="manipulateTime('engaged')">
-      <mat-error *ngIf="formGroup.get('engaged').hasError('required')">Feld wird benötigt</mat-error>
-      <mat-error *ngIf="formGroup.get('engaged').hasError('pattern') && !formGroup.get('engaged').hasError('required')">
-        Ungültige Uhrzeit
-      </mat-error>
-      <mat-error
-        *ngIf="formGroup.get('engaged').hasError('invalidTime') && !formGroup.get('engaged').hasError('required')">
-        Uhrzeit muss größer sein
-      </mat-error>
-    </mat-form-field>
-  </form>
-
-  <form fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="2.5%" fxLayoutGap.xs="0" [formGroup]="formGroup">
-    <mat-form-field fxFlex="48.75" appearance="outline">
-      <mat-label>Erstes Fahrzeug am Einsatzort</mat-label>
-      <input matInput formControlName="firstVehicle" (focusout)="manipulateTime('firstVehicle')">
-      <mat-error *ngIf="formGroup.get('firstVehicle').hasError('required')">Feld wird benötigt</mat-error>
-      <mat-error
-        *ngIf="formGroup.get('firstVehicle').hasError('pattern') && !formGroup.get('firstVehicle').hasError('required')">
-        Ungültige Uhrzeit
-      </mat-error>
-      <mat-error
-        *ngIf="formGroup.get('firstVehicle').hasError('invalidTime') && !formGroup.get('firstVehicle').hasError('required')">
-        Uhrzeit muss größer sein
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field fxFlex="48.75" appearance="outline">
-      <mat-label>Rückkher letztes Fahrzeug</mat-label>
-      <input matInput formControlName="returnLastVehicle" (focusout)="manipulateTime('returnLastVehicle')">
-      <mat-error *ngIf="formGroup.get('returnLastVehicle').hasError('required')">Feld wird benötigt</mat-error>
-      <mat-error
-        *ngIf="formGroup.get('returnLastVehicle').hasError('pattern') && !formGroup.get('returnLastVehicle').hasError('required')">
-        Ungültige Uhrzeit
-      </mat-error>
-      <mat-error
-        *ngIf="formGroup.get('returnLastVehicle').hasError('invalidTime') && !formGroup.get('returnLastVehicle').hasError('required')">
-        Uhrzeit muss größer sein
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field fxFlex="48.75" appearance="outline">
-      <mat-label>Einsatzbereitschaft wiederhergestellt</mat-label>
-      <input matInput formControlName="ready" (focusout)="manipulateTime('ready')">
-      <mat-error *ngIf="formGroup.get('ready').hasError('required')">Feld wird benötigt</mat-error>
-      <mat-error *ngIf="formGroup.get('ready').hasError('pattern') && !formGroup.get('ready').hasError('required')">
-        Ungültige Uhrzeit
-      </mat-error>
-      <mat-error *ngIf="formGroup.get('ready').hasError('invalidTime') && !formGroup.get('ready').hasError('required')">
-        Uhrzeit muss größer sein
-      </mat-error>
-    </mat-form-field>
-  </form>
-</div> -->

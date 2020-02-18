@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'choose-dialog',
@@ -9,18 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ChooseDialogComponent {
 
-  public readonly positions: string[] = [
-    'Atemschutzträger',
-    'Einsatzleiter',
-    'Fahrzeugkommandant',
-    'Feuerwehrmediziner',
-    'Funk',
-    'Mann',
-    'Maschinist',
-    'Reserve',
-    'Vollschutzträger',
-    'Zugskommandant'
-  ]
+  public readonly positions: string[] = environment.positions;
   public readonly positionsWithoutVehicle: string[] = [
     'Funk',
     'Reserve'
@@ -43,7 +33,12 @@ export class ChooseDialogComponent {
   }
 
   public isPositionWithoutVehicle(): boolean {
-    return this.positionsWithoutVehicle.indexOf(this.form.get('position').value) !== -1;
+    const result = this.positionsWithoutVehicle.indexOf(this.form.get('position').value) !== -1;
+    if (result)
+      this.form.get('vehicle').disable();
+    else
+      this.form.get('vehicle').enable();
+    return result;
   }
 
   public onResetClick(): void {

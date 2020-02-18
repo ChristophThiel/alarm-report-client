@@ -1,94 +1,84 @@
 <div class="container">
   <div fxLayout.gt-xs="row" fxLayoutGap.gt-xs="16px">
-    <form fxFlex.gt-xs="calc(100% / 2 - 8px)" [formGroup]="formGroup">
+    <form fxFlex.gt-xs="calc(100% / 2 - 8px)" [formGroup]="form">
       <mat-form-field fxFlex="calc(100% / 2)" appearance="outline" class="left" floatLabel="always">
         <mat-label>Verletzte Personen</mat-label>
-        <input matInput formControlName="hurtPeople" placeholder="0" type="number"
-          (input)="alarm.involved[0] = formGroup.get('hurtPeople').value">
+        <input matInput formControlName="hurtPeople" placeholder="0" type="number" min="0"
+          (input)="alarm.involved[0] = form.get('hurtPeople').value">
+        <mat-error>Ungültiger Wert</mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="calc(100% / 2)" appearance="outline" class="right" floatLabel="always">
         <mat-label>Getötete Personen</mat-label>
         <input matInput formControlName="killedPeople" placeholder="0" type="number"
-          (input)="alarm.involved[1] = formGroup.get('killedPeople').value">
+          (input)="alarm.involved[1] = form.get('killedPeople').value">
+        <mat-error>Ungültiger Wert</mat-error>
       </mat-form-field>
     </form>
 
-    <form fxFlex.gt-xs="calc(100% / 2 - 8px)" [formGroup]="formGroup">
+    <form fxFlex.gt-xs="calc(100% / 2 - 8px)" [formGroup]="form">
       <mat-form-field fxFlex="calc(100% / 2)" appearance="outline" class="left" floatLabel="always">
         <mat-label>Verletzte Tiere</mat-label>
         <input matInput formControlName="hurtAnimals" placeholder="0" type="number"
-          (input)="alarm.involved[2] = formGroup.get('hurtAnimals').value">
+          (input)="alarm.involved[2] = form.get('hurtAnimals').value">
+        <mat-error>Ungültiger Wert</mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="calc(100% / 2)" appearance="outline" class="right" floatLabel="always">
         <mat-label>Getötete Tiere</mat-label>
         <input matInput formControlName="killedAnimals" placeholder="0" type="number"
-          (input)="alarm.involved[3] = formGroup.get('killedAnimals').value">
+          (input)="alarm.involved[3] = form.get('killedAnimals').value">
+        <mat-error>Ungültiger Wert</mat-error>
       </mat-form-field>
     </form>
   </div>
 
-  <form [formGroup]="formGroup">
-    <mat-form-field fxFlexFill appearance="outline" floatLabel="always">
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" floatLabel="always" fxFlexFill fxHide.xs fxShow>
       <mat-label>Wetter</mat-label>
-      <div style="text-align: center">
-        <button mat-stroked-button matTooltip="Sonne" [color]="alarm.weather == 'Sonnig' ? 'accent' : ''"
-          (click)="setWeather('Sonnig')">
-          <mat-icon svgIcon="sun"></mat-icon>
-        </button>
-        <button mat-stroked-button matTooltip="Regen" [color]="alarm.weather == 'Regen' ? 'accent' : ''"
-          (click)="setWeather('Regen')">
-          <mat-icon svgIcon="rain"></mat-icon>
-        </button>
-        <button mat-stroked-button matTooltip="Schnee" [color]="alarm.weather == 'Schnee' ? 'accent' : ''"
-          (click)="setWeather('Schnee')">
-          <mat-icon svgIcon="snow"></mat-icon>
-        </button>
-        <button mat-stroked-button matTooltip="Nebel" [color]="alarm.weather == 'Nebel' ? 'accent' : ''"
-          (click)="setWeather('Nebel')">
-          <mat-icon svgIcon="fog"></mat-icon>
-        </button>
-        <button mat-stroked-button matTooltip="Bewölkt" [color]="alarm.weather == 'Bewölkt' ? 'accent' : ''"
-          (click)="setWeather('Bewölkt')">
-          <mat-icon svgIcon="cloud"></mat-icon>
-        </button>
-        <button mat-stroked-button matTooltip="Sturm" [color]="alarm.weather == 'Sturm' ? 'accent' : ''"
-          (click)="setWeather('Sturm')">
-          <mat-icon svgIcon="bolt"></mat-icon>
-        </button>
-      </div>
-      <mat-chip-list visiblity="hidden"></mat-chip-list>
-    </mat-form-field>
-  </form>
-
-  <form [formGroup]="formGroup">
-    <mat-form-field fxFlex appearance="outline">
       <mat-chip-list>
-        <mat-chip (click)="setType('Echtalarm')" [color]="alarm.alarmType === 'Echtalarm' ? 'accent' : ''"
-          [selected]="alarm.alarmType === 'Echtalarm'">Echtalarm</mat-chip>
-        <mat-chip *ngIf="alarm.isFire" (click)="setType('Realbrand')"
-          [color]="alarm.alarmType === 'Realbrand' ? 'accent' : ''" [selected]="alarm.alarmType === 'Realbrand'">
-          Realbrand</mat-chip>
-        <mat-chip *ngIf="alarm.isFire" (click)="setType('Kein Brand')"
-          [color]="alarm.alarmType === 'Kein Brand' ? 'accent' : ''" [selected]="alarm.alarmType === 'Kein Brand'">Kein
-          Brand</mat-chip>
-        <mat-chip (click)="setType('Fehlalarm')" [color]="alarm.alarmType === 'Fehlalarm' ? 'accent' : ''"
-          [selected]="alarm.alarmType === 'Fehlalarm'">Fehlalarm</mat-chip>
-        <mat-chip (click)="setType('Täuschungsalarm')" [color]="alarm.alarmType === 'Täuschungsalarm' ? 'accent' : ''"
-          [selected]="alarm.alarmType === 'Täuschungsalarm'">Täuschungsalarm</mat-chip>
-        <mat-chip (click)="setType('Böswilliger Alarm')"
-          [color]="alarm.alarmType === 'Böswilliger Alarm' ? 'accent' : ''"
-          [selected]="alarm.alarmType === 'Böswilliger Alarm'">Böswilliger Alarm</mat-chip>
+        <mat-chip *ngFor="let option of weatherOptions" (click)="alarm.weather = option"
+          [color]="alarm.weather === option ? 'accent' : ''" [selected]="alarm.weather === option">
+          {{option}}
+        </mat-chip>
       </mat-chip-list>
-      <mat-label>Alarmart</mat-label>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill fxHide fxShow.xs>
+      <mat-label>Wetter</mat-label>
+      <mat-select (selectionChange)="alarm.weather = $event.value" [value]="alarm.weather">
+        <mat-option *ngFor="let option of weatherOptions" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </form>
 
-  <form fxLayout="row" [formGroup]="formGroup">
-    <mat-form-field *ngIf="true" fxFlex="50" fxFlex.lt-md appearance="outline">
+  <form [formGroup]="form">
+    <mat-form-field fxFlex appearance="outline" fxFlexFill fxHide.xs fxShow>
+      <mat-label>Alarmart</mat-label>
+      <mat-chip-list>
+        <mat-chip *ngFor="let alarmType of alarmTypes" (click)="alarm.alarmType = alarmType"
+          [color]="alarm.alarmType === alarmType ? 'accent' : ''" [selected]="alarm.alarmType === alarmType">
+          {{alarmType}}
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill fxHide fxShow.xs>
+      <mat-label>Alarmart</mat-label>
+      <mat-select (selectionChange)="alarm.alarmType = $event.value" [value]="alarm.alarmType">
+        <mat-option *ngFor="let alarmType of alarmTypes" [value]="alarmType">
+          {{alarmType}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <form *ngIf="alarm.isFire && alarm.alarmType === 'Realbrand'" fxLayout="row" [formGroup]="form">
+    <mat-form-field *ngIf="true" fxFlex="33" fxFlex.lt-md appearance="outline">
       <mat-label>Brand aus</mat-label>
-      <input matInput formControlName="fireOut" type="time" (input)="alarm.fireOut = createDateTimeValue('engaged')">
+      <input matInput formControlName="fireOut" type="time" (input)="alarm.fireOut = createDateTimeValue('fireOut')">
     </mat-form-field>
   </form>
 </div>

@@ -20,13 +20,16 @@ export class CustomInputComponent implements OnInit {
 
   constructor() {
     this.valueChanged = new EventEmitter();
-    this.filteredOptions = [];
+    if (this.showOptionsAlways) {
+      this.filteredOptions = this.options;
+    } else {
+      this.filteredOptions = [];
+    }
+    console.log(this.filteredOptions);
     this.errors = [];
   }
 
-  public ngOnInit(): void {
-    this.filteredOptions = this.options;
-  }
+  public ngOnInit(): void { }
 
   public filter(): void {
     const value = this.control.value.toLowerCase();
@@ -42,7 +45,7 @@ export class CustomInputComponent implements OnInit {
     if (this.control.hasError('required')) {
       return 'Feld wird benötigt';
     } else if (this.control.hasError('invalidKeyword')) {
-      return 'Unbekanntes Einsatzstichwort'
+      return 'Ungültiges Einsatzstichwort'
     } else if (this.control.hasError('invalidParish')) {
       return 'Unbekannte Gemeinde';
     } else if (this.control.hasError('invalidLocation')) {

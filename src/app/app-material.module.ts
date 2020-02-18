@@ -23,6 +23,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatRippleModule } from '@angular/material/core';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatNativeDateModule,
     MatButtonToggleModule,
     MatBottomSheetModule,
-    MatRippleModule
+    MatRippleModule,
+    MatMomentDateModule
   ],
   exports: [
     MatToolbarModule,
@@ -75,7 +77,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatNativeDateModule,
     MatButtonToggleModule,
     MatBottomSheetModule,
-    MatRippleModule
+    MatRippleModule,
+    MatMomentDateModule
   ]
 })
 export class AppMaterialModule { }

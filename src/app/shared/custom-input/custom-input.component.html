@@ -1,9 +1,10 @@
 <mat-form-field fxFlex="100" appearance="outline">
-    <mat-label>{{label}}</mat-label>
-    <input matInput [formControl]="control" [matAutocomplete]="complete" (input)="onValueChanged()" (keyup)="filter()">
-    <mat-autocomplete autoActiveFirstOption #complete="matAutocomplete" (optionSelected)="onValueChanged()">
-        <mat-option *ngFor="let option of filteredOptions" [value]="option.name">
-            {{option.name}}</mat-option>
-    </mat-autocomplete>
-    <mat-error *ngIf="control.invalid">{{getErrorMessage()}}</mat-error>
+  <mat-label>{{label}}</mat-label>
+  <input matInput [formControl]="control" [matAutocomplete]="complete" (input)="onValueChanged()" (keyup)="filter()">
+  <mat-autocomplete autoActiveFirstOption #complete="matAutocomplete" (optionSelected)="onValueChanged()">
+    <mat-option *ngFor="let option of filteredOptions" [value]="option.name">
+      {{option.name}}
+    </mat-option>
+  </mat-autocomplete>
+  <mat-error *ngIf="control.invalid">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
