@@ -1,9 +1,11 @@
-<div class="container">
-  <mat-form-field appearance="outline" fxFlexFill>
+<div class="fixed-container" fxLayout="row">
+  <mat-form-field appearance="outline" class="flawless" fxFlex>
     <mat-label>Suchbegriff</mat-label>
     <input matInput (keyup)="onValueChange()" [formControl]="search" />
   </mat-form-field>
+</div>
 
+<div class="container" fxLayout="column">
   <mat-list>
     <mat-list-item *ngFor="let member of filteredMembers" fxLayout="column" matRipple (click)="openDialog(member)">
       <h3 matLine [style.font-weight]="member.position.length !== 0 ? 'bold' : 'normal'">{{member.name}}</h3>

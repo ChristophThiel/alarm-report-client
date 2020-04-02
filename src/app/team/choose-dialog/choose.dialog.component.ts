@@ -14,43 +14,27 @@ export class ChooseDialogComponent {
   public readonly positionsWithoutVehicle: string[] = [
     'Funk',
     'Reserve'
-  ]
+  ];
 
   public form: FormGroup;
+  public isVisible: boolean;
 
   constructor(public dialogRef: MatDialogRef<ChooseDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public builder: FormBuilder) {
+    this.isVisible = data.vehicle.length !== 0 && this.positionsWithoutVehicle.indexOf(data.vehicle) === -1;
     this.form = this.builder.group({
       position: [data.position],
-      vehicle: [data.vehicle, Validators.required]
+      vehicle: [data.vehicle]
     });
-  }
+    this.form.get('position').valueChanges
+      .subscribe(value => {
+        this.isVisible = value.length !== 0 && this.positionsWithoutVehicle.indexOf(value) === -1
+      });
 
-  private buildResult(): any {
-    return {
-      position: this.form.get('position').value,
-      vehicle: this.isPositionWithoutVehicle() ? '' : this.form.get('vehicle').value
-    }
-  }
-
-  public isPositionWithoutVehicle(): boolean {
-    const result = this.positionsWithoutVehicle.indexOf(this.form.get('position').value) !== -1;
-    if (result)
-      this.form.get('vehicle').disable();
-    else
-      this.form.get('vehicle').enable();
-    return result;
-  }
-
-  public onResetClick(): void {
-    this.form.get('position').setValue('');
-    this.form.get('vehicle').setValue('');
-    this.dialogRef.close(this.buildResult());
-  }
-
-  public onSubmit(): void {
-    if (this.form.invalid)
-      return;
-    this.dialogRef.close(this.buildResult());
+    this.dialogRef.backdropClick()
+      .subscribe(_ => this.dialogRef.close({
+        position: this.form.get('position').value,
+        vehicle: this.form.get('vehicle').value
+      }));
   }
 
 }

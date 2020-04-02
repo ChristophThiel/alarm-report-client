@@ -4,8 +4,9 @@
   "main": "electron.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng build --prod && electron .",
+    "new": "ng build --prod && electron . --enable-logging",
     "build": "ng build",
+    "start": "electron . --enable-logging",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -24,7 +25,9 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@types/electron": "^1.6.10",
     "core-js": "^2.5.4",
+    "file-saver": "^2.0.2",
     "jspdf": "^1.5.3",
     "moment": "^2.24.0",
     "rxjs": "~6.5.3",
@@ -39,6 +42,7 @@
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.1",
     "electron": "^7.1.2",
+    "fs": "0.0.1-security",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.5.3"

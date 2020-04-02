@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
-import { Alarm } from '../core/alarm.model';
+import { Alarm } from '../shared/alarm.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { isNullOrUndefined } from 'util';
@@ -19,15 +19,22 @@ export class AlarmedComponent implements OnInit {
   public departments: any[];
   public filteredDepartments: any[];
 
-  public readonly organisations: string[];
+  public organisations: string[];
 
   constructor(private builder: FormBuilder, private http: HttpClient) {
     this.departments = [];
-    this.organisations = environment.organisations;
+    this.organisations = environment.organisations.sort((o1, o2) => {
+      if (o1 > o2)
+        return 1;
+      if (o1 < o2)
+        return -1;
+      return 0;
+    });;
   }
 
   public ngOnInit(): void {
     this.form = this.builder.group({
+      organisation: [''],
       department: ['']
     });
     this.http.get<string[]>(environment.departments)
@@ -41,26 +48,41 @@ export class AlarmedComponent implements OnInit {
     else {
       const help = this.alarm.departments.map(department => department.name);
       this.filteredDepartments = this.departments.filter(department => help.indexOf(department) === -1)
-        .filter(department => department.toLowerCase().startsWith(value.toLowerCase()));
+        .filter(department => department.toLowerCase().startsWith(value.toLowerCase()))
+        .sort((d1, d2) => {
+          if (d1 > d2)
+            return 1;
+          if (d1 < d2)
+            return -1;
+          return 0;
+        });
     }
   }
 
-  public onSubmit(): void {
-    if (this.form.invalid)
+  public onSubmitDepartment(): void {
+    if (!this.validateSubmit('department'))
       return;
 
-    const value = this.form.get('department').value;
-    if (isNullOrUndefined(value))
-      return;
-    if (value.length === 0 || this.alarm.departments.filter(department => department.name === value).length !== 0)
+    const control = this.form.get('department');
+    if (this.alarm.departments.filter(department => department.name === control.value).length !== 0)
       return;
 
     this.alarm.departments.push({
-      name: value,
+      name: control.value,
       isHead: false
     });
-    this.form.reset();
+    control.reset();
     this.filteredDepartments = [];
+  }
+
+  public onSubmitOrganisation(): void {
+    if (!this.validateSubmit('organisation'))
+      return;
+
+    const control = this.form.get('organisation');
+    this.organisations.splice(this.organisations.indexOf(control.value), 1);
+    this.alarm.organisations.push(control.value);
+    control.reset();
   }
 
   public select(department: any): void {
@@ -71,60 +93,29 @@ export class AlarmedComponent implements OnInit {
     department.isHead = true;
   }
 
-  public remove(department: any): void {
+  public removeDepartment(department: any): void {
     if (department.isHead)
       this.alarm.departments[0].isHead = true;
     this.alarm.departments.splice(this.alarm.departments.indexOf(department), 1);
   }
 
-  /* public add(event: any): void {
-    const input = event.input;
-    const value = event.value;
-    if ((value || '\n').trim()) {
-      this.selectedDepartments.push({ name: value.trim(), isHead: false });
-    }
-    if (input) {
-      input.value = '';
-    }
-  }
-
-  public onOptionSelected(event: any): void {
-    console.log(event.option.viewValue)
-    this.selectedDepartments.push({
-      name: event.option.viewValue,
-      isHead: false
+  public removeOrganisation(organisation: string): void {
+    this.alarm.organisations.splice(this.alarm.organisations.indexOf(organisation), 1);
+    this.organisations.push(organisation);
+    this.organisations.sort((o1, o2) => {
+      if (o1 > o2)
+        return 1;
+      if (o1 < o2)
+        return -1;
+      return 0;
     });
   }
 
-  public onValueChanged(): void {
-    const value = this.control.value;
-    if (value.length === 0)
-      return;
-
-    this.filteredDepartments = this.departments.filter(department => this.selectedDepartments.indexOf(selected => selected.name === department))
-      .filter(department => department.startsWith(value));
+  private validateSubmit(formControlName: string): boolean {
+    const control = this.form.get(formControlName);
+    if (control.invalid || isNullOrUndefined(control.value) || control.value.length === 0)
+      return false;
+    return true;
   }
-
-  public remove(department: any): void {
-    if (department.name === 'Marchtrenk')
-      return;
-
-    const index = this.selectedDepartments.indexOf(department);
-    if (index >= 0) {
-      if (this.selectedDepartments[index].isHead) {
-        this.selectedDepartments[0].isHead = true;
-      }
-      this.selectedDepartments.splice(index, 1);
-    }
-  }
-
-  public select(department: any) {
-    console.log(this.selectedDepartments);
-    const index = this.selectedDepartments.indexOf(department);
-    if (index >= 0) {
-      this.selectedDepartments.forEach(department => department.isHead = false);
-      this.selectedDepartments[index].isHead = true;
-    }
-  } */
 
 }

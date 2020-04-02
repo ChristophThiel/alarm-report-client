@@ -1,22 +1,22 @@
-<div class="container">
-  <form fxLayout="row" fxLayoutGap="2.5%" fxHide.lt-lg [formGroup]="form" (submit)="add()">
-    <mat-form-field fxFlex appearance="outline">
-      <mat-label>Nachricht</mat-label>
-      <input matInput formControlName="message">
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
-    <button color="accent" fxFlex="15" mat-stroked-button type="submit">Hinzufügen</button>
-  </form>
+<form class="fixed-container" fxLayout="row" [formGroup]="form" (submit)="onSubmit()">
+  <mat-form-field appearance="outline" class="flawless left" fxFlex="80">
+    <mat-label>Nachricht</mat-label>
+    <input matInput formControlName="message">
+  </mat-form-field>
 
+  <button class="flawless form-submit-button right" color="accent" fxFlex="20" mat-stroked-button type="submit">
+    <span fxHide.xs fxShow>Hinzufügen</span>
+    <mat-icon fxHide.gt-xs fxShow.xs svgIcon="add"></mat-icon>
+  </button>
+</form>
+
+<div class="container">
   <mat-list>
-    <mat-divider></mat-divider>
     <mat-list-item *ngFor="let message of messages" class="truncate" (click)="message.valid = !message.valid">
-      <p [style.text-decoration]="message.valid ? '' : 'line-through'">{{message.value}}</p>
-      <mat-divider></mat-divider>
+      <p [style.text-decoration]="message.valid ? '' : 'line-through'">
+        {{message.value}}
+      </p>
+      <mat-divider *ngIf="hideDivider(message)"></mat-divider>
     </mat-list-item>
   </mat-list>
 </div>
-
-<button mat-fab fxShow.md fxHide.gt-md class="fab-button">
-  <mat-icon svgIcon="add" (click)="openDialog()"></mat-icon>
-</button>

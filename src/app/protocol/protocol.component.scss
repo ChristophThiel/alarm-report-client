@@ -1,6 +1,7 @@
-button {
-  height: 59.5px;
-  margin-top: 4px;
+@import "~src/styles.scss";
+
+mat-list {
+  padding-top: 0;
 }
 
 mat-list-item {
@@ -18,3 +19,5 @@ mat-list-item:hover {
   z-index: 100;
   backface-visibility: hidden;
 }
+
+// Not working in styles.scss

@@ -24,6 +24,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatRippleModule } from '@angular/material/core';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -51,7 +53,9 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter";
     MatButtonToggleModule,
     MatBottomSheetModule,
     MatRippleModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatMenuModule,
+    MatSnackBarModule
   ],
   exports: [
     MatToolbarModule,
@@ -78,7 +82,9 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter";
     MatButtonToggleModule,
     MatBottomSheetModule,
     MatRippleModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatMenuModule,
+    MatSnackBarModule
   ]
 })
 export class AppMaterialModule { }

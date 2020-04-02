@@ -76,9 +76,17 @@
   </form>
 
   <form *ngIf="alarm.isFire && alarm.alarmType === 'Realbrand'" fxLayout="row" [formGroup]="form">
-    <mat-form-field *ngIf="true" fxFlex="33" fxFlex.lt-md appearance="outline">
+    <mat-form-field appearance="outline" class="left" fxFlex="50" fxFlex.gt-md="25">
+      <mat-label>Datum</mat-label>
+      <input formControlName="fireOutDate" matInput readonly [matDatepicker]="fireOutPicker"
+        (click)="fireOutPicker.open()" />
+      <mat-datepicker #fireOutPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="true" appearance="outline" class="right fix-time" fxFlex="50" fxFlex.gt-md="25"
+      (click)="setCurrentTime('fireOut')">
       <mat-label>Brand aus</mat-label>
-      <input matInput formControlName="fireOut" type="time" (input)="alarm.fireOut = createDateTimeValue('fireOut')">
+      <input matInput formControlName="fireOut" type="time">
     </mat-form-field>
   </form>
 </div>

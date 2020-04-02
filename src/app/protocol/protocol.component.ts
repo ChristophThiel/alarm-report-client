@@ -1,11 +1,8 @@
 import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormGroupDirective, FormBuilder } from '@angular/forms';
-import { Alarm } from '../core/alarm.model';
-import { MatTableDataSource } from '@angular/material/table';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Alarm } from '../shared/alarm.model';
 import { MatDialog } from '@angular/material/dialog';
-import { AddEntryComponent } from './add-dialog/add.dialog.component';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-protocol',
@@ -19,50 +16,40 @@ export class ProtocolComponent implements OnInit {
 
   public form: FormGroup;
 
-  public readonly messages: any[];
+  public messages: any[];
 
   constructor(public dialog: MatDialog, private builder: FormBuilder) {
-    this.messages = [
-      {
-        value: '16:04 - Das ist eine Testnachricht',
-        valid: true
-      },
-      {
-        value: '16:12 - Das ist eine Testnachricht 2asdlöfkjas dölfjasdlfjasöldfjasdlfjas ödlfjasöldfjasödlfjasdl fjöasdlfjkasdölfjasdlfkj',
-        valid: true
-      }
-    ]
+    this.messages = []
   }
 
   public ngOnInit(): void {
     this.form = this.builder.group({
-      message: ['', Validators.required]
-    })
+      message: ''
+    });
+    this.initData(this.alarm);
   }
 
-  public add(): void {
+  public hideDivider(message: any): boolean {
+    return this.messages.indexOf(message) !== this.messages.length - 1;
+  }
+
+  public initData(instance: Alarm): void {
+    this.messages = isNullOrUndefined(instance.protocol) ? [] : instance.protocol;
+  }
+
+  public onSubmit(): void {
     if (this.form.invalid)
       return;
-    this.messages.push({
+
+    const value = this.form.get('message').value;
+    if (isNullOrUndefined(value) || value.length === 0)
+      return;
+
+    this.messages.unshift({
       value: this.buildMesssage(this.form.get('message').value),
-      vaid: true
+      valid: true
     });
-  }
-
-  public openDialog(): void {
-    const ref = this.dialog.open(AddEntryComponent, {
-      panelClass: 'dialog-container',
-      disableClose: true,
-    });
-    ref.afterClosed().subscribe(result => {
-      if (isUndefined(result))
-        return;
-
-      this.messages.push({
-        value: this.buildMesssage(result.message),
-        valid: true
-      });
-    });
+    this.form.reset();
   }
 
   private buildMesssage(value: string): string {

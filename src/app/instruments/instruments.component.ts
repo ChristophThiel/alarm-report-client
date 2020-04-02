@@ -1,9 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormGroupDirective, FormBuilder } from '@angular/forms';
-import { Alarm } from '../core/alarm.model';
-import { isUndefined } from 'util';
-import { MatDialog } from '@angular/material/dialog';
-import { AddInstrumentComponent } from './add-dialog/add.dialog.component';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Alarm } from '../shared/alarm.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -17,58 +14,76 @@ export class InstrumentsComponent implements OnInit {
   @Input()
   public alarm: Alarm;
 
-  public form: FormGroup;
+  public vehicleForm: FormGroup;
+  public deviceForm: FormGroup;
+
   public vehicles: string[];
 
-  constructor(private builder: FormBuilder, private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private builder: FormBuilder, private http: HttpClient) { }
 
   public ngOnInit(): void {
-    this.form = this.builder.group({
+    this.deviceForm = this.builder.group({
       name: ['', Validators.required],
-      amount: ['', Validators.required]
+      amount: ['', [Validators.required, Validators.min(1)]]
     });
-    this.http.get<string[]>(environment.vehicles).subscribe(data => this.vehicles = data);
+    this.vehicleForm = this.builder.group({
+      name: ['', Validators.required],
+      range: ['', [Validators.required, Validators.min(1)]]
+    });
+    this.http.get<string[]>(environment.vehicles).subscribe(data => this.vehicles = data.sort((v1, v2) => {
+      if (v1 > v2)
+        return 1;
+      else if (v1 < v2)
+        return -1
+      return 0;
+    }));
   }
 
-  public onSubmit(directive: FormGroupDirective): void {
-    if (this.form.invalid)
+  public onDeviceSubmit(): void {
+    if (this.deviceForm.invalid)
       return;
 
-    this.add({
-      name: this.form.get('name').value,
-      amount: +this.form.get('amount').value
-    });
-    directive.resetForm();
-  }
-
-  public openDialog(): void {
-    const ref = this.dialog.open(AddInstrumentComponent, {
-      panelClass: 'dialog-container',
-      disableClose: true,
-      autoFocus: false
-    });
-    ref.afterClosed().subscribe(result => {
-      if (isUndefined(result))
-        return;
-
-      this.add(result);
-    })
-  }
-
-  public remove(remove: any): void {
-    this.alarm.devices.splice(this.alarm.devices.indexOf(remove), 1);
-  }
-
-  private add(add: any): void {
-    const found = this.alarm.devices.filter(device => device.name === add.name)[0];
-    if (isUndefined(found)) {
+    const name = this.deviceForm.get('name').value;
+    const amount = +this.deviceForm.get('amount').value;
+    const search = this.alarm.devices.filter(device => device.name === name);
+    if (search.length > 0)
+      search[0].amount += amount;
+    else
       this.alarm.devices.push({
-        name: add.name,
-        amount: add.amount
+        name: name,
+        amount: amount
       });
-    } else {
-      found.amount += add.amount;
-    }
+    this.deviceForm.reset();
+  }
+
+  public onVehicleSubmit(): void {
+    if (this.vehicleForm.invalid)
+      return;
+
+    const name = this.vehicleForm.get('name').value
+    const range = +this.vehicleForm.get('range').value;
+    this.alarm.vehicles.push({
+      name: name,
+      range: range
+    });
+    this.vehicles.splice(this.vehicles.indexOf(name), 1);
+    this.vehicleForm.reset();
+  }
+
+  public removeVehicle(vehicle: any): void {
+    this.alarm.vehicles.splice(this.alarm.vehicles.indexOf(vehicle), 1);
+    this.vehicles.push(vehicle.name);
+    this.vehicles.sort((v1, v2) => {
+      if (v1 > v2)
+        return 1;
+      else if (v1 < v2)
+        return -1
+      return 0;
+    });
+  }
+
+  public removeDevice(device: any): void {
+    this.alarm.devices.splice(this.alarm.devices.indexOf(device), 1);
   }
 
 }

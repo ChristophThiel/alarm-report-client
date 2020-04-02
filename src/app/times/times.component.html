@@ -47,14 +47,14 @@
       </mat-form-field>
     </form>
 
-    <form fxFlex fxFlex.gt-md="calc(100% / 2 - 8px)" [formGroup]="form" (click)="setCurrentTime('stop')">
+    <form fxFlex fxFlex.gt-md="calc(100% / 2 - 8px)" [formGroup]="form">
       <mat-form-field appearance="outline" class="left" fxFlex="50">
         <mat-label>Datum</mat-label>
         <input formControlName="stopDate" matInput readonly [matDatepicker]="stopPicker" (click)="stopPicker.open()" />
         <mat-datepicker #stopPicker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="right fix-time" fxFlex="50">
+      <mat-form-field appearance="outline" class="right fix-time" fxFlex="50" (click)="setCurrentTime('stop')">
         <mat-label>Alarmstopp</mat-label>
         <input matInput formControlName="stop" type="time" />
         <mat-error *ngIf="form.invalid">{{getErrorMessage('stop')}}</mat-error>

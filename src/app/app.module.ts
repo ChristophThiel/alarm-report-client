@@ -12,19 +12,17 @@ import { AppComponent } from './app.component';
 import { GeneralComponent } from './general/general.component';
 import { TimesComponent } from './times/times.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
-import { AddInstrumentComponent } from './instruments/add-dialog/add.dialog.component';
 import { TeamComponent } from './team/team.component';
 import { ChooseDialogComponent } from './team/choose-dialog/choose.dialog.component';
 import { ProtocolComponent } from './protocol/protocol.component';
-import { AddEntryComponent } from './protocol/add-dialog/add.dialog.component';
 import { SpecialComponent } from './special/special.component';
 import { AlarmedComponent } from './alarmed/alarmed.component';
 
-import { DatePipe } from '@angular/common';
-import { ValidatorsService } from './core/validators.service';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { ValidatorsService } from './shared/validators.service';
+import { CommunicatorService } from './shared/communicator.service';
+import { MAT_DATE_LOCALE, ErrorStateMatcher } from '@angular/material/core';
 
-import { CustomInputComponent } from './shared/custom-input/custom-input.component';
+import { CustomErrorStateMatcher } from './shared/custom.matcher';
 
 @NgModule({
   declarations: [
@@ -32,14 +30,11 @@ import { CustomInputComponent } from './shared/custom-input/custom-input.compone
     GeneralComponent,
     TimesComponent,
     InstrumentsComponent,
-    AddInstrumentComponent,
     TeamComponent,
     ChooseDialogComponent,
     ProtocolComponent,
-    AddEntryComponent,
     SpecialComponent,
-    AlarmedComponent,
-    CustomInputComponent
+    AlarmedComponent
   ],
   imports: [
     BrowserModule,
@@ -52,17 +47,19 @@ import { CustomInputComponent } from './shared/custom-input/custom-input.compone
     ScrollingModule
   ],
   providers: [
-    DatePipe,
     ValidatorsService,
+    CommunicatorService,
     {
       provide: MAT_DATE_LOCALE,
       useValue: 'de-AT'
+    },
+    {
+      provide: ErrorStateMatcher,
+      useClass: CustomErrorStateMatcher
     }
   ],
   entryComponents: [
-    AddInstrumentComponent,
-    ChooseDialogComponent,
-    AddEntryComponent
+    ChooseDialogComponent
   ],
   bootstrap: [AppComponent]
 })

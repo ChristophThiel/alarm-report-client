@@ -1,31 +1,50 @@
 export const environment = {
   production: true,
-  departments: '/assets/departments.json',
-  members: '/assets/members.json',
-  keywords: '/assets/keywords.json',
-  vehicles: '/assets/vehicles.json',
+  departments: './assets/departments.json',
+  members: './assets/members.json',
+  vehicles: './assets/vehicles.json',
   types: [
     'Brand',
     'Technisch'
   ],
+  alarmTypes: [
+    'Echtalarm',
+    'Realbrand',
+    'Kein Brand',
+    'Fehlalarm',
+    'Täuschungsalarm',
+    'Böswilliger Alarm'
+  ],
+  mainAcitivites: './assets/mainActivities.json',
+  sideActivities: './assets/sideActivities.json',
   alarmedByOptions: [
     'LWZ/BWST',
     'OvD',
     'Andere'
   ],
+  officers: [
+    'Fraungruber Thomas',
+    'Deutsch Oliver',
+    'Sadleder Thomas',
+    'Zindl Daniel',
+    'Müller Andreas',
+    'Zimprich Christoph',
+    'Himpsl Daniel',
+    'Greinegger Alexander'
+  ],
   organisations: [
-    'Rotes Kreuz',
-    'Polizei',
     'Abschleppdienst',
-    'Gemeinde',
-    'Behörde',
-    'Stromversorger',
-    'Gasunternehmen',
-    'ÖBB',
-    'Straßenmeisterei',
-    'Bestatter',
     'AFK',
-    'BFK'
+    'Behörde',
+    'Bestatter',
+    'BFK',
+    'Gasunternehmen',
+    'Gemeinde',
+    'ÖBB',
+    'Polizei',
+    'Rotes Kreuz',
+    'Straßenmeisterei',
+    'Stromversorger'
   ],
   positions: [
     'Atemschutzträger',

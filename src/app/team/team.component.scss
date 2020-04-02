@@ -1,7 +1,8 @@
-mat-chip {
-  cursor: pointer;
-  font-size: 12pt;
-  height: auto;
+@import "~src/styles.scss";
+
+mat-list {
+  padding-top: 0;
+  margin: 0 8px 16px 8px;
 }
 
 mat-list-item {

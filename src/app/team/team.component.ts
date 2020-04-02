@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Alarm } from '../core/alarm.model';
+import { Alarm } from '../shared/alarm.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ChooseDialogComponent } from './choose-dialog/choose.dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-team',
@@ -21,13 +23,13 @@ export class TeamComponent implements OnInit {
   public members: any[];
   public filteredMembers: any[];
 
-  constructor(private builder: FormBuilder, private http: HttpClient, private dialog: MatDialog) {
+  constructor(private builder: FormBuilder, private http: HttpClient, private dialog: MatDialog, private snackbar: MatSnackBar) {
     this.members = [];
   }
 
   public ngOnInit(): void {
     this.search = this.builder.control('');
-    this.initData();
+    this.initData(this.alarm);
   }
 
   public buildInfo(member: any): string {
@@ -36,36 +38,52 @@ export class TeamComponent implements OnInit {
     return `${member.position} - ${member.vehicle}`;
   }
 
+  public initData(instance: Alarm): void {
+    if (instance.team.length !== 0) {
+      this.members = instance.team;
+      this.filteredMembers = this.members;
+    } else {
+      this.http.get<any[]>(environment.members)
+        .subscribe(data => {
+          this.members = data;
+          this.filteredMembers = data;
+        });
+    }
+  }
+
   public onValueChange(): void {
     if (this.search.value.length === 0)
       this.filteredMembers = this.members;
     else
-      this.filteredMembers = this.members.filter(member => member.name.indexOf(this.search.value) !== -1);
+      this.filteredMembers = this.members.filter(member => member.name.toLowerCase().indexOf(this.search.value.toLowerCase()) !== -1);
   }
 
   public openDialog(member: any): void {
+    if (this.alarm.vehicles.length === 0) {
+      this.snackbar.open('Keine Fahrzeuge ausgewählt!', '', {
+        duration: 2000,
+        panelClass: 'snackbar-container'
+      });
+      return;
+    }
     const ref = this.dialog.open(ChooseDialogComponent, {
-      panelClass: 'dialog-container',
       disableClose: true,
+      panelClass: 'dialog-container',
       data: {
         position: member.position,
         vehicle: member.vehicle,
         vehicles: this.alarm.vehicles
+          .map(vehicle => vehicle.name)
       }
     });
     ref.afterClosed().subscribe(result => {
+      console.log(result);
+      if (!result)
+        return;
       member.position = result.position;
       member.vehicle = result.vehicle;
-    })
-  }
-
-
-  private initData(): void {
-    this.http.get<any[]>(environment.members)
-      .subscribe(data => {
-        this.members = data;
-        this.filteredMembers = data;
-      });
+      this.alarm.team = this.members;
+    });
   }
 
 }

@@ -5,6 +5,8 @@ $primary: mat-palette($mat-blue-gray, 800);
 $accent: mat-palette($mat-teal);
 $error: mat-palette($mat-red, A700);
 
+$background: #FAFAFA;
+
 $theme: mat-light-theme($primary, $accent, $error);
 
 @include angular-material-theme($theme);
@@ -16,19 +18,15 @@ html, body {
 body { 
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #FAFAFA;
-}
-
-form {
-  padding-bottom: 0;
-
-  @media screen and (max-width: 599px) {
-    padding-bottom: 13px;
-  }
+  background-color: $background;
 }
 
 input::-webkit-clear-button, input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {
   display: none;
+}
+
+textarea {
+  min-height: 35px !important;
 }
 
 textarea::-webkit-inner-spin-button {
@@ -41,6 +39,24 @@ mat-chip {
   height: auto;
 }
 
+mat-divider {
+  border-top-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.container {
+  min-width: 567.2px;
+  width: 60vw;
+  margin: 16px auto 16px auto;
+  overflow: hidden;
+
+  @media screen and (max-width: 599px) {
+    min-width: 0;
+    max-width: calc(100vw - 32px);
+    width: calc(100vw - 32px);
+    margin: 16px;
+  }
+}
+
 .dialog-container {
   width: 40vw !important;
   min-width: 450px !important;
@@ -51,25 +67,37 @@ mat-chip {
   }
 }
 
-.container {
-  min-width: 567.2px;
+.fixed-container {
+  position: sticky;
+  top: 0;
   width: 60vw;
-  margin: 16px auto 16px auto;
+  min-width: 567.2px !important;
+  padding-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: $background;
+  z-index: 99;
 
   @media screen and (max-width: 599px) {
-    min-width: 0;
-    max-width: calc(100vw - 32px);
-    width: calc(100vw - 32px);
-    margin: 16px 16px 0 16px;
+    min-width: 0 !important;
+    width: 100vw;
+    padding: 16px;
   }
 }
 
-.form-submit-button {
-  height: 59.5px !important;
+snack-bar-container {
+  margin: 16px !important;    
 }
 
-.fix-button {
-  margin-top: 4px;
+// 21.5px is the padding of an mat-form-field-wrapper, 8px is the margin of an mat-form-field-wrapper
+.form-submit-button {
+  margin-top: 4px !important;
+  margin-bottom: calc(21.5px + 16px) !important;
+}
+
+.form-submit-button.flawless {
+  margin-top: 4px !important;
+  margin-bottom: 0 !important
 }
 
 .truncate {
@@ -91,12 +119,24 @@ mat-chip {
   }
 }
 
+.mat-stroked-button.left {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
 .center {
   ::ng-deep {
       .mat-form-field-outline-start, .mat-form-field-outline-end {
           border-radius: 0 !important;
       }
   }
+}
+
+.mat-stroked-button.center {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important
 }
 
 .right {
@@ -107,21 +147,39 @@ mat-chip {
   }
 }
 
+.mat-stroked-button.right {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
 .is-center {
   input {
     text-align: center;
   }
 }
 
-// If input is of type time then its height will be increased by 5px
-// To fix this behaviour, the mat-form-field must have the class fix-time
 ::ng-deep {
+  .mat-form-field-wrapper {
+    margin-bottom: 16px !important
+  }
+
+  .mat-form-field.flawless {
+    .mat-form-field-wrapper {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+  }
+
+  .mat-stroked-button {
+    min-width: 0px !important;
+  }
+
+  // If input is of type time then its height will be increased by 5px
+  // To fix this behaviour, the mat-form-field must have the class fix-time
   .mat-form-field.fix-time {
     .mat-form-field-wrapper {
       .mat-form-field-flex {
-        .mat-form-field-outline {
-          height: calc(100% - 5px) !important;
-        }
+        height: 63.1px !important;
       }
     }
   }

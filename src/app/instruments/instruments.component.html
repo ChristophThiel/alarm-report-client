@@ -1,36 +1,65 @@
-<div class="container">
-  <form [formGroup]="form">
-    <mat-form-field appearance="outline" fxFlex>
-      <mat-label>Fahrzeuge</mat-label>
-      <mat-select multiple (selectionChange)="alarm.vehicles = $event.value" [value]="alarm.vehicles">
+<div class="container" fxLayout="column">
+  <form fxLayout="row" [formGroup]="vehicleForm" (submit)="onVehicleSubmit()">
+    <mat-form-field appearance="outline" class="left" fxFlex.gt-xs="60" fxFlex.xs="40">
+      <mat-label>Fahrzeug</mat-label>
+      <mat-select formControlName="name">
         <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle">{{vehicle}}</mat-option>
       </mat-select>
+      <mat-error *ngIf="vehicleForm.get('name').invalid">Feld wird benötigt</mat-error>
     </mat-form-field>
+
+    <mat-form-field appearance="outline" class="center is-center" fxFlex.gt-xs="20" fxFlex.xs="40">
+      <mat-label>Kilometer</mat-label>
+      <input formControlName="range" matInput min="1" type="number">
+      <mat-error *ngIf="vehicleForm.get('range').hasError('required')">Feld wird benötigt</mat-error>
+      <mat-error *ngIf="vehicleForm.get('range').hasError('min')">Ungültiger Wert</mat-error>
+    </mat-form-field>
+
+    <button class="form-submit-button right" color="accent" fxFlex="20" mat-stroked-button type="submit">
+      <span fxHide.xs fxShow>Hinzufügen</span>
+      <mat-icon fxHide.gt-xs fxShow.xs svgIcon="add"></mat-icon>
+    </button>
   </form>
 
-  <form #directive="ngForm" fxLayout="row" fxHide.lt-lg (submit)="onSubmit(directive)" [formGroup]="form">
-    <mat-form-field appearance="outline" class="left" fxFlex="60">
-      <mat-label>Gerätename</mat-label>
-      <input formControlName="name" matInput>
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="center is-center" fxFlex="20">
-      <mat-label>Anzahl</mat-label>
-      <input formControlName="amount" matInput placeholder="0" type="number">
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
-
-    <button class="form-submit-button fix-button right" color="accent" fxFlex="20" mat-stroked-button
-      type="submit">Hinzufügen</button>
-  </form>
-
-  <!-- Same solution as used in team.component.html -->
-  <form fxLayout="column" [formGroup]="form">
-    <mat-form-field *ngIf="alarm.devices.length !== 0" appearance="outline" floatLabel="always" fxFlex>
-      <mat-label>Geräte</mat-label>
+  <form [formGroup]="vehicleForm">
+    <mat-form-field appearance="outline" fxFlex floatLabel="always">
+      <mat-label>Eingesetzte Fahrzeuge</mat-label>
       <mat-chip-list #chipList>
-        <mat-chip *ngFor="let device of alarm.devices" (removed)="remove(device)">
+        <mat-chip *ngIf="alarm.vehicles.length === 0" style="visibility: hidden;"></mat-chip>
+        <mat-chip *ngFor="let vehicle of alarm.vehicles" (removed)="removeVehicle(vehicle)">
+          {{vehicle.name}} ({{vehicle.range}} km)
+          <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
+
+  <form fxLayout="row" [formGroup]="deviceForm" (submit)="onDeviceSubmit()">
+    <mat-form-field appearance="outline" class="left" fxFlex.gt-xs="60" fxFlex.xs="40">
+      <mat-label>Gerät</mat-label>
+      <input formControlName="name" matInput>
+      <mat-error *ngIf="deviceForm.get('name').invalid">Feld wird benötigt</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="center is-center" fxFlex.gt-xs="20" fxFlex.xs="40">
+      <mat-label>Anzahl</mat-label>
+      <input formControlName="amount" matInput min="1" type="number">
+      <mat-error *ngIf="deviceForm.get('amount').hasError('required')">Feld wird benötigt</mat-error>
+      <mat-error *ngIf="deviceForm.get('amount').hasError('min')">Ungültiger Wert</mat-error>
+    </mat-form-field>
+
+    <button class="form-submit-button right" color="accent" fxFlex="20" mat-stroked-button type="submit">
+      <span fxHide.xs fxShow>Hinzufügen</span>
+      <mat-icon fxHide.gt-xs fxShow.xs svgIcon="add"></mat-icon>
+    </button>
+  </form>
+
+  <form [formGroup]="deviceForm">
+    <mat-form-field appearance="outline" fxFlex floatLabel="always">
+      <mat-label>Eingesetzte Geräte</mat-label>
+      <mat-chip-list #chipList>
+        <mat-chip *ngIf="alarm.devices.length === 0" style="visibility: hidden;"></mat-chip>
+        <mat-chip *ngFor="let device of alarm.devices" (removed)="removeDevice(device)">
           {{device.amount}}x {{device.name}}
           <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
         </mat-chip>
@@ -38,7 +67,3 @@
     </mat-form-field>
   </form>
 </div>
-
-<button mat-fab fxShow.md fxHide.gt-md class="fab-button" (click)="openDialog()">
-  <mat-icon svgIcon="add"></mat-icon>
-</button>

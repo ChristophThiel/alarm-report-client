@@ -1,77 +1,289 @@
 <div class="container">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
+    <form fxFlex="calc(50% - 8px)" fxLayout="column" [formGroup]="form">
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="left" fxFlex="35">
+          <mat-label>Alarmtyp</mat-label>
+          <mat-select formControlName="type" (selectionChange)="alarm.isFire = $event.value === types[0]">
+            <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right" fxFlex="65">
+          <mat-label>Alarmart</mat-label>
+          <mat-select (selectionChange)="alarm.alarmType = $event.value" [value]="alarm.alarmType">
+            <mat-option *ngFor="let alarmType of alarmTypes" [value]="alarmType">
+              {{alarmType}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="left" fxFlex="35">
+          <mat-label>Alarmiert von</mat-label>
+          <mat-select formControlName="alarmed" (selectionChange)="onAlarmedChanged()">
+            <mat-option *ngFor="let option of alarmedByOptions" [value]="option">{{option}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="form.get('alarmed').value !== alarmedByOptions[1]" appearance="outline" class="right"
+          fxFlex="65">
+          <mat-label>Information</mat-label>
+          <input matInput formControlName="others" (input)="alarm.others = form.get('others').value">
+          <mat-error>Feld wird benötigt</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="form.get('alarmed').value === alarmedByOptions[1]" appearance="outline" class="right"
+          fxFlex="65">
+          <mat-label>Person</mat-label>
+          <mat-select formControlName="others" (selectionChange)="alarm.others = $event.value">
+            <mat-option *ngFor="let officer of officers" [value]="officer">{{officer}}</mat-option>
+          </mat-select>
+          <mat-error>Feld wird benötigt</mat-error>
+        </mat-form-field>
+      </form>
+
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="left" fxFlex="50">
+          <mat-label>Hauptaktivität</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword.name">{{keyword.name}}</mat-option>
+          </mat-select>
+          <!-- <mat-error>{{getErrorMessage('keyword')}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right" fxFlex="50">
+          <mat-label>Nebenaktivität</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword.name">{{keyword.name}}</mat-option>
+          </mat-select>
+          <!-- <mat-error>{{getErrorMessage('keyword')}}</mat-error> -->
+        </mat-form-field>
+      </form>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Gemeinde</mat-label>
+        <input formControlName="parish" matInput (input)="this.alarm.parish = form.get('parish').value">
+        <mat-error>Feld wird benötigt</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Einsatzort</mat-label>
+        <input formControlName="location" matInput (input)="this.alarm.location = form.get('location').value">
+        <mat-error>Feld wird benötigt</mat-error>
+      </mat-form-field>
+
+      <form [formGroup]="form">
+        <mat-form-field fxFlex="50" appearance="outline" class="left is-center" floatLabel="always">
+          <mat-label>Verletzte Personen</mat-label>
+          <input matInput placeholder="0" type="number" min="0"
+            (input)="alarm.involved[0] = form.get('hurtPeople').value">
+          <mat-error>Ungültiger Wert</mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" appearance="outline" class="right is-center" floatLabel="always">
+          <mat-label>Getötete Personen</mat-label>
+          <input matInput placeholder="0" type="number" (input)="alarm.involved[1] = form.get('killedPeople').value">
+          <mat-error>Ungültiger Wert</mat-error>
+        </mat-form-field>
+      </form>
+
+      <form [formGroup]="form">
+        <mat-form-field fxFlex="50" appearance="outline" class="left is-center" floatLabel="always">
+          <mat-label>Verletzte Tiere</mat-label>
+          <input matInput placeholder="0" type="number" (input)="alarm.involved[2] = form.get('hurtAnimals').value">
+          <mat-error>Ungültiger Wert</mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" appearance="outline" class="right is-center" floatLabel="always">
+          <mat-label>Getötete Tiere</mat-label>
+          <input matInput placeholder="0" type="number" (input)="alarm.involved[3] = form.get('killedAnimals').value">
+          <mat-error>Ungültiger Wert</mat-error>
+        </mat-form-field>
+      </form>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Wetter</mat-label>
+        <mat-select (selectionChange)="alarm.weather = $event.value" [value]="alarm.weather">
+          <mat-option *ngFor="let option of weatherOptions" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-divider fxHide fxShow.xs style="margin-bottom: 33.5px"></mat-divider>
+    </form>
+
+    <form fxFlex="calc(50% - 8px)" fxLayout="column" [formGroup]="form">
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="left" fxFlex="50">
+          <mat-label>Datum</mat-label>
+          <input matInput readonly [matDatepicker]="alarmedPicker" (click)="alarmedPicker.open()" />
+          <mat-datepicker #alarmedPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+          <mat-label>Alarmiert</mat-label>
+          <input matInput type="time" />
+        </mat-form-field>
+      </form>
+
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="left" fxFlex="50">
+          <mat-label>Datum</mat-label>
+          <input matInput readonly [matDatepicker]="engagedPicker" (click)="engagedPicker.open()" />
+          <mat-datepicker #engagedPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+          <mat-label>Ausgerückt</mat-label>
+          <input matInput type="time" />
+        </mat-form-field>
+      </form>
+
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="left" fxFlex="50">
+          <mat-label>Datum</mat-label>
+          <input matInput readonly [matDatepicker]="reachedPicker" (click)="reachedPicker.open()" />
+          <mat-datepicker #reachedPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+          <mat-label>Einsatzort</mat-label>
+          <input matInput type="time" />
+        </mat-form-field>
+      </form>
+
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="left" fxFlex="50">
+          <mat-label>Datum</mat-label>
+          <input matInput readonly [matDatepicker]="stopPicker" (click)="stopPicker.open()" />
+          <mat-datepicker #stopPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+          <mat-label>Alarmstopp</mat-label>
+          <input matInput type="time" />
+        </mat-form-field>
+      </form>
+
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="left" fxFlex="50">
+          <mat-label>Datum</mat-label>
+          <input matInput readonly [matDatepicker]="indentedPicker" (click)="indentedPicker.open()" />
+          <mat-datepicker #indentedPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+          <mat-label>Eingerückt</mat-label>
+          <input matInput type="time" />
+        </mat-form-field>
+      </form>
+
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="left" fxFlex="50">
+          <mat-label>Datum</mat-label>
+          <input matInput readonly [matDatepicker]="readyPicker" (click)="readyPicker.open()" />
+          <mat-datepicker #readyPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+          <mat-label>Einsatzbereit</mat-label>
+          <input matInput type="time" />
+        </mat-form-field>
+      </form>
+
+      <form *ngIf="alarm.alarmType === alarmTypes[1]" fxLayout="row" [formGroup]="form">
+        <mat-form-field appearance="outline" class="left" fxFlex="50">
+          <mat-label>Datum</mat-label>
+          <input matInput readonly [matDatepicker]="fireOutPicker" />
+          <mat-datepicker #fireOutPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="true" appearance="outline" class="right fix-time is-center" fxFlex="50">
+          <mat-label>Brand aus</mat-label>
+          <input matInput type="time">
+        </mat-form-field>
+      </form>
+    </form>
+  </div>
+
+  <mat-divider style="margin-bottom: 33.5px"></mat-divider>
+
   <form [formGroup]="form">
-    <mat-form-field appearance="outline" class="left" fxFlex="35">
-      <mat-label>Einsatzart</mat-label>
-      <mat-select formControlName="type" (selectionChange)="onTypeChanged()">
-        <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
-      </mat-select>
+    <mat-form-field appearance="outline" class="left" fxFlex="80">
+      <mat-label>Feuerwehr</mat-label>
+      <input matInput [matAutocomplete]="complete" (input)="filter()">
+      <mat-autocomplete #complete="matAutocomplete" autoActiveFirstOption>
+        <!-- <mat-option *ngFor="let department of filteredDepartments" [value]="department">
+          {{department}}
+        </mat-option> -->
+      </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="right" fxFlex="65">
-      <mat-label>Einsatzstichwort</mat-label>
-      <mat-select formControlName="keyword" (selectionChange)="alarm.keyword = this.form.get('keyword').value">
-        <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword.name">{{keyword.name}}</mat-option>
-      </mat-select>
-      <mat-error>{{getErrorMessage('keyword')}}</mat-error>
+    <button class="form-submit-button right" color="accent" fxFlex="20" mat-stroked-button type="submit">
+      <span fxHide.xs fxShow>Hinzufügen</span>
+      <mat-icon fxHide.gt-xs fxShow.xs svgIcon="add"></mat-icon>
+    </button>
+  </form>
+
+  <form [formGroup]="form">
+    <mat-form-field *ngIf="alarm.departments.length !== 0" appearance="outline" floatLabel="always" fxFlex>
+      <mat-label>Involvierte Feuerwehren</mat-label>
+      <mat-chip-list>
+        <mat-chip *ngFor="let department of alarm.departments" [color]="department.isHead ? 'accent' : ''"
+          [selected]="department.isHead" (click)="select(department)" (removed)="removeDepartment(department)">
+          {{department.name}}
+          <mat-icon *ngIf="department.name !== 'Marchtrenk'" matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+      </mat-chip-list>
     </mat-form-field>
   </form>
 
   <form [formGroup]="form">
-    <mat-form-field appearance="outline" class="left" fxFlex="35">
-      <mat-label>Gemeinde</mat-label>
-      <input formControlName="parish" matInput (input)="this.alarm.parish = form.get('parish').value">
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="right" fxFlex>
-      <mat-label>Einsatzort</mat-label>
-      <input formControlName="location" matInput (input)="this.alarm.location = form.get('location').value">
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
-  </form>
-
-  <form [formGroup]="form">
-    <mat-form-field appearance="outline" class="left" fxFlex="35">
-      <mat-label>Alarmiert von</mat-label>
-      <mat-select formControlName="alarmed" (selectionChange)="onAlarmedChanged()">
-        <mat-option *ngFor="let option of alarmedByOptions" [value]="option">{{option}}</mat-option>
+    <mat-form-field appearance="outline" class="left" fxFlex="80">
+      <mat-label>Organisation</mat-label>
+      <mat-select>
+        <!-- <mat-option *ngFor="let organisation of organisations" [value]="organisation">{{organisation}}</mat-option> -->
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field *ngIf="form.get('alarmed').value !== alarmedByOptions[1]" appearance="outline" class="right" fxFlex>
-      <mat-label>Information</mat-label>
-      <input matInput formControlName="others" (input)="alarm.others = form.get('others').value">
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
-
-    <mat-form-field *ngIf="form.get('alarmed').value === alarmedByOptions[1]" appearance="outline" class="right" fxFlex>
-      <mat-label>Information</mat-label>
-      <mat-select *ngIf="form.get('alarmed').value === alarmedByOptions[1]">
-        <mat-option value="OvDs hier einfügen">OvDs hier einfügen</mat-option>
-      </mat-select>
-      <mat-error>Feld wird benötigt</mat-error>
-    </mat-form-field>
-
+    <button class="form-submit-button right" color="accent" fxFlex="20" mat-stroked-button type="submit">
+      <span fxHide.xs fxShow>Hinzufügen</span>
+      <mat-icon fxHide.gt-xs fxShow.xs svgIcon="add"></mat-icon>
+    </button>
   </form>
 
-  <form [formGroup]="form">
+  <form fxLayout="column" [formGroup]="form">
+    <mat-form-field *ngIf="alarm.departments.length !== 0" appearance="outline" floatLabel="always" fxFlex>
+      <mat-label>Involvierte Organisationen</mat-label>
+      <mat-chip-list>
+        <mat-chip *ngIf="alarm.organisations.length === 0" style="visibility: hidden;"></mat-chip>
+        <mat-chip *ngFor="let organisation of alarm.organisations" (removed)="removeOrganisation(organisation)">
+          {{organisation}}
+          <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
+
+  <mat-divider style="margin-bottom: 33.5px"></mat-divider>
+
+  <form fxLayout="column" [formGroup]="form">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Schadenslage</mat-label>
       <textarea matInput formControlName="damage" cdkTextareaAutosize
         (input)="alarm.damage = form.get('damage').value"></textarea>
     </mat-form-field>
-  </form>
 
-  <form [formGroup]="form">
     <mat-form-field fxFlex appearance="outline">
       <mat-label>Vorkommnisse</mat-label>
       <textarea matInput formControlName="events" cdkTextareaAutosize
         (input)="alarm.events = form.get('events').value"></textarea>
     </mat-form-field>
-  </form>
 
-  <form [formGroup]="form">
-    <mat-form-field fxFlex appearance="outline">
+    <mat-form-field appearance="outline" fxFlex>
       <mat-label>Tätigkeiten</mat-label>
       <textarea matInput formControlName="activities" cdkTextareaAutosize
         (input)="alarm.activities = form.get('activities').value"></textarea>

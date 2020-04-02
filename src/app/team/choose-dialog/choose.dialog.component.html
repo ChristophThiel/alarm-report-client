@@ -1,6 +1,6 @@
 <mat-dialog-content>
   <h2 mat-dialog-title>Position auswählen</h2>
-  <form fxLayout="column" (submit)="onSubmit()" [formGroup]="form">
+  <form fxLayout="column" [formGroup]="form">
     <mat-form-field appearance="outline" fxFlex>
       <mat-label>Position</mat-label>
       <mat-select formControlName="position">
@@ -8,15 +8,12 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="bottom" fxFlex>
+    <mat-form-field *ngIf="isVisible" appearance="outline" class="flawless" fxFlex>
       <mat-label>Fahrzeug</mat-label>
-      <mat-select formControlName="vehicle" [disabled]="isPositionWithoutVehicle()">
+      <mat-select formControlName="vehicle">
         <mat-option *ngFor="let vehicle of data.vehicles" [value]="vehicle">{{vehicle}}</mat-option>
       </mat-select>
-      <mat-error *ngIf="form.invalid">Feld wird benötigt</mat-error>
     </mat-form-field>
-
-    <button class="form-submit-button" mat-button type="button" (click)="onResetClick()">Zurücksetzen</button>
-    <button class="form-submit-button" color="accent" mat-button type="submit">Speichern</button>
   </form>
+  <button color="primary" mat-stroked-button>Fertig</button>
 </mat-dialog-content>

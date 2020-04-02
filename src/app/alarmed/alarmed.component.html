@@ -1,14 +1,32 @@
-<div class="container" fxLayout="column">
-  <mat-form-field appearance="outline" fxFlex>
-    <mat-label>Eingesetzte Organisationen</mat-label>
-    <mat-select multiple (selectionChange)="alarm.organisations = $event.value" [value]="alarm.organisations">
-      <mat-option *ngFor="let organisation of organisations" [value]="organisation">
-        {{organisation}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="container">
+  <form [formGroup]="form" (submit)="onSubmitOrganisation()">
+    <mat-form-field appearance="outline" class="left" fxFlex="80">
+      <mat-label>Organisation</mat-label>
+      <mat-select formControlName="organisation">
+        <mat-option *ngFor="let organisation of organisations" [value]="organisation">{{organisation}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <form [formGroup]="form" (submit)="onSubmit()">
+    <button class="form-submit-button right" color="accent" fxFlex="20" mat-stroked-button type="submit">
+      <span fxHide.xs fxShow>Hinzufügen</span>
+      <mat-icon fxHide.gt-xs fxShow.xs svgIcon="add"></mat-icon>
+    </button>
+  </form>
+
+  <form fxLayout="column" [formGroup]="form">
+    <mat-form-field *ngIf="alarm.departments.length !== 0" appearance="outline" floatLabel="always" fxFlex>
+      <mat-label>Involvierte Organisationen</mat-label>
+      <mat-chip-list>
+        <mat-chip *ngIf="alarm.organisations.length === 0" style="visibility: hidden;"></mat-chip>
+        <mat-chip *ngFor="let organisation of alarm.organisations" (removed)="removeOrganisation(organisation)">
+          {{organisation}}
+          <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
+
+  <form [formGroup]="form" (submit)="onSubmitDepartment()">
     <mat-form-field appearance="outline" class="left" fxFlex="80">
       <mat-label>Feuerwehr</mat-label>
       <input formControlName="department" matInput [matAutocomplete]="complete" (input)="filter()">
@@ -19,40 +37,22 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <button class="form-submit-button fix-button right" color="accent" fxFlex="20" fxHide.xs fxShow mat-stroked-button
-      type="submit">
-      Hinzufügen
-    </button>
-    <button class="form-submit-button fix-button right" color="accent" fxFlex="20" fxHide.gt-xs fxShow.xs
-      mat-stroked-button type="submit">
-      <mat-icon svgIcon="add"></mat-icon>
+    <button class="form-submit-button right" color="accent" fxFlex="20" mat-stroked-button type="submit">
+      <span fxHide.xs fxShow>Hinzufügen</span>
+      <mat-icon fxHide.gt-xs fxShow.xs svgIcon="add"></mat-icon>
     </button>
   </form>
 
-  <mat-form-field *ngIf="alarm.departments.length !== 0" appearance="outline" floatLabel="always" fxFlex>
-    <mat-label>Involvierte Feuerwehren</mat-label>
-    <mat-chip-list #chipList>
-      <mat-chip *ngFor="let department of alarm.departments" [color]="department.isHead ? 'accent' : ''"
-        [selected]="department.isHead" (click)="select(department)" (removed)="remove(department)">
-        {{department.name}}
-        <mat-icon *ngIf="department.name !== 'Marchtrenk'" matChipRemove svgIcon="cancel"></mat-icon>
-      </mat-chip>
-    </mat-chip-list>
-  </mat-form-field>
-  <!-- <mat-form-field appearance="outline" fxFlex>
-    <mat-label>Eingesetzte Feuerwehren</mat-label>
-    <mat-chip-list #chipList>
-      <mat-chip *ngFor="let department of selectedDepartments" removable [color]="department.isHead ? 'accent' : ''"
-        [selected]="department.isHead" (removed)="remove(department)" (click)="select(department)">
-        {{department.name}}
-        <mat-icon matChipRemove *ngIf="department.name !== 'Marchtrenk'" svgIcon="cancel"></mat-icon>
-      </mat-chip>
-      <input [formControl]="control" [matAutocomplete]="complete" [matChipInputFor]="chipList"
-        (input)="onValueChanged()" (matChipInputTokenEnd)="add($event)">
-      <mat-autocomplete #complete="matAutocomplete" (optionSelected)="onOptionSelected($event)">
-        <mat-option *ngFor="let department of filteredDepartments" [value]="department">{{department}}</mat-option>
-      </mat-autocomplete>
-    </mat-chip-list>
-  </mat-form-field> -->
-
+  <form [formGroup]="form">
+    <mat-form-field *ngIf="alarm.departments.length !== 0" appearance="outline" floatLabel="always" fxFlex>
+      <mat-label>Involvierte Feuerwehren</mat-label>
+      <mat-chip-list>
+        <mat-chip *ngFor="let department of alarm.departments" [color]="department.isHead ? 'accent' : ''"
+          [selected]="department.isHead" (click)="select(department)" (removed)="removeDepartment(department)">
+          {{department.name}}
+          <mat-icon *ngIf="department.name !== 'Marchtrenk'" matChipRemove svgIcon="cancel"></mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
 </div>
