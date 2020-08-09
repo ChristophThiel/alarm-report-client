@@ -15,7 +15,7 @@ export class Alarm {
 
   public involved: any[4] = [];
 
-  public weather: string = 'Sonnig';
+  public weather: string = 'Sonne';
 
   public startDate: string = ''; // yyyy-MM-dd
   public alarmed: Date;

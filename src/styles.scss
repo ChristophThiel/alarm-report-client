@@ -43,6 +43,10 @@ mat-divider {
   border-top-color: rgba(0, 0, 0, 0.8) !important;
 }
 
+snack-bar-container {
+  margin: 16px !important;    
+}
+
 .container {
   min-width: 567.2px;
   width: 60vw;
@@ -83,10 +87,6 @@ mat-divider {
     width: 100vw;
     padding: 16px;
   }
-}
-
-snack-bar-container {
-  margin: 16px !important;    
 }
 
 // 21.5px is the padding of an mat-form-field-wrapper, 8px is the margin of an mat-form-field-wrapper

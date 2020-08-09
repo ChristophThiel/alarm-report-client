@@ -4,7 +4,8 @@
       <form [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="35">
           <mat-label>Alarmtyp</mat-label>
-          <mat-select formControlName="type" (selectionChange)="alarm.isFire = $event.value === types[0]">
+          <mat-select (selectionChange)="alarm.isFire = $event.value === types[0]"
+            [value]="alarm.isFire ? types[0] : types[1]">
             <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -22,20 +23,18 @@
       <form [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="35">
           <mat-label>Alarmiert von</mat-label>
-          <mat-select formControlName="alarmed" (selectionChange)="onAlarmedChanged()">
+          <mat-select (selectionChange)="onAlarmedChanged($event)" [value]="alarm.alarmedBy">
             <mat-option *ngFor="let option of alarmedByOptions" [value]="option">{{option}}</mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="form.get('alarmed').value !== alarmedByOptions[1]" appearance="outline" class="right"
-          fxFlex="65">
+        <mat-form-field *ngIf="alarm.alarmedBy !== alarmedByOptions[1]" appearance="outline" class="right" fxFlex="65">
           <mat-label>Information</mat-label>
           <input matInput formControlName="others" (input)="alarm.others = form.get('others').value">
           <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
 
-        <mat-form-field *ngIf="form.get('alarmed').value === alarmedByOptions[1]" appearance="outline" class="right"
-          fxFlex="65">
+        <mat-form-field *ngIf="alarm.alarmedBy === alarmedByOptions[1]" appearance="outline" class="right" fxFlex="65">
           <mat-label>Person</mat-label>
           <mat-select formControlName="others" (selectionChange)="alarm.others = $event.value">
             <mat-option *ngFor="let officer of officers" [value]="officer">{{officer}}</mat-option>
@@ -47,44 +46,46 @@
       <form [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="50">
           <mat-label>Hauptaktivität</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword.name">{{keyword.name}}</mat-option>
+          <mat-select formControlName="mainActivity" (selectionChange)="alarm.mainActivity = $event.value">
+            <mat-option value="Brand KFZ">Brand KFZ</mat-option>
           </mat-select>
-          <!-- <mat-error>{{getErrorMessage('keyword')}}</mat-error> -->
+          <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="right" fxFlex="50">
           <mat-label>Nebenaktivität</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword.name">{{keyword.name}}</mat-option>
+          <mat-select formControlName="sideActivity" (selectionChange)="alarm.sideActivity = $event.value">
+            <mat-option value="Brand LKW">Brand LKW</mat-option>
+            <mat-option value="Brand PKW">Brand PKW</mat-option>
           </mat-select>
-          <!-- <mat-error>{{getErrorMessage('keyword')}}</mat-error> -->
+          <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
       </form>
 
       <mat-form-field appearance="outline">
         <mat-label>Gemeinde</mat-label>
-        <input formControlName="parish" matInput (input)="this.alarm.parish = form.get('parish').value">
+        <input formControlName="parish" matInput (input)="this.alarm.parish = $event.target.value">
         <mat-error>Feld wird benötigt</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Einsatzort</mat-label>
-        <input formControlName="location" matInput (input)="this.alarm.location = form.get('location').value">
+        <input formControlName="location" matInput (input)="this.alarm.location = $event.target.value">
         <mat-error>Feld wird benötigt</mat-error>
       </mat-form-field>
 
       <form [formGroup]="form">
         <mat-form-field fxFlex="50" appearance="outline" class="left is-center" floatLabel="always">
           <mat-label>Verletzte Personen</mat-label>
-          <input matInput placeholder="0" type="number" min="0"
-            (input)="alarm.involved[0] = form.get('hurtPeople').value">
+          <input formControlName="injuredPeople" matInput min="0" placeholder="0" type="number"
+            (input)="alarm.involved[0] = $event.target.value">
           <mat-error>Ungültiger Wert</mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex="50" appearance="outline" class="right is-center" floatLabel="always">
           <mat-label>Getötete Personen</mat-label>
-          <input matInput placeholder="0" type="number" (input)="alarm.involved[1] = form.get('killedPeople').value">
+          <input formControlName="killedPeople" matInput min="0" placeholder="0" type="number"
+            (input)="alarm.involved[1] = $event.target.value">
           <mat-error>Ungültiger Wert</mat-error>
         </mat-form-field>
       </form>
@@ -92,13 +93,15 @@
       <form [formGroup]="form">
         <mat-form-field fxFlex="50" appearance="outline" class="left is-center" floatLabel="always">
           <mat-label>Verletzte Tiere</mat-label>
-          <input matInput placeholder="0" type="number" (input)="alarm.involved[2] = form.get('hurtAnimals').value">
+          <input formControlName="injuredAnimals" matInput placeholder="0" type="number"
+            (input)="alarm.involved[2] = $event.target.value">
           <mat-error>Ungültiger Wert</mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex="50" appearance="outline" class="right is-center" floatLabel="always">
           <mat-label>Getötete Tiere</mat-label>
-          <input matInput placeholder="0" type="number" (input)="alarm.involved[3] = form.get('killedAnimals').value">
+          <input formControlName="killedAnimals" matInput placeholder="0" type="number"
+            (input)="alarm.involved[3] = $event.target.value">
           <mat-error>Ungültiger Wert</mat-error>
         </mat-form-field>
       </form>
@@ -119,91 +122,105 @@
       <form [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="50">
           <mat-label>Datum</mat-label>
-          <input matInput readonly [matDatepicker]="alarmedPicker" (click)="alarmedPicker.open()" />
+          <input class="date" formControlName="alarmedDate" matInput readonly [matDatepicker]="alarmedPicker"
+            (click)="alarmedPicker.open()" />
           <mat-datepicker #alarmedPicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
+          (click)="setCurrentTime('alarmed')">
           <mat-label>Alarmiert</mat-label>
-          <input matInput type="time" />
+          <input formControlName="alarmed" matInput type="time" />
         </mat-form-field>
       </form>
 
       <form [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="50">
           <mat-label>Datum</mat-label>
-          <input matInput readonly [matDatepicker]="engagedPicker" (click)="engagedPicker.open()" />
+          <input class="date" formControlName="engagedDate" matInput readonly [matDatepicker]="engagedPicker"
+            (click)="engagedPicker.open()" />
           <mat-datepicker #engagedPicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
+          (click)="setCurrentTime('engaged')">
           <mat-label>Ausgerückt</mat-label>
-          <input matInput type="time" />
+          <input formControlName="engaged" matInput type="time" />
         </mat-form-field>
       </form>
 
       <form [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="50">
           <mat-label>Datum</mat-label>
-          <input matInput readonly [matDatepicker]="reachedPicker" (click)="reachedPicker.open()" />
+          <input class="date" formControlName="reachedDate" matInput readonly [matDatepicker]="reachedPicker"
+            (click)="reachedPicker.open()" />
           <mat-datepicker #reachedPicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
+          (click)="setCurrentTime('reached')">
           <mat-label>Einsatzort</mat-label>
-          <input matInput type="time" />
+          <input formControlName="reached" matInput type="time" />
         </mat-form-field>
       </form>
 
       <form [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="50">
           <mat-label>Datum</mat-label>
-          <input matInput readonly [matDatepicker]="stopPicker" (click)="stopPicker.open()" />
+          <input class="date" formControlName="stopDate" matInput readonly [matDatepicker]="stopPicker"
+            (click)="stopPicker.open()" />
           <mat-datepicker #stopPicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
+          (click)="setCurrentTime('stop')">
           <mat-label>Alarmstopp</mat-label>
-          <input matInput type="time" />
+          <input formControlName="stop" matInput type="time" />
         </mat-form-field>
       </form>
 
       <form [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="50">
           <mat-label>Datum</mat-label>
-          <input matInput readonly [matDatepicker]="indentedPicker" (click)="indentedPicker.open()" />
+          <input class="date" formControlName="indentedDate" matInput readonly [matDatepicker]="indentedPicker"
+            (click)="indentedPicker.open()" />
           <mat-datepicker #indentedPicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
+          (click)="setCurrentTime('indented')">
           <mat-label>Eingerückt</mat-label>
-          <input matInput type="time" />
+          <input formControlName="indented" matInput type="time" />
         </mat-form-field>
       </form>
 
       <form [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="50">
           <mat-label>Datum</mat-label>
-          <input matInput readonly [matDatepicker]="readyPicker" (click)="readyPicker.open()" />
+          <input class="date" formControlName="readyDate" matInput readonly [matDatepicker]="readyPicker"
+            (click)="readyPicker.open()" />
           <mat-datepicker #readyPicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
+          (click)="setCurrentTime('ready')">
           <mat-label>Einsatzbereit</mat-label>
-          <input matInput type="time" />
+          <input formControlName="ready" matInput type="time" />
         </mat-form-field>
       </form>
 
       <form *ngIf="alarm.alarmType === alarmTypes[1]" fxLayout="row" [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="50">
           <mat-label>Datum</mat-label>
-          <input matInput readonly [matDatepicker]="fireOutPicker" />
+          <input class="date" formControlName="fireOutDate" matInput readonly [matDatepicker]="fireOutPicker"
+            (click)="fireOutPicker.open()" />
           <mat-datepicker #fireOutPicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field *ngIf="true" appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field *ngIf="true" appearance="outline" class="right fix-time is-center" fxFlex="50"
+          (click)="setCurrentTime('fireOut')">
           <mat-label>Brand aus</mat-label>
-          <input matInput type="time">
+          <input formControlName="fireOut" matInput type="time">
         </mat-form-field>
       </form>
     </form>
@@ -211,14 +228,14 @@
 
   <mat-divider style="margin-bottom: 33.5px"></mat-divider>
 
-  <form [formGroup]="form">
+  <form [formGroup]="form" (submit)="onSubmitDepartment()">
     <mat-form-field appearance="outline" class="left" fxFlex="80">
       <mat-label>Feuerwehr</mat-label>
-      <input matInput [matAutocomplete]="complete" (input)="filter()">
+      <input formControlName="department" matInput [matAutocomplete]="complete" (input)="filter()">
       <mat-autocomplete #complete="matAutocomplete" autoActiveFirstOption>
-        <!-- <mat-option *ngFor="let department of filteredDepartments" [value]="department">
+        <mat-option *ngFor="let department of filteredDepartments" [value]="department">
           {{department}}
-        </mat-option> -->
+        </mat-option>
       </mat-autocomplete>
     </mat-form-field>
 
@@ -241,11 +258,11 @@
     </mat-form-field>
   </form>
 
-  <form [formGroup]="form">
+  <form [formGroup]="form" (submit)="onSubmitOrganisation()">
     <mat-form-field appearance="outline" class="left" fxFlex="80">
       <mat-label>Organisation</mat-label>
-      <mat-select>
-        <!-- <mat-option *ngFor="let organisation of organisations" [value]="organisation">{{organisation}}</mat-option> -->
+      <mat-select formControlName="organisation">
+        <mat-option *ngFor="let organisation of organisations" [value]="organisation">{{organisation}}</mat-option>
       </mat-select>
     </mat-form-field>
 

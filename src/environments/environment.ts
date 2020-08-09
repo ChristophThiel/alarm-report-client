@@ -55,5 +55,14 @@ export const environment = {
     'Reserve',
     'Vollschutzträger',
     'Zugskommandant'
+  ],
+  weatherOptions: [
+    'Finster',
+    'Nebel',
+    'Regen',
+    'Schnee',
+    'Sonne',
+    'Sturm',
+    'Wolkig'
   ]
 };

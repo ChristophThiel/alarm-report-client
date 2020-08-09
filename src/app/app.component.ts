@@ -3,10 +3,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Alarm } from './shared/alarm.model';
 import { CommunicatorService } from './shared/communicator.service';
-import { isNullOrUndefined } from 'util';
 import { GeneralComponent } from './general/general.component';
-import { TimesComponent } from './times/times.component';
-import { SpecialComponent } from './special/special.component';
 import { TeamComponent } from './team/team.component';
 import { ProtocolComponent } from './protocol/protocol.component';
 
@@ -17,13 +14,11 @@ import { ProtocolComponent } from './protocol/protocol.component';
 })
 export class AppComponent implements OnInit {
 
+  public alarm: Alarm;
+
   @ViewChild('general', null) generalReference: GeneralComponent;
-  @ViewChild('times', null) timesReference: TimesComponent;
-  @ViewChild('special', null) specialReference: SpecialComponent;
   @ViewChild('team', null) teamReference: TeamComponent;
   @ViewChild('protocol', null) protocolReference: ProtocolComponent;
-
-  public alarm: Alarm;
 
   constructor(private communicator: CommunicatorService, private sanitizer: DomSanitizer, private iconRegistry: MatIconRegistry) {
     this.initializeIcons(iconRegistry, sanitizer);
@@ -34,15 +29,16 @@ export class AppComponent implements OnInit {
   }
 
   public new(): void {
+    // TODO: Reset values in intpus
     this.alarm = new Alarm();
-    this.updateForms();
+    this.initializeForms();
   }
 
   public open(): void {
-    const content = this.communicator.openFile()
+    this.communicator.openFile()
       .then(result => {
         this.alarm = JSON.parse(result.toString());
-        this.updateForms();
+        this.initializeForms();
       });
   }
 
@@ -52,7 +48,12 @@ export class AppComponent implements OnInit {
   }
 
   // This function creates the pdf
-  public finish(): void {
+  public finish(): void { }
+
+  private initializeForms(): void {
+    this.generalReference.initForm(this.alarm);
+    this.teamReference.initData(this.alarm);
+    this.protocolReference.initData(this.alarm);
   }
 
   private initializeIcons(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
@@ -73,13 +74,5 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon('sun', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/sun.svg'));
     iconRegistry.addSvgIcon('technic', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/technic.svg'));
     iconRegistry.addSvgIcon('truck', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/truck.svg'));
-  }
-
-  private updateForms(): void {
-    this.generalReference.initForm(this.alarm);
-    this.timesReference.initForm(this.alarm);
-    this.specialReference.initForm(this.alarm);
-    this.teamReference.initData(this.alarm);
-    this.protocolReference.initData(this.alarm);
   }
 }

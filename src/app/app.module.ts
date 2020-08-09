@@ -10,15 +10,11 @@ import { AppMaterialModule } from './app-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
 import { GeneralComponent } from './general/general.component';
-import { TimesComponent } from './times/times.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { TeamComponent } from './team/team.component';
 import { ChooseDialogComponent } from './team/choose-dialog/choose.dialog.component';
 import { ProtocolComponent } from './protocol/protocol.component';
-import { SpecialComponent } from './special/special.component';
-import { AlarmedComponent } from './alarmed/alarmed.component';
 
-import { ValidatorsService } from './shared/validators.service';
 import { CommunicatorService } from './shared/communicator.service';
 import { MAT_DATE_LOCALE, ErrorStateMatcher } from '@angular/material/core';
 
@@ -28,13 +24,10 @@ import { CustomErrorStateMatcher } from './shared/custom.matcher';
   declarations: [
     AppComponent,
     GeneralComponent,
-    TimesComponent,
     InstrumentsComponent,
     TeamComponent,
     ChooseDialogComponent,
-    ProtocolComponent,
-    SpecialComponent,
-    AlarmedComponent
+    ProtocolComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +40,6 @@ import { CustomErrorStateMatcher } from './shared/custom.matcher';
     ScrollingModule
   ],
   providers: [
-    ValidatorsService,
     CommunicatorService,
     {
       provide: MAT_DATE_LOCALE,

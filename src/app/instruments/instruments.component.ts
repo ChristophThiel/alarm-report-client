@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Alarm } from '../shared/alarm.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { sortAlhabetical } from '../shared/sort.shared';
 
 @Component({
   selector: 'app-instruments',
@@ -18,6 +19,7 @@ export class InstrumentsComponent implements OnInit {
   public deviceForm: FormGroup;
 
   public vehicles: string[];
+  public noVehicles: string[] = ['TSA', 'Boot', 'Rüst Anhänger']
 
   constructor(private builder: FormBuilder, private http: HttpClient) { }
 
@@ -30,13 +32,11 @@ export class InstrumentsComponent implements OnInit {
       name: ['', Validators.required],
       range: ['', [Validators.required, Validators.min(1)]]
     });
-    this.http.get<string[]>(environment.vehicles).subscribe(data => this.vehicles = data.sort((v1, v2) => {
-      if (v1 > v2)
-        return 1;
-      else if (v1 < v2)
-        return -1
-      return 0;
-    }));
+    this.http.get<string[]>(environment.vehicles).subscribe(data => this.vehicles = data.sort((v1, v2) => sortAlhabetical(v1, v2)));
+  }
+
+  public isNoVehicle(vehicle: string) {
+    return this.noVehicles.indexOf(vehicle) === -1;
   }
 
   public onDeviceSubmit(): void {
@@ -73,13 +73,7 @@ export class InstrumentsComponent implements OnInit {
   public removeVehicle(vehicle: any): void {
     this.alarm.vehicles.splice(this.alarm.vehicles.indexOf(vehicle), 1);
     this.vehicles.push(vehicle.name);
-    this.vehicles.sort((v1, v2) => {
-      if (v1 > v2)
-        return 1;
-      else if (v1 < v2)
-        return -1
-      return 0;
-    });
+    this.vehicles.sort((v1, v2) => sortAlhabetical(v1, v2));
   }
 
   public removeDevice(device: any): void {
