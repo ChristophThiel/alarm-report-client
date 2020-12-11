@@ -27,7 +27,7 @@
     "@angular/router": "~10.0.8",
     "@types/electron": "^1.6.10",
     "core-js": "^2.5.4",
-    "electron": "^8.2.0",
+    "electron": "^8.5.2",
     "file-saver": "^2.0.2",
     "jspdf": "^1.5.3",
     "moment": "^2.24.0",
