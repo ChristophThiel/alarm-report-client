@@ -19,6 +19,7 @@
   <button fxHide.gt-sm fxShow mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon svgIcon="menu"></mat-icon>
   </button>
+
   <mat-menu #menu="matMenu" fxLayout="row">
     <button mat-menu-item (click)="new()">
       <mat-icon class="icon-position" svgIcon="add"></mat-icon>
@@ -43,12 +44,12 @@
 </mat-toolbar>
 
 <mat-tab-group>
-  <mat-tab label="Fahrzeuge und Material">
-    <app-instruments #instruments [alarm]="alarm"></app-instruments>
-  </mat-tab>
-
   <mat-tab label="Allgemein">
     <app-general #general [alarm]="alarm"></app-general>
+  </mat-tab>
+
+  <mat-tab label="Fahrzeuge und Material">
+    <app-instruments #instruments [alarm]="alarm"></app-instruments>
   </mat-tab>
 
   <mat-tab label="Mannschaft">

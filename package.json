@@ -4,7 +4,7 @@
   "main": "electron.js",
   "scripts": {
     "ng": "ng",
-    "new": "ng build --prod && electron . --enable-logging",
+    "new": "ng build --source-map=false && electron . --enable-logging",
     "build": "ng build",
     "start": "electron . --enable-logging",
     "test": "ng test",
