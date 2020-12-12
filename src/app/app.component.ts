@@ -16,9 +16,9 @@ export class AppComponent implements OnInit {
 
   public alarm: Alarm;
 
-  @ViewChild('general', null) generalReference: GeneralComponent;
-  @ViewChild('team', null) teamReference: TeamComponent;
-  @ViewChild('protocol', null) protocolReference: ProtocolComponent;
+  @ViewChild('general') generalReference: GeneralComponent;
+  @ViewChild('team') teamReference: TeamComponent;
+  @ViewChild('protocol') protocolReference: ProtocolComponent;
 
   constructor(private communicator: CommunicatorService, private sanitizer: DomSanitizer, private iconRegistry: MatIconRegistry) {
     this.initializeIcons(iconRegistry, sanitizer);
