@@ -5,8 +5,7 @@ import { environment } from 'src/environments/environment';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ChooseDialogComponent } from './choose-dialog/choose.dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { isNullOrUndefined } from 'util';
+import { sortAlhabetical } from '../shared/sort.shared';
 
 @Component({
   selector: 'app-team',
@@ -21,9 +20,11 @@ export class TeamComponent implements OnInit {
   public search: FormControl;
 
   public members: any[];
+  public relevantMembers: any[];
+  public unrelevantMembers: any[];
   public filteredMembers: any[];
 
-  constructor(private builder: FormBuilder, private http: HttpClient, private dialog: MatDialog, private snackbar: MatSnackBar) {
+  constructor(private builder: FormBuilder, private http: HttpClient, private dialog: MatDialog) {
     this.members = [];
   }
 
@@ -42,30 +43,30 @@ export class TeamComponent implements OnInit {
     if (instance.team.length !== 0) {
       this.members = instance.team;
       this.filteredMembers = this.members;
+      this.filterMembersWithPosition();
     } else {
       this.http.get<any[]>(environment.members)
         .subscribe(data => {
           this.members = data;
           this.filteredMembers = data;
+          this.filterMembersWithPosition();
         });
     }
   }
 
   public onValueChange(): void {
-    if (this.search.value.length === 0)
+    if (this.search.value.length === 0) {
       this.filteredMembers = this.members;
-    else
-      this.filteredMembers = this.members.filter(member => member.name.toLowerCase().indexOf(this.search.value.toLowerCase()) !== -1);
+      this.filterMembersWithPosition();
+    }
+    else {
+      this.filteredMembers = this.members
+        .filter(member => member.name.toLowerCase().indexOf(this.search.value.toLowerCase()) !== -1);
+      this.filterMembersWithPosition();
+    }
   }
 
   public openDialog(member: any): void {
-    if (this.alarm.vehicles.length === 0) {
-      this.snackbar.open('Keine Fahrzeuge ausgewählt!', '', {
-        duration: 2000,
-        panelClass: 'snackbar-container'
-      });
-      return;
-    }
     const ref = this.dialog.open(ChooseDialogComponent, {
       disableClose: true,
       panelClass: 'dialog-container',
@@ -77,13 +78,18 @@ export class TeamComponent implements OnInit {
       }
     });
     ref.afterClosed().subscribe(result => {
-      console.log(result);
       if (!result)
         return;
       member.position = result.position;
       member.vehicle = result.vehicle;
-      this.alarm.team = this.members;
+      this.alarm.team = this.members.filter(member => member.position.length !== 0);
+      this.filterMembersWithPosition();
+      console.log(this.alarm.team)
     });
   }
 
+  private filterMembersWithPosition(): void {
+    this.relevantMembers = this.filteredMembers.filter(member => member.position.length !== 0);
+    this.unrelevantMembers = this.filteredMembers.filter(member => member.position.length === 0);
+  }
 }

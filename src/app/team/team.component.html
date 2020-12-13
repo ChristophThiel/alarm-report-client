@@ -7,7 +7,17 @@
 
 <div class="container" fxLayout="column">
   <mat-list>
-    <mat-list-item *ngFor="let member of filteredMembers" fxLayout="column" matRipple (click)="openDialog(member)">
+    <mat-list-item *ngFor="let member of relevantMembers" fxLayout="column" matRipple (click)="openDialog(member)">
+      <h3 matLine [style.font-weight]="member.position.length !== 0 ? 'bold' : 'normal'">{{member.name}}</h3>
+      <p *ngIf="member.position.length !== 0" matLine>{{buildInfo(member)}}</p>
+      <mat-checkbox fxAlign="right" disableRipple (click)="$event.preventDefault()"
+        [checked]="member.position.length !== 0">
+      </mat-checkbox>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-list>
+    <mat-list-item *ngFor="let member of unrelevantMembers" fxLayout="column" matRipple (click)="openDialog(member)">
       <h3 matLine [style.font-weight]="member.position.length !== 0 ? 'bold' : 'normal'">{{member.name}}</h3>
       <p *ngIf="member.position.length !== 0" matLine>{{buildInfo(member)}}</p>
       <mat-checkbox fxAlign="right" disableRipple (click)="$event.preventDefault()"
