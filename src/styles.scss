@@ -13,6 +13,7 @@ $theme: mat-light-theme($primary, $accent, $error);
 
 html, body { 
   height: 100%;
+  overflow-x: hidden;
 }
 
 body { 
@@ -160,6 +161,12 @@ snack-bar-container {
 }
 
 ::ng-deep {
+  .cdk-global-scrollblock {
+    position: static;
+    width: initial;
+    overflow: hidden !important;
+  }
+
   .mat-form-field-wrapper {
     margin-bottom: 16px !important
   }

@@ -10,13 +10,6 @@ mat-sidenav-container {
   }
 
   mat-sidenav-content {
-    
-    mat-toolbar, mat-tab-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
     mat-tab-header {
       background: rgba(252, 252, 252, 1);
     }
@@ -32,6 +25,12 @@ mat-sidenav-container {
   }
 }
 
+mat-toolbar {
+  position: sticky !important;
+  top: 0;
+  z-index: 99;
+}
+
 p {
   width: 200%;
   margin: -15px 0 0 0;
@@ -40,4 +39,18 @@ p {
 
 .icon-position {
   margin-bottom: 3px;
+}
+
+::ng-deep {
+  .mat-tab-header {
+    background-color: white;
+    position: sticky !important;
+    top: 64px;
+    width: 100vw;
+    z-index: 99;
+
+    @media screen and (max-width: 599px) {
+      top: 56px;
+    }
+  }
 }
