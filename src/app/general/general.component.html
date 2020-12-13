@@ -47,7 +47,7 @@
         <mat-form-field appearance="outline" class="left" fxFlex="50">
           <mat-label>Hauptaktivität</mat-label>
           <mat-select formControlName="mainActivity" (selectionChange)="alarm.mainActivity = $event.value">
-            <mat-option value="Brand KFZ">Brand KFZ</mat-option>
+            <mat-option *ngFor="let activity of mainActivities" [value]="activity">{{activity}}</mat-option>
           </mat-select>
           <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
@@ -55,8 +55,7 @@
         <mat-form-field appearance="outline" class="right" fxFlex="50">
           <mat-label>Nebenaktivität</mat-label>
           <mat-select formControlName="sideActivity" (selectionChange)="alarm.sideActivity = $event.value">
-            <mat-option value="Brand LKW">Brand LKW</mat-option>
-            <mat-option value="Brand PKW">Brand PKW</mat-option>
+            <mat-option *ngFor="let activity of sideActivities" [value]="activity">{{activity}}</mat-option>
           </mat-select>
           <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
@@ -125,12 +124,17 @@
           <input class="date" formControlName="alarmedDate" matInput readonly [matDatepicker]="alarmedPicker"
             (click)="alarmedPicker.open()" />
           <mat-datepicker #alarmedPicker></mat-datepicker>
+          <button mat-icon-button matSuffix (click)="alarmedPicker.open()">
+            <mat-icon>today</mat-icon>
+          </button>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
-          (click)="setCurrentTime('alarmed')">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
           <mat-label>Alarmiert</mat-label>
-          <input formControlName="alarmed" matInput type="time" />
+          <input formControlName="alarmed" matInput type="time" (click)="setCurrentTime('alarmed')" />
+          <button mat-icon-button matSuffix (click)="setCurrentTime('alarmed')">
+            <mat-icon>schedule</mat-icon>
+          </button>
         </mat-form-field>
       </form>
 
@@ -140,12 +144,17 @@
           <input class="date" formControlName="engagedDate" matInput readonly [matDatepicker]="engagedPicker"
             (click)="engagedPicker.open()" />
           <mat-datepicker #engagedPicker></mat-datepicker>
+          <button mat-icon-button matSuffix (click)="engagedPicker.open()">
+            <mat-icon>today</mat-icon>
+          </button>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
-          (click)="setCurrentTime('engaged')">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
           <mat-label>Ausgerückt</mat-label>
-          <input formControlName="engaged" matInput type="time" />
+          <input formControlName="engaged" matInput type="time" (click)="setCurrentTime('engaged')" />
+          <button mat-icon-button matSuffix (click)="setCurrentTime('engaged')">
+            <mat-icon>schedule</mat-icon>
+          </button>
         </mat-form-field>
       </form>
 
@@ -155,12 +164,17 @@
           <input class="date" formControlName="reachedDate" matInput readonly [matDatepicker]="reachedPicker"
             (click)="reachedPicker.open()" />
           <mat-datepicker #reachedPicker></mat-datepicker>
+          <button mat-icon-button matSuffix (click)="reachedPicker.open()">
+            <mat-icon>today</mat-icon>
+          </button>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
-          (click)="setCurrentTime('reached')">
-          <mat-label>Einsatzort</mat-label>
-          <input formControlName="reached" matInput type="time" />
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+          <mat-label>Am Einsatzort</mat-label>
+          <input formControlName="reached" matInput type="time" (click)="setCurrentTime('reached')" />
+          <button mat-icon-button matSuffix (click)="setCurrentTime('reached')">
+            <mat-icon>schedule</mat-icon>
+          </button>
         </mat-form-field>
       </form>
 
@@ -170,12 +184,17 @@
           <input class="date" formControlName="stopDate" matInput readonly [matDatepicker]="stopPicker"
             (click)="stopPicker.open()" />
           <mat-datepicker #stopPicker></mat-datepicker>
+          <button mat-icon-button matSuffix (click)="stopPicker.open()">
+            <mat-icon>today</mat-icon>
+          </button>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
-          (click)="setCurrentTime('stop')">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
           <mat-label>Alarmstopp</mat-label>
-          <input formControlName="stop" matInput type="time" />
+          <input formControlName="stop" matInput type="time" (click)="setCurrentTime('stop')" />
+          <button mat-icon-button matSuffix (click)="setCurrentTime('stop')">
+            <mat-icon>schedule</mat-icon>
+          </button>
         </mat-form-field>
       </form>
 
@@ -185,12 +204,17 @@
           <input class="date" formControlName="indentedDate" matInput readonly [matDatepicker]="indentedPicker"
             (click)="indentedPicker.open()" />
           <mat-datepicker #indentedPicker></mat-datepicker>
+          <button mat-icon-button matSuffix (click)="indentedPicker.open()">
+            <mat-icon>today</mat-icon>
+          </button>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
-          (click)="setCurrentTime('indented')">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
           <mat-label>Eingerückt</mat-label>
-          <input formControlName="indented" matInput type="time" />
+          <input formControlName="indented" matInput type="time" (click)="setCurrentTime('indented')" />
+          <button mat-icon-button matSuffix (click)="setCurrentTime('indented')">
+            <mat-icon>schedule</mat-icon>
+          </button>
         </mat-form-field>
       </form>
 
@@ -200,12 +224,17 @@
           <input class="date" formControlName="readyDate" matInput readonly [matDatepicker]="readyPicker"
             (click)="readyPicker.open()" />
           <mat-datepicker #readyPicker></mat-datepicker>
+          <button mat-icon-button matSuffix (click)="readyPicker.open()">
+            <mat-icon>today</mat-icon>
+          </button>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50"
-          (click)="setCurrentTime('ready')">
+        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
           <mat-label>Einsatzbereit</mat-label>
-          <input formControlName="ready" matInput type="time" />
+          <input formControlName="ready" matInput type="time" (click)="setCurrentTime('ready')" />
+          <button mat-icon-button matSuffix (click)="setCurrentTime('ready')">
+            <mat-icon>schedule</mat-icon>
+          </button>
         </mat-form-field>
       </form>
 
@@ -215,12 +244,17 @@
           <input class="date" formControlName="fireOutDate" matInput readonly [matDatepicker]="fireOutPicker"
             (click)="fireOutPicker.open()" />
           <mat-datepicker #fireOutPicker></mat-datepicker>
+          <button mat-icon-button matSuffix (click)="fireOutDate.open()">
+            <mat-icon>today</mat-icon>
+          </button>
         </mat-form-field>
 
-        <mat-form-field *ngIf="true" appearance="outline" class="right fix-time is-center" fxFlex="50"
-          (click)="setCurrentTime('fireOut')">
+        <mat-form-field *ngIf="true" appearance="outline" class="right fix-time is-center" fxFlex="50">
           <mat-label>Brand aus</mat-label>
-          <input formControlName="fireOut" matInput type="time">
+          <input formControlName="fireOut" matInput type="time" (click)="setCurrentTime('fireOut')">
+          <button mat-icon-button matSuffix (click)="setCurrentTime('fireOut')">
+            <mat-icon>schedule</mat-icon>
+          </button>
         </mat-form-field>
       </form>
     </form>

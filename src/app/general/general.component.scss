@@ -3,3 +3,8 @@
 input[type="time"], .date {
     text-align: center;
 }
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    background: none;
+    display: none;
+}

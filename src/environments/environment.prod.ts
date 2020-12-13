@@ -15,12 +15,17 @@ export const environment = {
     'Täuschungsalarm',
     'Böswilliger Alarm'
   ],
-  mainAcitivites: './assets/mainActivities.json',
-  sideActivities: './assets/sideActivities.json',
   alarmedByOptions: [
     'LWZ/BWST',
     'OvD',
     'Andere'
+  ],
+  mainActivities: [
+    'Brand Fahrzeug'
+  ],
+  sideActivities: [
+    'Brand PKW',
+    'Brand LKW'
   ],
   officers: [
     'Fraungruber Thomas',
@@ -60,11 +65,11 @@ export const environment = {
   ],
   weatherOptions: [
     'Finster',
-    'Nebel',
-    'Regen',
+    'Nebelig',
+    'Regnerisch',
     'Schnee',
-    'Sonne',
-    'Sturm',
-    'Wolkig'
+    'Sonnig',
+    'Stürmisch',
+    'Bewölkt'
   ]
 };

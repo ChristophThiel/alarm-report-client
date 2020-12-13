@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   departments: './assets/departments.json',
   members: './assets/members.json',
   vehicles: './assets/vehicles.json',
@@ -19,6 +19,13 @@ export const environment = {
     'LWZ/BWST',
     'OvD',
     'Andere'
+  ],
+  mainActivities: [
+    'Brand Fahrzeug'
+  ],
+  sideActivities: [
+    'Brand PKW',
+    'Brand LKW'
   ],
   officers: [
     'Fraungruber Thomas',
@@ -58,11 +65,11 @@ export const environment = {
   ],
   weatherOptions: [
     'Finster',
-    'Nebel',
-    'Regen',
+    'Nebelig',
+    'Regnerisch',
     'Schnee',
-    'Sonne',
-    'Sturm',
-    'Wolkig'
+    'Sonnig',
+    'Stürmisch',
+    'Bewölkt'
   ]
 };

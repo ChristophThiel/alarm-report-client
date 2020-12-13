@@ -4,7 +4,6 @@ import { Alarm } from '../shared/alarm.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { sortAlhabetical } from '../shared/sort.shared';
-import { isNullOrUndefined } from 'util';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
@@ -39,6 +38,8 @@ export class GeneralComponent implements OnInit {
   public alarmTypes: string[];
   public alarmedByOptions: string[];
   public officers: string[];
+  public mainActivities: string[];
+  public sideActivities: string[];
   public weatherOptions: string[];
   public departments: any[];
   public filteredDepartments: any[];
@@ -51,6 +52,10 @@ export class GeneralComponent implements OnInit {
     this.alarmTypes = environment.alarmTypes;
     this.alarmedByOptions = environment.alarmedByOptions;
     this.officers = environment.officers
+      .sort((a, b) => sortAlhabetical(a, b));
+    this.mainActivities = environment.mainActivities
+      .sort((a, b) => sortAlhabetical(a, b));
+    this.sideActivities = environment.sideActivities
       .sort((a, b) => sortAlhabetical(a, b));
     this.weatherOptions = environment.weatherOptions;
     this.organisations = environment.organisations;
@@ -94,20 +99,20 @@ export class GeneralComponent implements OnInit {
       killedPeople: [instance.involved[1], Validators.min(0)],
       injuredAnimals: [instance.involved[2], Validators.min(0)],
       killedAnimals: [instance.involved[3], Validators.min(0)],
-      alarmedDate: [isNullOrUndefined(instance.alarmed) ? new Date() : instance.alarmed],
-      alarmed: [isNullOrUndefined(instance.alarmed) ? '' : moment(instance.alarmed).format('hh:mm'), Validators.required],
-      engagedDate: [isNullOrUndefined(instance.engaged) ? new Date() : instance.engaged],
-      engaged: [isNullOrUndefined(instance.engaged) ? '' : moment(instance.engaged).format('hh:mm')],
-      reachedDate: [isNullOrUndefined(instance.reached) ? new Date() : instance.reached],
-      reached: [isNullOrUndefined(instance.reached) ? '' : moment(instance.reached).format('hh:mm')],
-      stopDate: [isNullOrUndefined(instance.stop) ? new Date() : instance.stop],
-      stop: [isNullOrUndefined(instance.stop) ? '' : moment(instance.stop).format('hh:mm')],
-      indentedDate: [isNullOrUndefined(instance.indented) ? new Date() : instance.indented],
-      indented: [isNullOrUndefined(instance.indented) ? '' : moment(instance.indented).format('hh:mm')],
-      readyDate: [isNullOrUndefined(instance.ready) ? new Date() : instance.ready],
-      ready: [isNullOrUndefined(instance.ready) ? '' : moment(instance.ready).format('hh:mm')],
-      fireOutDate: [isNullOrUndefined(instance.fireOut) ? new Date() : instance.fireOut],
-      fireOut: [isNullOrUndefined(instance.fireOut) ? '' : moment(instance.fireOut).format('hh:mm')],
+      alarmedDate: [instance.alarmed === null ? new Date() : instance.alarmed],
+      alarmed: [instance.alarmed == null ? '' : moment(instance.alarmed).format('hh:mm'), Validators.required],
+      engagedDate: [instance.engaged === null ? new Date() : instance.engaged],
+      engaged: [instance.engaged == null ? '' : moment(instance.engaged).format('hh:mm')],
+      reachedDate: [instance.reached === null ? new Date() : instance.reached],
+      reached: [instance.reached == null ? '' : moment(instance.reached).format('hh:mm')],
+      stopDate: [instance.stop === null ? new Date() : instance.stop],
+      stop: [instance.stop == null ? '' : moment(instance.stop).format('hh:mm')],
+      indentedDate: [instance.indented === null ? new Date() : instance.indented],
+      indented: [instance.indented == null ? '' : moment(instance.indented).format('hh:mm')],
+      readyDate: [instance.ready === null ? new Date() : instance.ready],
+      ready: [instance.ready == null ? '' : moment(instance.ready).format('hh:mm')],
+      fireOutDate: [instance.fireOut === null ? new Date() : instance.fireOut],
+      fireOut: [instance.fireOut == null ? '' : moment(instance.fireOut).format('hh:mm')],
       department: [''],
       organisation: [''],
       damage: [instance.damage],
@@ -219,7 +224,7 @@ export class GeneralComponent implements OnInit {
 
   private validateSubmit(formControlName: string): boolean {
     const control = this.form.get(formControlName);
-    if (control.invalid || isNullOrUndefined(control.value) || control.value.length === 0)
+    if (control.invalid || control.value === null || control.value.length === 0)
       return false;
     return true;
   }
