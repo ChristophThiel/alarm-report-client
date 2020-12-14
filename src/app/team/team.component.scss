@@ -1,16 +1,21 @@
 @import "~src/styles.scss";
 
-mat-list {
-  padding-top: 0;
-  margin: 0 8px 16px 8px;
-}
-
 mat-list-item {
   cursor: pointer !important;
 }
 
 mat-list-item:hover {
   background-color: rgb(225, 225, 225) !important;
+}
+
+.relevantMembers {
+  padding-top: 0;
+  margin: 0 8px 16px 8px;
+}
+
+.unrelevantMembers {
+  padding-top: 0;
+  margin: 0 8px 32px 8px;
 }
 
 ::ng-deep {

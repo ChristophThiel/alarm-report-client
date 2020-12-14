@@ -1,28 +1,5 @@
-mat-sidenav-container {
-  height: 100vh;
-
-  mat-sidenav {
-    width: 270px;
-
-    @media screen and (max-width: 599px) {
-      width: 85vw;
-    }
-  }
-
-  mat-sidenav-content {
-    mat-tab-header {
-      background: rgba(252, 252, 252, 1);
-    }
-    
-    mat-tab-group {
-      overflow: hidden !important;
-      height: calc(100vh - 64px);
-
-      @media screen and (max-width: 599px) {
-        height: calc(100vh - 56px);
-      }
-    }
-  }
+mat-tab-group {
+  height: 100%;
 }
 
 mat-toolbar {
@@ -42,6 +19,12 @@ p {
 }
 
 ::ng-deep {
+  .mat-tab-body-wrapper {
+    height: 100%;
+    margin-bottom: 32px;
+    overflow-y: auto !important;
+  }
+
   .mat-tab-header {
     background-color: white;
     position: sticky !important;
@@ -52,5 +35,9 @@ p {
     @media screen and (max-width: 599px) {
       top: 56px;
     }
+  }
+
+  .mat-tab-header-pagination-before, .mat-tab-header-pagination-after {
+    display: flex !important;
   }
 }

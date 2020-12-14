@@ -26,6 +26,8 @@ export class TeamComponent implements OnInit {
 
   constructor(private builder: FormBuilder, private http: HttpClient, private dialog: MatDialog) {
     this.members = [];
+    this.relevantMembers = [];
+    this.unrelevantMembers = [];
   }
 
   public ngOnInit(): void {

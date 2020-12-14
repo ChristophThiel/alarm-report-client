@@ -11,15 +11,15 @@ $theme: mat-light-theme($primary, $accent, $error);
 
 @include angular-material-theme($theme);
 
-html, body { 
+html, body {
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 body { 
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: $background;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
 }
 
 input::-webkit-clear-button, input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {

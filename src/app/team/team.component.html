@@ -6,7 +6,7 @@
 </div>
 
 <div class="container" fxLayout="column">
-  <mat-list>
+  <mat-list *ngIf="relevantMembers.length !== 0" class="relevantMembers">
     <mat-list-item *ngFor="let member of relevantMembers" fxLayout="column" matRipple (click)="openDialog(member)">
       <h3 matLine [style.font-weight]="member.position.length !== 0 ? 'bold' : 'normal'">{{member.name}}</h3>
       <p *ngIf="member.position.length !== 0" matLine>{{buildInfo(member)}}</p>
@@ -16,7 +16,7 @@
     </mat-list-item>
   </mat-list>
 
-  <mat-list>
+  <mat-list class="unrelevantMembers">
     <mat-list-item *ngFor="let member of unrelevantMembers" fxLayout="column" matRipple (click)="openDialog(member)">
       <h3 matLine [style.font-weight]="member.position.length !== 0 ? 'bold' : 'normal'">{{member.name}}</h3>
       <p *ngIf="member.position.length !== 0" matLine>{{buildInfo(member)}}</p>
