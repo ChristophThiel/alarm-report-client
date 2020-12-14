@@ -6,6 +6,7 @@ import { CommunicatorService } from './shared/communicator.service';
 import { GeneralComponent } from './general/general.component';
 import { TeamComponent } from './team/team.component';
 import { ProtocolComponent } from './protocol/protocol.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -28,27 +29,27 @@ export class AppComponent implements OnInit {
     this.alarm = new Alarm();
   }
 
-  public new(): void {
-    // TODO: Reset values in intpus
-    this.alarm = new Alarm();
-    this.initializeForms();
-  }
+  public new(): void { }
 
   public open(): void {
     this.communicator.openFile()
       .then(result => {
-        this.alarm = JSON.parse(result.toString());
+        console.log(result);
+        this.alarm = result as Alarm;
         this.initializeForms();
       });
   }
 
   // This function creates the .rep file
   public save(): void {
+    console.log(this.alarm.alarmed);
     this.communicator.saveFile(this.alarm);
   }
 
   // This function creates the pdf
-  public finish(): void { }
+  public finish(): void {
+
+  }
 
   private initializeForms(): void {
     this.generalReference.initForm(this.alarm);

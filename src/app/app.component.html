@@ -10,7 +10,7 @@
   <span style="flex: 1 1 auto"></span>
 
   <div fxHide.lt-md fxShow>
-    <button mat-button (click)="new()">Neu</button>
+    <!-- <button mat-button (click)="new()">Neu</button> -->
     <button mat-button (click)="open()">Öffnen</button>
     <button mat-button (click)="save()">Speichern</button>
     <button mat-button (click)="finish()">Abschließen</button>
@@ -21,10 +21,10 @@
   </button>
 
   <mat-menu #menu="matMenu" fxLayout="row">
-    <button mat-menu-item (click)="new()">
+    <!-- <button mat-menu-item (click)="new()">
       <mat-icon class="icon-position" svgIcon="add"></mat-icon>
       <span>Neu</span>
-    </button>
+    </button> -->
 
     <button mat-menu-item (click)="open()">
       <mat-icon class="icon-position" svgIcon="open"></mat-icon>
@@ -43,7 +43,9 @@
   </mat-menu>
 </mat-toolbar>
 
-<mat-tab-group>
+<app-finish></app-finish>
+
+<!-- <mat-tab-group>
   <mat-tab label="Allgemein">
     <app-general #general [alarm]="alarm"></app-general>
   </mat-tab>
@@ -59,4 +61,4 @@
   <mat-tab label="Protokoll">
     <app-protocol #protocol [alarm]="alarm"></app-protocol>
   </mat-tab>
-</mat-tab-group>
+</mat-tab-group> -->

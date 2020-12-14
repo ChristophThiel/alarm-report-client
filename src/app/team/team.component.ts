@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ChooseDialogComponent } from './choose-dialog/choose.dialog.component';
-import { sortAlhabetical } from '../shared/sort.shared';
 
 @Component({
   selector: 'app-team',
@@ -28,6 +27,7 @@ export class TeamComponent implements OnInit {
     this.members = [];
     this.relevantMembers = [];
     this.unrelevantMembers = [];
+    this.filteredMembers = [];
   }
 
   public ngOnInit(): void {
@@ -44,7 +44,7 @@ export class TeamComponent implements OnInit {
   public initData(instance: Alarm): void {
     if (instance.team.length !== 0) {
       this.members = instance.team;
-      this.filteredMembers = this.members;
+      this.filteredMembers = instance.team;
       this.filterMembersWithPosition();
     } else {
       this.http.get<any[]>(environment.members)
@@ -84,7 +84,7 @@ export class TeamComponent implements OnInit {
         return;
       member.position = result.position;
       member.vehicle = result.vehicle;
-      this.alarm.team = this.members.filter(member => member.position.length !== 0);
+      this.alarm.team = this.members;
       this.filterMembersWithPosition();
       console.log(this.alarm.team)
     });

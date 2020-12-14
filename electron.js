@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
 const fs = require('fs');
+const moment = require('moment');
 
 function createWindow() {
   let win = new BrowserWindow({
@@ -28,9 +29,9 @@ ipcMain.on('open', (event, args) => {
   dialog.showOpenDialog()
     .then(result => {
       console.log(result.filePaths[0]);
-      fs.readFile(result.filePaths[0], (err, data) => {
+      fs.readFile(result.filePaths[0], (_, data) => {
         console.log(data.toString());
-        event.reply('open-reply', data);
+        event.reply('open-reply', JSON.parse(data));
       });
     });
 });
@@ -40,6 +41,9 @@ ipcMain.on('save', (event, args) => {
     console.warn('Id of alarm is empty, file will not be created');
   } else {
     console.log(`Write file into ${args.id}.rep`);
+    var backup = Date.prototype.toJSON;
+    Date.prototype.toJSON = function () { return moment(this).format(); }
     fs.writeFileSync(`/home/christoph/Documents/${args.id}.rep`, JSON.stringify(args));
+    Date.prototype.toJSON = backup;
   }
 });

@@ -17,7 +17,6 @@ export class Alarm {
 
   public weather: string = 'Sonne';
 
-  public startDate: string = ''; // yyyy-MM-dd
   public alarmed: Date;
   public engaged: Date;
   public reached: Date;
