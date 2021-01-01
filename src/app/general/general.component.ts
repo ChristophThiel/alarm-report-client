@@ -90,7 +90,7 @@ export class GeneralComponent implements OnInit {
 
   public initForm(instance: Alarm): void {
     this.form = this.builder.group({
-      others: [{ value: instance.others, disabled: true }, Validators.required],
+      others: [{ value: instance.others, disabled: instance.alarmedBy === 'LWZ/BWST' }, Validators.required],
       mainActivity: [instance.mainActivity, Validators.required],
       sideActivity: [instance.sideActivity, Validators.required],
       location: [instance.location, Validators.required],
@@ -99,20 +99,20 @@ export class GeneralComponent implements OnInit {
       killedPeople: [instance.involved[1], Validators.min(0)],
       injuredAnimals: [instance.involved[2], Validators.min(0)],
       killedAnimals: [instance.involved[3], Validators.min(0)],
-      alarmedDate: [instance.alarmed === null ? new Date() : instance.alarmed],
-      alarmed: [instance.alarmed == null ? '' : moment(instance.alarmed).format('hh:mm'), Validators.required],
-      engagedDate: [instance.engaged === null ? new Date() : instance.engaged],
-      engaged: [instance.engaged == null ? '' : moment(instance.engaged).format('hh:mm')],
-      reachedDate: [instance.reached === null ? new Date() : instance.reached],
-      reached: [instance.reached == null ? '' : moment(instance.reached).format('hh:mm')],
-      stopDate: [instance.stop === null ? new Date() : instance.stop],
-      stop: [instance.stop == null ? '' : moment(instance.stop).format('hh:mm')],
-      indentedDate: [instance.indented === null ? new Date() : instance.indented],
-      indented: [instance.indented == null ? '' : moment(instance.indented).format('hh:mm')],
-      readyDate: [instance.ready === null ? new Date() : instance.ready],
-      ready: [instance.ready == null ? '' : moment(instance.ready).format('hh:mm')],
-      fireOutDate: [instance.fireOut === null ? new Date() : instance.fireOut],
-      fireOut: [instance.fireOut == null ? '' : moment(instance.fireOut).format('hh:mm')],
+      alarmedDate: [instance.alarmed === null || instance.alarmed],
+      alarmed: [instance.alarmed == null ? '' : moment(instance.alarmed).format('HH:mm'), Validators.required],
+      engagedDate: [instance.engaged === null || instance.engaged],
+      engaged: [instance.engaged == null ? '' : moment(instance.engaged).format('HH:mm')],
+      reachedDate: [instance.reached === null || instance.reached],
+      reached: [instance.reached == null ? '' : moment(instance.reached).format('HH:mm')],
+      stopDate: [instance.stop === null || instance.stop],
+      stop: [instance.stop == null ? '' : moment(instance.stop).format('HH:mm')],
+      indentedDate: [instance.indented === null || instance.indented],
+      indented: [instance.indented == null ? '' : moment(instance.indented).format('HH:mm')],
+      readyDate: [instance.ready === null || instance.ready],
+      ready: [instance.ready == null ? '' : moment(instance.ready).format('HH:mm')],
+      fireOutDate: [instance.fireOut === null || instance.fireOut],
+      fireOut: [instance.fireOut == null ? '' : moment(instance.fireOut).format('HH:mm')],
       department: [''],
       organisation: [''],
       damage: [instance.damage],
@@ -165,7 +165,6 @@ export class GeneralComponent implements OnInit {
   public onSubmitOrganisation(): void {
     if (!this.validateSubmit('organisation'))
       return;
-    console.log('TESt')
 
     const control = this.form.get('organisation');
     this.organisations.splice(this.organisations.indexOf(control.value), 1);

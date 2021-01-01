@@ -14,7 +14,7 @@
   <mat-list>
     <mat-list-item *ngFor="let message of messages" class="truncate" (click)="message.valid = !message.valid">
       <p [style.text-decoration]="message.valid ? '' : 'line-through'">
-        {{message.value}}
+        {{buildMessage(message)}}
       </p>
       <mat-divider *ngIf="hideDivider(message)"></mat-divider>
     </mat-list-item>

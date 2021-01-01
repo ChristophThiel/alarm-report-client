@@ -55,7 +55,7 @@ export const environment = {
     'Atemschutzträger',
     'Einsatzleiter',
     'Fahrzeugkommandant',
-    'Feuerwehrmediziner',
+    'FMD',
     'Funk',
     'Mann',
     'Maschinist',

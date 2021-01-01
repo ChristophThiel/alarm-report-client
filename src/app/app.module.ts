@@ -14,6 +14,7 @@ import { InstrumentsComponent } from './instruments/instruments.component';
 import { TeamComponent } from './team/team.component';
 import { ChooseDialogComponent } from './team/choose-dialog/choose.dialog.component';
 import { ProtocolComponent } from './protocol/protocol.component';
+import { FinishDialogComponent } from './finish-dialog/finish-dialog.component';
 
 import { CommunicatorService } from './shared/communicator.service';
 import { MAT_DATE_LOCALE, ErrorStateMatcher } from '@angular/material/core';
@@ -27,7 +28,8 @@ import { CustomErrorStateMatcher } from './shared/custom.matcher';
     InstrumentsComponent,
     TeamComponent,
     ChooseDialogComponent,
-    ProtocolComponent
+    ProtocolComponent,
+    FinishDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,8 @@ import { CustomErrorStateMatcher } from './shared/custom.matcher';
     }
   ],
   entryComponents: [
-    ChooseDialogComponent
+    ChooseDialogComponent,
+    FinishDialogComponent
   ],
   bootstrap: [AppComponent]
 })

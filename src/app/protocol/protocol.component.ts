@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Alarm } from '../shared/alarm.model';
 import { MatDialog } from '@angular/material/dialog';
-import { isUndefined, isNullOrUndefined } from 'util';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-protocol',
@@ -29,12 +29,16 @@ export class ProtocolComponent implements OnInit {
     this.initData(this.alarm);
   }
 
+  public buildMessage(message: any): string {
+    return `${moment(message.dateTime).format('HH:mm [(]DD.MM.YYYY[)]')} - ${message.value}`;
+  }
+
   public hideDivider(message: any): boolean {
     return this.messages.indexOf(message) !== this.messages.length - 1;
   }
 
   public initData(instance: Alarm): void {
-    this.messages = isNullOrUndefined(instance.protocol) ? [] : instance.protocol;
+    this.messages = instance.protocol == null ? [] : instance.protocol;
   }
 
   public onSubmit(): void {
@@ -42,19 +46,15 @@ export class ProtocolComponent implements OnInit {
       return;
 
     const value = this.form.get('message').value;
-    if (isNullOrUndefined(value) || value.length === 0)
+    if (value == null || value.length === 0)
       return;
 
     this.messages.unshift({
-      value: this.buildMesssage(this.form.get('message').value),
+      value: this.form.get('message').value,
+      dateTime: moment().locale('de').toDate(),
       valid: true
     });
     this.form.reset();
-  }
-
-  private buildMesssage(value: string): string {
-    const time = new Date();
-    return `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')} - ${value}`;
   }
 
 }

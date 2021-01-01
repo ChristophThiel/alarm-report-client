@@ -28,10 +28,15 @@ app.on('ready', createWindow);
 ipcMain.on('open', (event, args) => {
   dialog.showOpenDialog()
     .then(result => {
-      console.log(result.filePaths[0]);
       fs.readFile(result.filePaths[0], (_, data) => {
-        console.log(data.toString());
-        event.reply('open-reply', JSON.parse(data));
+        event.reply('open-reply', JSON.parse(data, (key, value) => {
+          if (value instanceof String) {
+            const help = moment(value, 'YYYY-MM-DDTHH:mm', true);
+            if (help.isValid())
+              return help.toDate();
+          }
+          return value;
+        }));
       });
     });
 });
@@ -41,8 +46,8 @@ ipcMain.on('save', (event, args) => {
     console.warn('Id of alarm is empty, file will not be created');
   } else {
     console.log(`Write file into ${args.id}.rep`);
-    var backup = Date.prototype.toJSON;
-    Date.prototype.toJSON = function () { return moment(this).format(); }
+    const backup = Date.prototype.toJSON;
+    Date.prototype.toJSON = function () { return moment(this).locale('de').format('YYYY-MM-DDTHH:mm'); }
     fs.writeFileSync(`/home/christoph/Documents/${args.id}.rep`, JSON.stringify(args));
     Date.prototype.toJSON = backup;
   }

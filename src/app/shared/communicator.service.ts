@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IpcRenderer } from 'electron';
+import { Alarm } from './alarm.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class CommunicatorService {
     })
   }
 
-  public saveFile(alarm: any) {
+  public saveFile(alarm: Alarm) {
     this.ipcRenderer.send('save', alarm);
   }
 }

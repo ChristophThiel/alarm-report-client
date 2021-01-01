@@ -3,10 +3,12 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Alarm } from './shared/alarm.model';
 import { CommunicatorService } from './shared/communicator.service';
+import { PdfService } from './shared/pdf.service';
 import { GeneralComponent } from './general/general.component';
 import { TeamComponent } from './team/team.component';
 import { ProtocolComponent } from './protocol/protocol.component';
-import * as moment from 'moment';
+import { MatDialog } from '@angular/material/dialog';
+import { FinishDialogComponent } from './finish-dialog/finish-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -21,8 +23,10 @@ export class AppComponent implements OnInit {
   @ViewChild('team') teamReference: TeamComponent;
   @ViewChild('protocol') protocolReference: ProtocolComponent;
 
-  constructor(private communicator: CommunicatorService, private sanitizer: DomSanitizer, private iconRegistry: MatIconRegistry) {
-    this.initializeIcons(iconRegistry, sanitizer);
+  constructor(private communicator: CommunicatorService, private dialog: MatDialog,
+    private domSanitizer: DomSanitizer, private iconRegistry: MatIconRegistry,
+    private pdfService: PdfService) {
+    this.initializeIcons(iconRegistry, domSanitizer);
   }
 
   public ngOnInit(): void {
@@ -34,7 +38,6 @@ export class AppComponent implements OnInit {
   public open(): void {
     this.communicator.openFile()
       .then(result => {
-        console.log(result);
         this.alarm = result as Alarm;
         this.initializeForms();
       });
@@ -42,13 +45,14 @@ export class AppComponent implements OnInit {
 
   // This function creates the .rep file
   public save(): void {
-    console.log(this.alarm.alarmed);
     this.communicator.saveFile(this.alarm);
   }
 
   // This function creates the pdf
   public finish(): void {
-
+    //const dialogRef = this.dialog.open(FinishDialogComponent, { data: this.alarm });
+    // dialogRef.afterClosed().subscribe(result => { });
+    this.pdfService.create(this.alarm);
   }
 
   private initializeForms(): void {

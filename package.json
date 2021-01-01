@@ -29,7 +29,7 @@
     "core-js": "^3.8.1",
     "electron": "^11.1.0",
     "file-saver": "^2.0.5",
-    "jspdf": "^2.2.0",
+    "jspdf-autotable": "^3.5.13",
     "moment": "^2.29.1",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.3",

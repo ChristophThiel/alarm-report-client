@@ -86,7 +86,6 @@ export class TeamComponent implements OnInit {
       member.vehicle = result.vehicle;
       this.alarm.team = this.members;
       this.filterMembersWithPosition();
-      console.log(this.alarm.team)
     });
   }
 
