@@ -53,10 +53,6 @@ export class GeneralComponent implements OnInit {
     this.alarmedByOptions = environment.alarmedByOptions;
     this.officers = environment.officers
       .sort((a, b) => sortAlhabetical(a, b));
-    this.mainActivities = environment.mainActivities
-      .sort((a, b) => sortAlhabetical(a, b));
-    this.sideActivities = environment.sideActivities
-      .sort((a, b) => sortAlhabetical(a, b));
     this.weatherOptions = environment.weatherOptions;
     this.organisations = environment.organisations;
   }
@@ -167,8 +163,10 @@ export class GeneralComponent implements OnInit {
       return;
 
     const control = this.form.get('organisation');
-    this.organisations.splice(this.organisations.indexOf(control.value), 1);
-    this.alarm.organisations.push(control.value);
+    for (let organisation of control.value) {
+      this.organisations.splice(this.organisations.indexOf(organisation), 1);
+      this.alarm.organisations.push(organisation);
+    }
     control.reset();
   }
 

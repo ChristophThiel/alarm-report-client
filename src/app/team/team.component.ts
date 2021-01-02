@@ -41,6 +41,12 @@ export class TeamComponent implements OnInit {
     return `${member.position} - ${member.vehicle}`;
   }
 
+  public clearValue(): void {
+    this.search.setValue('');
+    this.filteredMembers = this.members;
+    this.filterMembersWithPosition();
+  }
+
   public initData(instance: Alarm): void {
     if (instance.team.length !== 0) {
       this.members = instance.team;

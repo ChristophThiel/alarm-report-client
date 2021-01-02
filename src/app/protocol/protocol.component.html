@@ -12,9 +12,10 @@
 
 <div class="container">
   <mat-list>
-    <mat-list-item *ngFor="let message of messages" class="truncate" (click)="message.valid = !message.valid">
+    <mat-list-item *ngFor="let message of messages" (click)="message.valid = !message.valid">
       <p [style.text-decoration]="message.valid ? '' : 'line-through'">
-        {{buildMessage(message)}}
+        <b>{{formatDateTime(message)}}</b>
+        - {{message.value}}
       </p>
       <mat-divider *ngIf="hideDivider(message)"></mat-divider>
     </mat-list-item>

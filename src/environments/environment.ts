@@ -25,13 +25,6 @@ export const environment = {
     'OvD',
     'Andere'
   ],
-  mainActivities: [
-    'Brand Fahrzeug'
-  ],
-  sideActivities: [
-    'Brand PKW',
-    'Brand LKW'
-  ],
   officers: [
     'Fraungruber Thomas',
     'Deutsch Oliver',

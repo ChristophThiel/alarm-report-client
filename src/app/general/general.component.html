@@ -46,17 +46,13 @@
       <form [formGroup]="form">
         <mat-form-field appearance="outline" class="left" fxFlex="50">
           <mat-label>Hauptaktivität</mat-label>
-          <mat-select formControlName="mainActivity" (selectionChange)="alarm.mainActivity = $event.value">
-            <mat-option *ngFor="let activity of mainActivities" [value]="activity">{{activity}}</mat-option>
-          </mat-select>
+          <input matInput formControlName="mainActivity" (input)="alarm.mainActivity = form.get('mainActivity').value">
           <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="right" fxFlex="50">
           <mat-label>Nebenaktivität</mat-label>
-          <mat-select formControlName="sideActivity" (selectionChange)="alarm.sideActivity = $event.value">
-            <mat-option *ngFor="let activity of sideActivities" [value]="activity">{{activity}}</mat-option>
-          </mat-select>
+          <input matInput formControlName="sideActivity" (input)="alarm.sideActivity = form.get('sideActivity').value">
           <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
       </form>
@@ -274,7 +270,7 @@
   <form [formGroup]="form" (submit)="onSubmitOrganisation()">
     <mat-form-field appearance="outline" class="left" fxFlex="80">
       <mat-label>Organisation</mat-label>
-      <mat-select formControlName="organisation">
+      <mat-select formControlName="organisation" multiple>
         <mat-option *ngFor="let organisation of organisations" [value]="organisation">{{organisation}}</mat-option>
       </mat-select>
     </mat-form-field>

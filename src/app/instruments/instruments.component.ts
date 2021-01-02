@@ -30,13 +30,25 @@ export class InstrumentsComponent implements OnInit {
     });
     this.vehicleForm = this.builder.group({
       name: ['', Validators.required],
-      range: ['', [Validators.required, Validators.min(1)]]
+      range: ['', [Validators.required, Validators.min(0)]]
     });
     this.http.get<string[]>(environment.vehicles).subscribe(data => this.vehicles = data.sort((v1, v2) => sortAlhabetical(v1, v2)));
   }
 
-  public isNoVehicle(vehicle: string) {
-    return this.noVehicles.indexOf(vehicle) === -1;
+  public buildVehicleString(vehicle: any): string {
+    const result = vehicle.name;
+    if (vehicle.range > 0)
+      return `${result} (${vehicle.range} km)`;
+    return result;
+  }
+
+  public isNoVehicle(event: any): void {
+    const formControl = this.vehicleForm.get('range');
+    if (this.noVehicles.indexOf(event.value) === -1) {
+      formControl.enable();
+    } else {
+      formControl.disable();
+    }
   }
 
   public onDeviceSubmit(): void {

@@ -11,7 +11,8 @@ function createWindow() {
     webPreferences: {
       zoomFactor: 1.25,
       nodeIntegration: true
-    }
+    },
+    icon: __dirname + '/src/assets/icon.ico'
   });
   /* win.once('ready-to-show', () => {
     win.webContents.setZoomFactor(1.25);

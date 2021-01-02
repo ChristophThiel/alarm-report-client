@@ -2,7 +2,7 @@
   <form fxLayout="row" [formGroup]="vehicleForm" (submit)="onVehicleSubmit()">
     <mat-form-field appearance="outline" class="left" fxFlex.gt-xs="60" fxFlex.xs="40">
       <mat-label>Fahrzeug</mat-label>
-      <mat-select formControlName="name">
+      <mat-select formControlName="name" (selectionChange)="isNoVehicle($event)">
         <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle">{{vehicle}}</mat-option>
       </mat-select>
       <mat-error *ngIf="vehicleForm.get('name').invalid">Feld wird benötigt</mat-error>
@@ -27,7 +27,7 @@
       <mat-chip-list #chipList>
         <mat-chip *ngIf="alarm.vehicles.length === 0" style="visibility: hidden;"></mat-chip>
         <mat-chip *ngFor="let vehicle of alarm.vehicles" (removed)="removeVehicle(vehicle)">
-          {{vehicle.name}} ({{vehicle.range}} km)
+          {{buildVehicleString(vehicle)}}
           <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
         </mat-chip>
       </mat-chip-list>

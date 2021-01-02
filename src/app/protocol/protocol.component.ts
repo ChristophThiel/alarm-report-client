@@ -29,8 +29,8 @@ export class ProtocolComponent implements OnInit {
     this.initData(this.alarm);
   }
 
-  public buildMessage(message: any): string {
-    return `${moment(message.dateTime).format('HH:mm [(]DD.MM.YYYY[)]')} - ${message.value}`;
+  public formatDateTime(message: any): string {
+    return `${moment(message.dateTime).format('HH:mm [(]DD.MM.YYYY[)]')}`;
   }
 
   public hideDivider(message: any): boolean {

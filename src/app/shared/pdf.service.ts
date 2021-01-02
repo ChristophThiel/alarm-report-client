@@ -33,7 +33,7 @@ export class PdfService {
     let tableData = [
       ['Alarmart:', alarm.alarmType, 'Alarmiert von:', others],
       ['Einsatzort:', alarm.location, 'Gemeinde:', alarm.parish],
-      ['Wetter:', alarm.weather, '', '']
+      ['Nebenaktivität:', alarm.sideActivity, 'Wetter:', alarm.weather, '', '']
     ];
     this.drawTable(tableData, this.getColumnsConfiguration(tableData));
 
@@ -237,7 +237,7 @@ export class PdfService {
   }
 
   private formatDateTime(dateTime: Date): string {
-    return moment(dateTime).locale('de').format('HH:mm [Uhr  -  ] DD. MMMM YYYY');
+    return moment(dateTime).locale('de').format('HH:mm [Uhr] DD. MMMM YYYY (dddd)');
   }
 
   private getColumnsConfiguration(tableData: string[][]): any {
