@@ -13,6 +13,7 @@ import { GeneralComponent } from './general/general.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { TeamComponent } from './team/team.component';
 import { ChooseDialogComponent } from './team/choose-dialog/choose.dialog.component';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { ProtocolComponent } from './protocol/protocol.component';
 import { FinishDialogComponent } from './finish-dialog/finish-dialog.component';
 
@@ -28,6 +29,7 @@ import { CustomErrorStateMatcher } from './shared/custom.matcher';
     InstrumentsComponent,
     TeamComponent,
     ChooseDialogComponent,
+    ConfirmationDialogComponent,
     ProtocolComponent,
     FinishDialogComponent
   ],
@@ -46,14 +48,11 @@ import { CustomErrorStateMatcher } from './shared/custom.matcher';
     {
       provide: MAT_DATE_LOCALE,
       useValue: 'de-AT'
-    },
-    {
-      provide: ErrorStateMatcher,
-      useClass: CustomErrorStateMatcher
     }
   ],
   entryComponents: [
     ChooseDialogComponent,
+    ConfirmationDialogComponent,
     FinishDialogComponent
   ],
   bootstrap: [AppComponent]

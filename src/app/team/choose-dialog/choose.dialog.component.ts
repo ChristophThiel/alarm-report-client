@@ -30,6 +30,7 @@ export class ChooseDialogComponent {
 
   public reset(): void {
     this.form.reset();
+    this.close();
   }
 
   private close(): void {

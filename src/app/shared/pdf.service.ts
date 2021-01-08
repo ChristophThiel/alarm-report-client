@@ -101,7 +101,10 @@ export class PdfService {
 
     // Print team
     const result = [];
-    alarm.team.filter(member => member.position !== '')
+    const copy = [];
+    alarm.team.forEach(member => copy.push(Object.assign({}, member)));
+
+    copy.filter(member => member.position !== '')
       .map(member => {
         let vehicle = member.vehicle;
         if (vehicle === '') {
@@ -112,9 +115,8 @@ export class PdfService {
           name: member.name,
           vehicle,
           position: member.position
-        }
-      })
-      .forEach(member => {
+        };
+      }).forEach(member => {
         const found = result.find(item => item.vehicle === member.vehicle);
         let help = `${member.name} (${member.position})`;
         if (member.position === '')

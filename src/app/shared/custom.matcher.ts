@@ -5,6 +5,8 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
   public isErrorState(control: FormControl, form: FormGroupDirective | NgForm): boolean {
-    return (control.dirty || control.touched) && control.invalid;
+    if (form != null && form.submitted)
+      return control.invalid;
+    return false;
   }
 }

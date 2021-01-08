@@ -1,8 +1,9 @@
 <div class="container" fxLayout="column">
-  <form fxLayout="row" [formGroup]="vehicleForm" (submit)="onVehicleSubmit()">
+  <form #vehicleFormDirective="ngForm" fxLayout="row" [formGroup]="vehicleForm"
+    (submit)="onVehicleSubmit(vehicleFormDirective)">
     <mat-form-field appearance="outline" class="left" fxFlex.gt-xs="60" fxFlex.xs="40">
       <mat-label>Fahrzeug</mat-label>
-      <mat-select formControlName="name" (selectionChange)="isNoVehicle($event)">
+      <mat-select formControlName="name" (selectionChange)="isNoVehicle($event)" [errorStateMatcher]="matcher">
         <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle">{{vehicle}}</mat-option>
       </mat-select>
       <mat-error *ngIf="vehicleForm.get('name').invalid">Feld wird benötigt</mat-error>
@@ -10,7 +11,7 @@
 
     <mat-form-field appearance="outline" class="center is-center" fxFlex.gt-xs="20" fxFlex.xs="40">
       <mat-label>Kilometer</mat-label>
-      <input formControlName="range" matInput min="1" type="number">
+      <input formControlName="range" matInput min="1" type="number" [errorStateMatcher]="matcher">
       <mat-error *ngIf="vehicleForm.get('range').hasError('required')">Feld wird benötigt</mat-error>
       <mat-error *ngIf="vehicleForm.get('range').hasError('min')">Ungültiger Wert</mat-error>
     </mat-form-field>
@@ -26,7 +27,7 @@
       <mat-label>Eingesetzte Fahrzeuge</mat-label>
       <mat-chip-list #chipList>
         <mat-chip *ngIf="alarm.vehicles.length === 0" style="visibility: hidden;"></mat-chip>
-        <mat-chip *ngFor="let vehicle of alarm.vehicles" (removed)="removeVehicle(vehicle)">
+        <mat-chip *ngFor="let vehicle of alarm.vehicles" (removed)="openRemoveVehicleConfirmationDialog(vehicle)">
           {{buildVehicleString(vehicle)}}
           <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
         </mat-chip>
@@ -34,16 +35,17 @@
     </mat-form-field>
   </form>
 
-  <form fxLayout="row" [formGroup]="deviceForm" (submit)="onDeviceSubmit()">
+  <form #deviceFormDirective="ngForm" fxLayout="row" [formGroup]="deviceForm"
+    (submit)="onDeviceSubmit(deviceFormDirective)">
     <mat-form-field appearance="outline" class="left" fxFlex.gt-xs="60" fxFlex.xs="40">
       <mat-label>Gerät</mat-label>
-      <input formControlName="name" matInput>
+      <input formControlName="name" matInput [errorStateMatcher]="matcher">
       <mat-error *ngIf="deviceForm.get('name').invalid">Feld wird benötigt</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="center is-center" fxFlex.gt-xs="20" fxFlex.xs="40">
       <mat-label>Anzahl</mat-label>
-      <input formControlName="amount" matInput min="1" type="number">
+      <input formControlName="amount" matInput min="1" type="number" [errorStateMatcher]="matcher">
       <mat-error *ngIf="deviceForm.get('amount').hasError('required')">Feld wird benötigt</mat-error>
       <mat-error *ngIf="deviceForm.get('amount').hasError('min')">Ungültiger Wert</mat-error>
     </mat-form-field>

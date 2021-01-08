@@ -120,6 +120,7 @@
           <input class="date" formControlName="alarmedDate" matInput readonly [matDatepicker]="alarmedPicker"
             (click)="alarmedPicker.open()" />
           <mat-datepicker #alarmedPicker></mat-datepicker>
+          <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
@@ -128,6 +129,7 @@
           <button mat-icon-button matSuffix (click)="setCurrentTime('alarmed')">
             <mat-icon>schedule</mat-icon>
           </button>
+          <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
       </form>
 
@@ -205,6 +207,7 @@
           <input class="date" formControlName="readyDate" matInput readonly [matDatepicker]="readyPicker"
             (click)="readyPicker.open()" />
           <mat-datepicker #readyPicker></mat-datepicker>
+          <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
@@ -213,6 +216,7 @@
           <button mat-icon-button matSuffix (click)="setCurrentTime('ready')">
             <mat-icon>schedule</mat-icon>
           </button>
+          <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
       </form>
 
@@ -222,6 +226,7 @@
           <input class="date" formControlName="fireOutDate" matInput readonly [matDatepicker]="fireOutPicker"
             (click)="fireOutPicker.open()" />
           <mat-datepicker #fireOutPicker></mat-datepicker>
+          <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
 
         <mat-form-field *ngIf="true" appearance="outline" class="right fix-time is-center" fxFlex="50">
@@ -230,6 +235,7 @@
           <button mat-icon-button matSuffix (click)="setCurrentTime('fireOut')">
             <mat-icon>schedule</mat-icon>
           </button>
+          <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
       </form>
     </form>

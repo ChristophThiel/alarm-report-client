@@ -1,0 +1,11 @@
+<mat-dialog-content>
+  <h2 class="flawless" mat-dialog-title>Bestätigen</h2>
+  <p>
+    <span *ngFor="let line of data.lines" [innerHtml]="line"></span>
+  </p>
+  <div fxLayout="row" fxLayoutGap="16px">
+    <button color="error" fxFlex mat-stroked-button type="button" (click)="answer(false)">Abbrechen</button>
+    <button cdkFocusInitial color="accent" fxFlex mat-stroked-button type="button"
+      (click)="answer(true)">Bestätigen</button>
+  </div>
+</mat-dialog-content>

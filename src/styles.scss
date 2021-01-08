@@ -70,6 +70,13 @@ snack-bar-container {
     width: 80vw !important;
     min-width: 0 !important;
   }
+
+  p span{
+    display: block;
+    font-size: 14pt;
+    line-break: normal;
+    text-align: justify;
+  }
 }
 
 .fixed-container {
@@ -159,6 +166,11 @@ snack-bar-container {
   input {
     text-align: center;
   }
+}
+
+.flawless {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 ::ng-deep {
