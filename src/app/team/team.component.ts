@@ -19,14 +19,10 @@ export class TeamComponent implements OnInit {
   public search: FormControl;
 
   public members: any[];
-  public relevantMembers: any[];
-  public unrelevantMembers: any[];
   public filteredMembers: any[];
 
   constructor(private builder: FormBuilder, private http: HttpClient, private dialog: MatDialog) {
     this.members = [];
-    this.relevantMembers = [];
-    this.unrelevantMembers = [];
     this.filteredMembers = [];
   }
 
@@ -44,33 +40,27 @@ export class TeamComponent implements OnInit {
   public clearValue(): void {
     this.search.setValue('');
     this.filteredMembers = this.members;
-    this.filterMembersWithPosition();
   }
 
   public initData(instance: Alarm): void {
     if (instance.team.length !== 0) {
       this.members = instance.team;
       this.filteredMembers = instance.team;
-      this.filterMembersWithPosition();
     } else {
       this.http.get<any[]>(environment.members)
         .subscribe(data => {
           this.members = data;
           this.filteredMembers = data;
-          this.filterMembersWithPosition();
         });
     }
   }
 
   public onValueChange(): void {
-    if (this.search.value.length === 0) {
+    if (this.search.value.length === 0)
       this.filteredMembers = this.members;
-      this.filterMembersWithPosition();
-    }
     else {
       this.filteredMembers = this.members
         .filter(member => member.name.toLowerCase().indexOf(this.search.value.toLowerCase()) !== -1);
-      this.filterMembersWithPosition();
     }
   }
 
@@ -91,12 +81,18 @@ export class TeamComponent implements OnInit {
       member.position = result.position;
       member.vehicle = result.vehicle;
       this.alarm.team = this.members;
-      this.filterMembersWithPosition();
     });
   }
 
-  private filterMembersWithPosition(): void {
-    this.relevantMembers = this.filteredMembers.filter(member => member.position.length !== 0);
-    this.unrelevantMembers = this.filteredMembers.filter(member => member.position.length === 0);
+  public getRelevantMembers(): any[] {
+    return this.members.filter(member => member.position.length !== 0);
+  }
+
+  public getIrrelevantMembers(): any[] {
+    return this.members.filter(member => member.position.length === 0);
+  }
+
+  public trackItem(index: number, item: any) {
+    return item.position;
   }
 }

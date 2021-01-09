@@ -9,8 +9,9 @@
 </div>
 
 <div class="container" fxLayout="column">
-  <mat-list *ngIf="relevantMembers.length !== 0" class="relevantMembers">
-    <mat-list-item *ngFor="let member of relevantMembers" fxLayout="column" matRipple (click)="openDialog(member)">
+  <mat-list *ngIf="getRelevantMembers().length !== 0" class="relevantMembers">
+    <mat-list-item *ngFor="let member of getRelevantMembers(); trackBy: trackItem" fxLayout="column" matRipple
+      (click)="openDialog(member)">
       <h3 matLine [style.font-weight]="member.position.length !== 0 ? 'bold' : 'normal'">{{member.name}}</h3>
       <p *ngIf="member.position.length !== 0" matLine>{{buildInfo(member)}}</p>
       <mat-checkbox fxAlign="right" disableRipple (click)="$event.preventDefault()"
@@ -20,7 +21,8 @@
   </mat-list>
 
   <mat-list class="unrelevantMembers">
-    <mat-list-item *ngFor="let member of unrelevantMembers" fxLayout="column" matRipple (click)="openDialog(member)">
+    <mat-list-item *ngFor="let member of getIrrelevantMembers(); trackBy: trackItem" fxLayout="column" matRipple
+      (click)="openDialog(member)">
       <h3 matLine [style.font-weight]="member.position.length !== 0 ? 'bold' : 'normal'">{{member.name}}</h3>
       <p *ngIf="member.position.length !== 0" matLine>{{buildInfo(member)}}</p>
       <mat-checkbox fxAlign="right" disableRipple (click)="$event.preventDefault()"

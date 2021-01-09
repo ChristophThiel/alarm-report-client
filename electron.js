@@ -46,10 +46,20 @@ ipcMain.on('save', (event, args) => {
   if (args.id.length === 0) {
     console.warn('Id of alarm is empty, file will not be created');
   } else {
-    console.log(`Write file into ${args.id}.rep`);
+    let index = 0;
+    const path = '/home/christoph/Documents/';
+
+    let file = `${path}${args.id}.rep`;
+    let exists = fs.existsSync(file);
+    while (exists) {
+      file = `${path}${args.id}-${++index}.rep`;
+      exists = fs.existsSync(file);
+    }
+
+    console.log(`Write file into ${file}`);
     const backup = Date.prototype.toJSON;
     Date.prototype.toJSON = function () { return moment(this).locale('de').format('YYYY-MM-DDTHH:mm'); }
-    fs.writeFileSync(`/home/christoph/Documents/${args.id}.rep`, JSON.stringify(args));
+    fs.writeFileSync(file, JSON.stringify(args));
     Date.prototype.toJSON = backup;
   }
 });
