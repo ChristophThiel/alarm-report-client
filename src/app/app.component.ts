@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Alarm } from './shared/alarm.model';
@@ -9,6 +9,8 @@ import { TeamComponent } from './team/team.component';
 import { ProtocolComponent } from './protocol/protocol.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FinishDialogComponent } from './finish-dialog/finish-dialog.component';
+import { InstrumentsComponent } from './instruments/instruments.component';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-root',
@@ -19,12 +21,18 @@ export class AppComponent implements OnInit {
 
   public alarm: Alarm;
 
+  @ViewChild("tabs") tabs: MatTabGroup;
+
   @ViewChild('general') generalReference: GeneralComponent;
+  @ViewChild('instruments') instrumentsReference: InstrumentsComponent;
   @ViewChild('team') teamReference: TeamComponent;
   @ViewChild('protocol') protocolReference: ProtocolComponent;
 
-  constructor(private communicator: CommunicatorService, private dialog: MatDialog,
-    private domSanitizer: DomSanitizer, private iconRegistry: MatIconRegistry,
+  constructor(private communicator: CommunicatorService,
+    private dialog: MatDialog,
+    private domSanitizer: DomSanitizer,
+    private elementRef: ElementRef,
+    private iconRegistry: MatIconRegistry,
     private pdfService: PdfService) {
     this.initializeIcons(iconRegistry, domSanitizer);
   }
@@ -50,9 +58,11 @@ export class AppComponent implements OnInit {
 
   // This function creates the pdf
   public finish(): void {
-    //const dialogRef = this.dialog.open(FinishDialogComponent, { data: this.alarm });
-    // dialogRef.afterClosed().subscribe(result => { });
-    this.pdfService.create(this.alarm);
+    if (this.tabs.selectedIndex === 0)
+      this.validate();
+
+    this.tabs.selectedIndex = 0;
+    this.tabs.animationDone.subscribe(() => this.validate());
   }
 
   private initializeForms(): void {
@@ -80,5 +90,29 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon('sun', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/sun.svg'));
     iconRegistry.addSvgIcon('technic', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/technic.svg'));
     iconRegistry.addSvgIcon('truck', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/truck.svg'));
+  }
+
+  private validate(): void {
+    const formGroup = this.generalReference.form;
+    const controls = Object.keys(formGroup.controls);
+    for (const key of controls) {
+      const control = formGroup.get(key);
+      if (control.enabled)
+        control.markAsTouched();
+    }
+
+    for (const key of controls) {
+      const control = formGroup.get(key);
+      if (control.disabled)
+        continue;
+
+      if (control.invalid) {
+        const htmlElement = document.querySelector(`[formControlName=${key}]`) as HTMLElement;
+        if (htmlElement == null)
+          continue;
+        htmlElement.focus();
+        break;
+      }
+    }
   }
 }

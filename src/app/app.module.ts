@@ -18,9 +18,9 @@ import { ProtocolComponent } from './protocol/protocol.component';
 import { FinishDialogComponent } from './finish-dialog/finish-dialog.component';
 
 import { CommunicatorService } from './shared/communicator.service';
-import { MAT_DATE_LOCALE, ErrorStateMatcher } from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
-import { CustomErrorStateMatcher } from './shared/custom.matcher';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,8 @@ import { CustomErrorStateMatcher } from './shared/custom.matcher';
     AppRoutingModule,
     AppMaterialModule,
     FlexLayoutModule,
-    ScrollingModule
+    ScrollingModule,
+    PdfViewerModule
   ],
   providers: [
     CommunicatorService,

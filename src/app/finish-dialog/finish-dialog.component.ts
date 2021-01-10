@@ -1,8 +1,7 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Alarm } from '../shared/alarm.model';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { PdfService } from '../shared/pdf.service';
 
 @Component({
   selector: 'app-finish-dialog',
@@ -14,10 +13,14 @@ export class FinishDialogComponent {
   @ViewChild('report') report: ElementRef;
 
   public alarm: Alarm;
+  public doc: any;
 
   constructor(private dialogRef: MatDialogRef<FinishDialogComponent>,
+    private pdfService: PdfService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.alarm = data;
+    this.doc = this.pdfService.create(this.alarm)
+      .output('dataurlstring');
   }
 
   public cancel(): void {
@@ -25,14 +28,14 @@ export class FinishDialogComponent {
   }
 
   public print(): void {
-    html2canvas(this.report.nativeElement)
-      .then(canvas => {
-        var pdf = new jsPDF('p', 'pt', 'a4');
-        var data = canvas.toDataURL('image/jpeg', 1);
+    // Send file to printer
 
-        pdf.addImage(data, 0, 0, canvas.width, canvas.height);
-        pdf.save('test.pdf');
-      });
+    this.save();
+  }
+
+  public save(): void {
+    this.pdfService.save(this.alarm);
+    this.dialogRef.close();
   }
 
 }

@@ -115,17 +115,10 @@ export class GeneralComponent implements OnInit {
       events: [instance.events],
       activities: [instance.activities]
     });
-    this.form.get('alarmedDate').valueChanges.subscribe(value => {
-      const time = this.form.get('alarmed').value;
-      if (time.length === 0)
-        return;
-
+    this.form.get('alarmedDate').valueChanges.subscribe(_ => {
       this.createAlarmId();
     });
-    this.form.get('alarmed').valueChanges.subscribe(value => {
-      if (value.length === 0)
-        return;
-
+    this.form.get('alarmed').valueChanges.subscribe(_ => {
       this.createAlarmId();
     })
     this.form.valueChanges.subscribe(() => this.onValueChanged());
@@ -183,10 +176,9 @@ export class GeneralComponent implements OnInit {
   }
 
   public setCurrentTime(formControlName: string): void {
-    const time = new Date();
     const control = this.form.get(formControlName);
     if (control.value.length === 0)
-      control.setValue(`${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}`);
+      control.setValue(moment().format('HH:mm'));
   }
 
   public select(department: any): void {
@@ -198,13 +190,18 @@ export class GeneralComponent implements OnInit {
   }
 
   private createAlarmId(): void {
+    console.log('CALL')
     const date = moment(this.form.get('alarmedDate').value);
     const split = this.form.get('alarmed').value.split(':');
+
+    if (!date.isValid() || split.length !== 2)
+      return;
 
     this.alarm.id = `${date.format('MM-DD')}-${split[0]}-${split[1]}`;
   }
 
   private onValueChanged(): void {
+    console.log('CALL')
     for (let name of Alarm.getTimeFields()) {
       const timeControl = this.form.get(name);
       if (timeControl.value.length === 0) {
@@ -224,5 +221,9 @@ export class GeneralComponent implements OnInit {
     if (control.invalid || control.value === null || control.value.length === 0)
       return false;
     return true;
+  }
+
+  public test(): void {
+    console.log('Test');
   }
 }

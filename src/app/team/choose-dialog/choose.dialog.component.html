@@ -1,11 +1,12 @@
+<h2 class="flawless" mat-dialog-title>Position auswählen</h2>
 <mat-dialog-content>
-  <h2 mat-dialog-title>Position auswählen</h2>
   <form fxLayout="column" (submit)="onSubmit()" [formGroup]="form">
     <mat-form-field appearance="outline" fxFlex>
       <mat-label>Position</mat-label>
       <mat-select formControlName="position">
         <mat-option *ngFor="let position of positions" [value]="position">{{position}}</mat-option>
       </mat-select>
+      <mat-error>Feld wird benötigt</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" fxFlex>
@@ -15,8 +16,9 @@
       </mat-select>
     </mat-form-field>
 
-    <button class="form-submit-button" color="accent" fxFlex mat-stroked-button type="submit">Fertig</button>
-    <button class="flawless form-submit-button" color="error" fxFlex mat-stroked-button type="button"
-      (click)="reset()">Zurücksetzen</button>
+    <div fxLayout="column" fxLayoutGap="16px">
+      <button color="error" fxFlex mat-stroked-button type="button" (click)="reset()">Zurücksetzen</button>
+      <button color="accent" fxFlex mat-stroked-button type="submit">Fertig</button>
+    </div>
   </form>
 </mat-dialog-content>

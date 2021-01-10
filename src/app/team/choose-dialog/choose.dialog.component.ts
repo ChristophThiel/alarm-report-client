@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -16,37 +16,35 @@ export class ChooseDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<ChooseDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public builder: FormBuilder) {
     this.form = this.builder.group({
-      position: [data.position],
-      vehicle: [{ value: data.vehicle, disabled: this.data.vehicles.length === 0 }]
+      position: [data.position, Validators.required],
+      vehicle: [{ value: data.vehicle === '' ? null : data.vehicle, disabled: this.data.vehicles.length === 0 }]
     });
+    this.data.vehicles.unshift(null);
 
     this.dialogRef.backdropClick()
-      .subscribe(_ => this.close());
+      .subscribe(_ => this.dialogRef.close({
+        position: '',
+        vehicle: ''
+      }));
   }
 
   public onSubmit(): void {
-    this.close();
+    if (this.form.invalid)
+      return;
+
+    const result = {
+      position: this.form.get('position').value,
+      vehicle: this.form.get('vehicle').value ?? ''
+    };
+    this.dialogRef.close(result);
   }
 
   public reset(): void {
     this.form.reset();
-    this.close();
-  }
-
-  private close(): void {
-    const items = Object.keys(this.form.controls)
-      .filter(key => this.form.get(key).value != null);
-
-    const result = {
+    this.dialogRef.close({
       position: '',
       vehicle: ''
-    };
-    if (items.length !== 0) {
-      result.position = this.form.get('position').value;
-      result.vehicle = this.form.get('vehicle').value;
-    }
-
-    this.dialogRef.close(result);
+    });
   }
 
 }

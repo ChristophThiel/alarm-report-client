@@ -9,7 +9,7 @@ import { ChooseDialogComponent } from './choose-dialog/choose.dialog.component';
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
-  styleUrls: ['./team.component.scss']
+  styleUrls: ['./team.component.scss'],
 })
 export class TeamComponent implements OnInit {
 
@@ -61,6 +61,9 @@ export class TeamComponent implements OnInit {
     else {
       this.filteredMembers = this.members
         .filter(member => member.name.toLowerCase().indexOf(this.search.value.toLowerCase()) !== -1);
+      console.log(this.filteredMembers);
+      for (let i = 0; i < this.filteredMembers.length; i++)
+        this.trackItem(i, this.filteredMembers[i]);
     }
   }
 
@@ -85,14 +88,14 @@ export class TeamComponent implements OnInit {
   }
 
   public getRelevantMembers(): any[] {
-    return this.members.filter(member => member.position.length !== 0);
+    return this.filteredMembers.filter(member => member.position.length !== 0);
   }
 
   public getIrrelevantMembers(): any[] {
-    return this.members.filter(member => member.position.length === 0);
+    return this.filteredMembers.filter(member => member.position.length === 0);
   }
 
-  public trackItem(index: number, item: any) {
+  public trackItem(index: number, item: any): any {
     return item.position;
   }
 }

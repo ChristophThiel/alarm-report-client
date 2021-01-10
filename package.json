@@ -31,6 +31,7 @@
     "file-saver": "^2.0.5",
     "jspdf-autotable": "^3.5.13",
     "moment": "^2.29.1",
+    "ng2-pdf-viewer": "^6.3.2",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.3",
     "zone.js": "~0.11.3"

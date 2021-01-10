@@ -20,7 +20,7 @@ export class PdfService {
     this.offset = { x: 40, y: 40 + 61.3 };
   }
 
-  public create(alarm: Alarm) {
+  public create(alarm: Alarm): jsPDF {
     this.initDocument();
     this.drawBackground();
     (this.doc.internal as any).events.subscribe('addPage', () => this.drawBackground());
@@ -48,17 +48,17 @@ export class PdfService {
 
     // Print times
     tableData = [['Alarmiert:', this.formatDateTime(alarm.alarmed)]];
-    if (alarm.engaged !== null)
+    if (alarm.engaged != null)
       tableData.push(['Ausgerückt:', this.formatDateTime(alarm.engaged)]);
-    if (alarm.reached !== null)
+    if (alarm.reached != null)
       tableData.push(['1. Fahrzeug am Einsatzort:', this.formatDateTime(alarm.reached)]);
-    if (alarm.stop !== null)
+    if (alarm.stop != null)
       tableData.push(['Alarmstopp:', this.formatDateTime(alarm.stop)]);
-    if (alarm.indented !== null)
+    if (alarm.indented != null)
       tableData.push(['Rückher letztes Fahrzeug:', this.formatDateTime(alarm.indented)]);
-    if (alarm.ready !== null)
+    if (alarm.ready != null)
       tableData.push(['Wieder Einsatzbereit:', this.formatDateTime(alarm.ready)]);
-    if (alarm.stop !== null)
+    if (alarm.stop != null)
       tableData.push(['Brand aus:', this.formatDateTime(alarm.fireOut)]);
 
     this.drawTable(tableData, this.getColumnsConfiguration(tableData));
@@ -151,7 +151,12 @@ export class PdfService {
 
     this.finishDocument(alarm);
 
-    this.doc.save('test.pdf');
+    return this.doc;
+  }
+
+  public save(alarm: Alarm): void {
+    console.log(alarm.id)
+    this.doc.save(alarm.id);
   }
 
   private drawBackground(): void {

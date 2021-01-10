@@ -1,8 +1,9 @@
-<h1 mat-dialog-title>Resultierende PDF</h1>
-<div mat-dialog-content>
-  <p>Should contain a preview of the resulting pdf file.</p>
-</div>
-<div mat-dialog-actions>
-  <button mat-stroked-button>Abbrechen</button>
-  <button mat-stroked-button (click)="print()">Drucken</button>
+<h2 class="flawless" mat-dialog-title>Resultierende PDF</h2>
+<mat-dialog-content>
+  <pdf-viewer render-text="true" fit-to-page="true" [src]="doc"></pdf-viewer>
+</mat-dialog-content>
+
+<div fxLayout="column" fxLayoutGap="16px">
+  <button color="accent" fxFlex mat-stroked-button type="button" (click)="print()">Drucken & Speichern</button>
+  <button color="error" fxFlex mat-stroked-button type="button" (click)="cancel()">Abbrechen</button>
 </div>
