@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 export class ChooseDialogComponent {
 
   public readonly positions: string[] = environment.positions;
+  public readonly noVehicles: string[] = ['Funk', 'Reserve'];
 
   public form: FormGroup;
 
@@ -18,6 +19,13 @@ export class ChooseDialogComponent {
     this.form = this.builder.group({
       position: [data.position, Validators.required],
       vehicle: [{ value: data.vehicle === '' ? null : data.vehicle, disabled: this.data.vehicles.length === 0 }]
+    });
+    const control = this.form.get('position');
+    control.valueChanges.subscribe(event => {
+      if (this.noVehicles.indexOf(event) === -1 && this.data.vehicles.length > 1)
+        this.form.get('vehicle').enable();
+      else
+        this.form.get('vehicle').disable();
     });
     this.data.vehicles.unshift(null);
 

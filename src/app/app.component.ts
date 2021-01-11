@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
   constructor(private communicator: CommunicatorService,
     private dialog: MatDialog,
     private domSanitizer: DomSanitizer,
-    private elementRef: ElementRef,
     private iconRegistry: MatIconRegistry,
     private pdfService: PdfService) {
     this.initializeIcons(iconRegistry, domSanitizer);
@@ -58,11 +57,37 @@ export class AppComponent implements OnInit {
 
   // This function creates the pdf
   public finish(): void {
-    if (this.tabs.selectedIndex === 0)
-      this.validate();
+    this.tabs.animationDone.subscribe(() => {
+      if (this.tabs.selectedIndex === 0) {
+        if (this.validateGeneral())
+          this.tabs.selectedIndex = 2;
+      } else {
+        if (this.validateGeneral())
+          this.validateTeam();
+        else
+          this.tabs.selectedIndex = 0;
+      }
+    });
+    this.tabs.selectedIndex = 1;
 
-    this.tabs.selectedIndex = 0;
-    this.tabs.animationDone.subscribe(() => this.validate());
+    // Trigger animationDone from index 0
+
+    // Call dialog
+
+    /* if (this.tabs.selectedIndex === 0) {
+      if (this.validateGeneral) {
+        this.tabs.selectedIndex = 2;
+        this.tabs.animationDone.subscribe(() => this.validateTeam());
+      }
+    } else {
+      this.tabs.selectedIndex = 0;
+      this.tabs.animationDone.subscribe(() => {
+        if (this.validateGeneral) {
+          this.tabs.selectedIndex = 2;
+          this.tabs.animationDone.subscribe(() => this.validateTeam);
+        }
+      })
+    }*/
   }
 
   private initializeForms(): void {
@@ -92,7 +117,7 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon('truck', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/truck.svg'));
   }
 
-  private validate(): void {
+  private validateGeneral(): boolean {
     const formGroup = this.generalReference.form;
     const controls = Object.keys(formGroup.controls);
     for (const key of controls) {
@@ -110,9 +135,19 @@ export class AppComponent implements OnInit {
         const htmlElement = document.querySelector(`[formControlName=${key}]`) as HTMLElement;
         if (htmlElement == null)
           continue;
+        if (htmlElement.hasAttribute('data-mat-calendar'))
+          htmlElement.click();
         htmlElement.focus();
-        break;
+        return false;
       }
     }
+    return true;
+  }
+
+  private validateTeam(): boolean {
+    if (this.alarm.team.filter(member => member.position === 'Einsatzleiter' || member.position === 'Zugskommandant').length === 0) {
+      // this.dialog.open()
+    }
+    return true;
   }
 }
