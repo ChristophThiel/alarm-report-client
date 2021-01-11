@@ -14,6 +14,7 @@ import { InstrumentsComponent } from './instruments/instruments.component';
 import { TeamComponent } from './team/team.component';
 import { ChooseDialogComponent } from './team/choose-dialog/choose.dialog.component';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
 import { ProtocolComponent } from './protocol/protocol.component';
 import { FinishDialogComponent } from './finish-dialog/finish-dialog.component';
 
@@ -30,6 +31,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     TeamComponent,
     ChooseDialogComponent,
     ConfirmationDialogComponent,
+    ErrorDialogComponent,
     ProtocolComponent,
     FinishDialogComponent
   ],
@@ -54,6 +56,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   entryComponents: [
     ChooseDialogComponent,
     ConfirmationDialogComponent,
+    ErrorDialogComponent,
     FinishDialogComponent
   ],
   bootstrap: [AppComponent]

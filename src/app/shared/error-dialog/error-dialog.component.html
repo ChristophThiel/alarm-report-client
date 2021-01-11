@@ -1,0 +1,10 @@
+<h2 class="flawless" mat-dialog-title>Fehler</h2>
+<mat-dialog-content>
+  <p>
+    <span *ngFor="let line of data.lines" [innerHtml]="line"></span>
+  </p>
+</mat-dialog-content>
+
+<div fxLayout="column" fxLayoutGap="16px">
+  <button cdkFocusInitial color="accent" fxFlex mat-stroked-button type="button" (click)="close()">Verstanden</button>
+</div>

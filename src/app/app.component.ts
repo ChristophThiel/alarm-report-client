@@ -11,6 +11,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { FinishDialogComponent } from './finish-dialog/finish-dialog.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { MatTabGroup } from '@angular/material/tabs';
+import { take } from 'rxjs/operators';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -57,37 +60,59 @@ export class AppComponent implements OnInit {
 
   // This function creates the pdf
   public finish(): void {
-    this.tabs.animationDone.subscribe(() => {
-      if (this.tabs.selectedIndex === 0) {
-        if (this.validateGeneral())
-          this.tabs.selectedIndex = 2;
-      } else {
-        if (this.validateGeneral())
-          this.validateTeam();
-        else
-          this.tabs.selectedIndex = 0;
+    if (this.tabs.selectedIndex === 0) {
+      if (this.validateGeneral()) {
+        this.tabs.selectedIndex = 2;
+        this.tabs.animationDone.pipe(take(1))
+          .subscribe(() => this.validateTeam());
       }
-    });
-    this.tabs.selectedIndex = 1;
+    } else if (this.tabs.selectedIndex === 2) {
+      if (this.validateGeneral())
+        this.validateTeam();
+      else {
+        this.tabs.selectedIndex = 0;
+        this.tabs.animationDone.pipe(take(1))
+          .subscribe(() => this.validateGeneral());
+      }
+    } else {
+      if (this.validateGeneral()) {
+        this.tabs.selectedIndex = 2;
+        this.tabs.animationDone.pipe(take(1))
+          .subscribe(() => this.validateTeam());
+      } else {
+        this.tabs.selectedIndex = 0;
+        this.tabs.animationDone.pipe(take(1))
+          .subscribe(() => this.validateGeneral());
+      }
+    }
+
+
+    /* this.tabs.animationDone.pipe(take(1))
+      .subscribe(() => {
+        if (this.tabs.selectedIndex === 0) {
+          if (this.validateGeneral())
+            this.tabs.selectedIndex = 2;
+        } else {
+          if (this.validateGeneral())
+            this.validateTeam();
+          else
+            this.tabs.selectedIndex = 0;
+        }
+      });
+    if (this.tabs.selectedIndex === 0) {
+      if (this.validateGeneral())
+        this.tabs.selectedIndex = 2;
+    } else {
+      if (this.validateGeneral())
+        this.tabs.selectedIndex = 2;
+      else
+        this.tabs.selectedIndex = 0;
+    } */
+
 
     // Trigger animationDone from index 0
 
     // Call dialog
-
-    /* if (this.tabs.selectedIndex === 0) {
-      if (this.validateGeneral) {
-        this.tabs.selectedIndex = 2;
-        this.tabs.animationDone.subscribe(() => this.validateTeam());
-      }
-    } else {
-      this.tabs.selectedIndex = 0;
-      this.tabs.animationDone.subscribe(() => {
-        if (this.validateGeneral) {
-          this.tabs.selectedIndex = 2;
-          this.tabs.animationDone.subscribe(() => this.validateTeam);
-        }
-      })
-    }*/
   }
 
   private initializeForms(): void {
@@ -133,11 +158,15 @@ export class AppComponent implements OnInit {
 
       if (control.invalid) {
         const htmlElement = document.querySelector(`[formControlName=${key}]`) as HTMLElement;
-        if (htmlElement == null)
+
+        if (key.startsWith('fireOut') && this.alarm.alarmType !== 'Realbrand')
           continue;
-        if (htmlElement.hasAttribute('data-mat-calendar'))
-          htmlElement.click();
-        htmlElement.focus();
+
+        if (htmlElement != null) {
+          if (htmlElement.hasAttribute('data-mat-calendar'))
+            htmlElement.click();
+          htmlElement.focus();
+        }
         return false;
       }
     }
@@ -145,8 +174,17 @@ export class AppComponent implements OnInit {
   }
 
   private validateTeam(): boolean {
+    console.log(this.alarm.team.filter(member => member.position === 'Einsatzleiter' || member.position === 'Zugskommandant').length)
     if (this.alarm.team.filter(member => member.position === 'Einsatzleiter' || member.position === 'Zugskommandant').length === 0) {
-      // this.dialog.open()
+      this.dialog.open(ErrorDialogComponent, {
+        data: {
+          disableClose: true,
+          panelClass: 'dialog-container',
+          lines: [
+            'Es muss entweder ein Einsatleiter oder ein Zugskommandant ausgewählt werden.'
+          ]
+        }
+      });
     }
     return true;
   }
