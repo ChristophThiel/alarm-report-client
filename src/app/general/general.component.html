@@ -12,7 +12,7 @@
 
         <mat-form-field appearance="outline" class="right" fxFlex="65">
           <mat-label>Alarmart</mat-label>
-          <mat-select (selectionChange)="alarm.alarmType = $event.value" [value]="alarm.alarmType">
+          <mat-select (selectionChange)="onAlarmTypeChanged($event)" [value]="alarm.alarmType">
             <mat-option *ngFor="let alarmType of alarmTypes" [value]="alarmType">
               {{alarmType}}
             </mat-option>

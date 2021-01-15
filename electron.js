@@ -10,21 +10,18 @@ function createWindow() {
     minHeight: 600,
     webPreferences: {
       zoomFactor: 1.25,
-      nodeIntegration: true
+      nodeIntegration: true,
+      webSecurity: false
     },
-    icon: __dirname + '/src/assets/icon.ico'
+    icon: `${__dirname}/dist/assets/icon.png`
   });
-  /* win.once('ready-to-show', () => {
-    win.webContents.setZoomFactor(1.25);
-    win.show();
-  }) */
+
   Menu.setApplicationMenu(null);
   win.setMenuBarVisibility(false);
-  win.loadFile('./dist/alarm-report-client/index.html');
-  win.on('closed', () => win = null);
+  win.loadFile(`${__dirname}/dist/index.html`);
 }
 
-app.on('ready', createWindow);
+app.whenReady().then(createWindow);
 
 ipcMain.on('open', (event, args) => {
   dialog.showOpenDialog()

@@ -1,7 +1,12 @@
 export const environment = {
-  production: true,
+  production: false,
+  backgroundImage: 'assets/pdf/background.png',
   departments: './assets/departments.json',
+  fireImage: 'assets/pdf/fire.png',
   members: './assets/members.json',
+  robotoBold: './assets/pdf/Roboto-Bold.ttf',
+  robotoRegular: './assets/pdf/Roboto-Regular.ttf',
+  technicImage: 'assets/pdf/technic.png',
   vehicles: './assets/vehicles.json',
   types: [
     'Brand',

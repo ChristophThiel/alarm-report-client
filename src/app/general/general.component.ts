@@ -107,8 +107,8 @@ export class GeneralComponent implements OnInit {
       indented: [instance.indented == null ? '' : moment(instance.indented).format('HH:mm')],
       readyDate: [instance.ready === null || instance.ready, Validators.required],
       ready: [instance.ready == null ? '' : moment(instance.ready).format('HH:mm'), Validators.required],
-      fireOutDate: [instance.fireOut === null || instance.fireOut, Validators.required],
-      fireOut: [instance.fireOut == null ? '' : moment(instance.fireOut).format('HH:mm'), Validators.required],
+      fireOutDate: [{ value: instance.fireOut === null || instance.fireOut, disabled: instance.alarmType !== 'Realbrand' }, Validators.required],
+      fireOut: [{ value: instance.fireOut == null ? '' : moment(instance.fireOut).format('HH:mm'), disabled: instance.alarmType !== 'Realbrand' }, Validators.required],
       department: [''],
       organisation: [''],
       damage: [instance.damage],
@@ -132,6 +132,20 @@ export class GeneralComponent implements OnInit {
       others.disable();
     } else {
       others.enable();
+    }
+  }
+
+  public onAlarmTypeChanged(event: any): void {
+    this.alarm.alarmType = event.value;
+    const fireOutDate = this.form.get('fireOutDate');
+    const fireOut = this.form.get('fireOut');
+
+    if (this.alarm.alarmType === 'Realbrand') {
+      fireOutDate.enable();
+      fireOut.enable();
+    } else {
+      fireOutDate.disable();
+      fireOut.disable();
     }
   }
 
@@ -190,7 +204,6 @@ export class GeneralComponent implements OnInit {
   }
 
   private createAlarmId(): void {
-    console.log('CALL')
     const date = moment(this.form.get('alarmedDate').value);
     const split = this.form.get('alarmed').value.split(':');
 
@@ -201,7 +214,6 @@ export class GeneralComponent implements OnInit {
   }
 
   private onValueChanged(): void {
-    console.log('CALL')
     for (let name of Alarm.getTimeFields()) {
       const timeControl = this.form.get(name);
       if (timeControl.value.length === 0) {
@@ -223,7 +235,4 @@ export class GeneralComponent implements OnInit {
     return true;
   }
 
-  public test(): void {
-    console.log('Test');
-  }
 }

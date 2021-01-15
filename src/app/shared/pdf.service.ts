@@ -155,7 +155,6 @@ export class PdfService {
   }
 
   public save(alarm: Alarm): void {
-    console.log(alarm.id)
     this.doc.save(alarm.id);
   }
 

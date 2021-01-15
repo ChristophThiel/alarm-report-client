@@ -3,13 +3,7 @@
   "version": "0.0.0",
   "main": "electron.js",
   "scripts": {
-    "ng": "ng",
-    "new": "ng build --source-map=false && electron . --enable-logging",
-    "build": "ng build",
-    "start": "electron . --enable-logging",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "build": "ng build --output-path=dist --prod"
   },
   "private": true,
   "dependencies": {
@@ -27,7 +21,6 @@
     "@angular/router": "~11.0.4",
     "@types/electron": "^1.6.10",
     "core-js": "^3.8.1",
-    "electron": "^11.1.0",
     "file-saver": "^2.0.5",
     "jspdf-autotable": "^3.5.13",
     "moment": "^2.29.1",
@@ -43,6 +36,7 @@
     "@angular/language-service": "~11.0.4",
     "@types/node": "^14.14.12",
     "codelyzer": "^6.0.1",
+    "electron": "^11.1.0",
     "fs": "0.0.1-security",
     "ts-node": "~9.1.1",
     "tslint": "~6.1.0",

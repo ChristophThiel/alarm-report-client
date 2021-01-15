@@ -14,6 +14,7 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { take } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -60,15 +61,40 @@ export class AppComponent implements OnInit {
 
   // This function creates the pdf
   public finish(): void {
-    if (this.tabs.selectedIndex === 0) {
-      if (this.validateGeneral()) {
+    if (!this.isGeneralValid()) {
+      if (this.tabs.selectedIndex === 0)
+        this.validateGeneral();
+      else {
+        this.tabs.selectedIndex = 0;
+        this.tabs.animationDone.pipe(take(1))
+          .subscribe(() => this.validateGeneral());
+      }
+    } else if (!this.isTeamValid()) {
+      if (this.tabs.selectedIndex === 2)
+        this.openPositionErrorDialog();
+      else {
         this.tabs.selectedIndex = 2;
         this.tabs.animationDone.pipe(take(1))
-          .subscribe(() => this.validateTeam());
+          .subscribe(() => this.openPositionErrorDialog());
+      }
+    }
+
+    /* if (this.tabs.selectedIndex === 0) {
+      if (this.validateGeneral()) {
+        if (!this.validateTeam) {
+          this.tabs.selectedIndex = 2;
+          this.tabs.animationDone.pipe(take(1))
+            .subscribe(() => {
+              this.validateTeam();
+              this.openErrorDialog();
+            });
+        }
       }
     } else if (this.tabs.selectedIndex === 2) {
-      if (this.validateGeneral())
+      if (this.validateGeneral()) {
         this.validateTeam();
+        this.openErrorDialog();
+      }
       else {
         this.tabs.selectedIndex = 0;
         this.tabs.animationDone.pipe(take(1))
@@ -76,41 +102,20 @@ export class AppComponent implements OnInit {
       }
     } else {
       if (this.validateGeneral()) {
-        this.tabs.selectedIndex = 2;
-        this.tabs.animationDone.pipe(take(1))
-          .subscribe(() => this.validateTeam());
+        if (!this.validateTeam) {
+          this.tabs.selectedIndex = 2;
+          this.tabs.animationDone.pipe(take(1))
+            .subscribe(() => {
+              this.validateTeam();
+              this.openErrorDialog();
+            });
+        }
       } else {
         this.tabs.selectedIndex = 0;
         this.tabs.animationDone.pipe(take(1))
           .subscribe(() => this.validateGeneral());
       }
-    }
-
-
-    /* this.tabs.animationDone.pipe(take(1))
-      .subscribe(() => {
-        if (this.tabs.selectedIndex === 0) {
-          if (this.validateGeneral())
-            this.tabs.selectedIndex = 2;
-        } else {
-          if (this.validateGeneral())
-            this.validateTeam();
-          else
-            this.tabs.selectedIndex = 0;
-        }
-      });
-    if (this.tabs.selectedIndex === 0) {
-      if (this.validateGeneral())
-        this.tabs.selectedIndex = 2;
-    } else {
-      if (this.validateGeneral())
-        this.tabs.selectedIndex = 2;
-      else
-        this.tabs.selectedIndex = 0;
     } */
-
-
-    // Trigger animationDone from index 0
 
     // Call dialog
   }
@@ -142,50 +147,50 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon('truck', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/truck.svg'));
   }
 
-  private validateGeneral(): boolean {
+  private isGeneralValid(): boolean {
     const formGroup = this.generalReference.form;
-    const controls = Object.keys(formGroup.controls);
-    for (const key of controls) {
-      const control = formGroup.get(key);
+    const controls: Array<FormControl> = [];
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key) as FormControl;
       if (control.enabled)
         control.markAsTouched();
-    }
+      controls.push(control);
+    })
 
-    for (const key of controls) {
-      const control = formGroup.get(key);
-      if (control.disabled)
-        continue;
-
-      if (control.invalid) {
-        const htmlElement = document.querySelector(`[formControlName=${key}]`) as HTMLElement;
-
-        if (key.startsWith('fireOut') && this.alarm.alarmType !== 'Realbrand')
-          continue;
-
-        if (htmlElement != null) {
-          if (htmlElement.hasAttribute('data-mat-calendar'))
-            htmlElement.click();
-          htmlElement.focus();
-        }
+    for (let control of controls) {
+      if (control.invalid && control.enabled)
         return false;
-      }
     }
     return true;
   }
 
-  private validateTeam(): boolean {
-    console.log(this.alarm.team.filter(member => member.position === 'Einsatzleiter' || member.position === 'Zugskommandant').length)
-    if (this.alarm.team.filter(member => member.position === 'Einsatzleiter' || member.position === 'Zugskommandant').length === 0) {
-      this.dialog.open(ErrorDialogComponent, {
-        data: {
-          disableClose: true,
-          panelClass: 'dialog-container',
-          lines: [
-            'Es muss entweder ein Einsatleiter oder ein Zugskommandant ausgewählt werden.'
-          ]
-        }
-      });
+  private isTeamValid(): boolean {
+    return this.alarm.team
+      .some(member => member.position === 'Einsatzleiter' || member.position === 'Zugskommandant');
+  }
+
+  private validateGeneral(): void {
+    const formGroup = this.generalReference.form;
+    const keys = Object.keys(formGroup.controls);
+    for (let key of keys) {
+      const control = formGroup.get(key);
+      if (control.invalid && control.enabled) {
+        const htmlElement = document.querySelector(`[formControlName=${key}]`) as HTMLElement;
+        htmlElement?.click();
+        return;
+      }
     }
-    return true;
+  }
+
+  private openPositionErrorDialog(): void {
+    this.dialog.open(ErrorDialogComponent, {
+      data: {
+        disableClose: true,
+        panelClass: 'dialog-container',
+        lines: [
+          'Es muss entweder ein Einsatleiter oder ein Zugskommandant ausgewählt werden.'
+        ]
+      }
+    });
   }
 }

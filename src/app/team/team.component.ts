@@ -61,7 +61,6 @@ export class TeamComponent implements OnInit {
     else {
       this.filteredMembers = this.members
         .filter(member => member.name.toLowerCase().indexOf(this.search.value.toLowerCase()) !== -1);
-      console.log(this.filteredMembers);
       for (let i = 0; i < this.filteredMembers.length; i++)
         this.trackItem(i, this.filteredMembers[i]);
     }
