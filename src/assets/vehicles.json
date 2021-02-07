@@ -1,14 +1,66 @@
 [
-  "Kommando 1",
-  "Kommando 2",
-  "Tank 1",
-  "Tank 2",
-  "Tank 3",
-  "Rüst 1",
-  "Rüst 2",
-  "Leiter",
-  "Last",
-  "TSA",
-  "Rüst Anhänger",
-  "Boot"
+  {
+    "name": "Kommando 1",
+    "isVehicle": true
+  },
+  {
+    "name": "Kommando 2",
+    "isVehicle": true
+  },
+  {
+    "name": "Kommando 3",
+    "isVehicle": true
+  },
+  {
+    "name": "MTF 1",
+    "isVehicle": true
+  },
+  {
+    "name": "MTF 2",
+    "isVehicle": true
+  },
+  {
+    "name": "Tank 1",
+    "isVehicle": true
+  },
+  {
+    "name": "Tank 2",
+    "isVehicle": true
+  },
+  {
+    "name": "Tank 3",
+    "isVehicle": true
+  },
+  {
+    "name": "Rüst 1",
+    "isVehicle": true
+  },
+  {
+    "name": "Rüst 2",
+    "isVehicle": true
+  },
+  {
+    "name": "Leiter",
+    "isVehicle": true
+  },
+  {
+    "name": "Last",
+    "isVehicle": true
+  },
+  {
+    "name": "TSA 750",
+    "isVehicle": false
+  },
+  {
+    "name": "RA 750",
+    "isVehicle": false
+  },
+  {
+    "name": "STROMA",
+    "isVehicle": false
+  },
+  {
+    "name": "Boot",
+    "isVehicle": false
+  }
 ]

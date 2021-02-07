@@ -7,8 +7,7 @@ export class Alarm {
   public alarmedBy: string = 'LWZ/BWST';
   public others: string = '';
 
-  public mainActivity: string = '';
-  public sideActivity: string = '';
+  public reason: string = '';
 
   public location: string = '';
   public parish: string = 'Marchtrenk';
@@ -33,7 +32,7 @@ export class Alarm {
 
   public damage: string = '';
   public events: string = '';
-  public activities: string = '';
+  public problems: string = '';
 
   public devices: any[] = [];
   public vehicles: any[] = [];

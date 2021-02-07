@@ -33,7 +33,7 @@ export class PdfService {
     let tableData = [
       ['Alarmart:', alarm.alarmType, 'Alarmiert von:', others],
       ['Einsatzort:', alarm.location, 'Gemeinde:', alarm.parish],
-      ['Nebenaktivität:', alarm.sideActivity, 'Wetter:', alarm.weather, '', '']
+      ['Wetter:', alarm.weather, '', '']
     ];
     this.drawTable(tableData, this.getColumnsConfiguration(tableData));
 
@@ -84,9 +84,9 @@ export class PdfService {
     if (alarm.damage != null && alarm.damage !== '')
       tableData.push(['Schadenslage:', alarm.damage]);
     if (alarm.events != null && alarm.events !== '')
-      tableData.push(['Vorkommnisse:', alarm.events]);
-    if (alarm.activities != null && alarm.activities !== '')
-      tableData.push(['Tätigkeiten:', alarm.activities]);
+      tableData.push(['Vorkommnisse/Tätigkeiten:', alarm.events]);
+    if (alarm.problems != null && alarm.problems !== '')
+      tableData.push(['Probleme:', alarm.problems]);
 
     this.drawTable(tableData, this.getColumnsConfiguration(tableData));
 
@@ -104,7 +104,38 @@ export class PdfService {
     const copy = [];
     alarm.team.forEach(member => copy.push(Object.assign({}, member)));
 
-    copy.filter(member => member.position !== '')
+    for (let member of copy) {
+      if (member.position === '')
+        continue;
+
+      let help = `${member.name} (${member.position})`;
+      let group = 'Sonstige';
+      if (member.vehicle !== '')
+        group = member.vehicle;
+      else {
+        help = member.name;
+        if (member.position === 'Reserve')
+          group = member.position;
+        else if (member.position === 'Zentralist')
+          group = 'Zentrale';
+      }
+
+      const found = result.find(item => item.group === group);
+      if (found)
+        found.team.push(help);
+      else {
+        result.push({
+          group,
+          team: [help]
+        });
+      }
+    };
+
+    tableData = result.map(item => [`${item.group}:`, item.team.join(', ')]);
+
+    this.drawTable(tableData, this.getColumnsConfiguration(tableData));
+
+    /* copy.filter(member => member.position !== '')
       .map(member => {
         let vehicle = member.vehicle;
         if (vehicle === '') {
@@ -132,10 +163,19 @@ export class PdfService {
       });
 
     tableData = result.map(item => {
-      return [`${item.vehicle}:`, item.team.join(', ')];
+      console.log(item)
+      const vehicle = alarm.vehicles.find(vehicle => vehicle.name === item.vehicle);
+      console.log(vehicle)
+      const rangeResult = `${vehicle.range} ${vehicle.unit}`;
+      return [`${item.vehicle} (${rangeResult}):`, item.team.join(', ')];
     });
 
-    this.drawTable(tableData, this.getColumnsConfiguration(tableData));
+    const specificPositions = [
+      'Reserve',
+      'Zentralist'
+    ];
+
+    this.drawTable(tableData, this.getColumnsConfiguration(tableData)); */
 
     // Print protocol
     tableData = alarm.protocol.filter(message => message.valid)
@@ -212,7 +252,7 @@ export class PdfService {
       this.offset = { x: 40, y: 40 };
       this.doc.setFont('Roboto', 'Bold');
       this.doc.setFontSize(10)
-        .text(moment().locale('de').format('dddd, DD. MMMM YYYY, HH:mm [Uhr (01-01-02-03)]'), this.offset.x, this.offset.y);
+        .text(moment().locale('de').format(`dddd, DD. MMMM YYYY, HH:mm [Uhr (${alarm.id})]`), this.offset.x, this.offset.y);
       this.offset.y += this.doc.getLineHeight();
 
       const img = new Image()
@@ -227,7 +267,7 @@ export class PdfService {
         .text(alarm.id, this.offset.x, this.offset.y);
       this.offset.y += this.doc.getLineHeight() - 5;
 
-      let lineSplit = this.doc.splitTextToSize(alarm.mainActivity, 280);
+      let lineSplit = this.doc.splitTextToSize(alarm.reason, 280);
       this.doc.setFontSize(14)
         .setFont('Roboto', 'Regular')
         .text(lineSplit, this.offset.x, this.offset.y);

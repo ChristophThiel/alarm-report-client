@@ -87,33 +87,32 @@ export class GeneralComponent implements OnInit {
   public initForm(instance: Alarm): void {
     this.form = this.builder.group({
       others: [{ value: instance.others, disabled: instance.alarmedBy === 'LWZ/BWST' }, Validators.required],
-      mainActivity: [instance.mainActivity, Validators.required],
-      sideActivity: [instance.sideActivity, Validators.required],
+      reason: [instance.reason, Validators.required],
       location: [instance.location, Validators.required],
       parish: [instance.parish, Validators.required],
       injuredPeople: [instance.involved[0], Validators.min(1)],
       killedPeople: [instance.involved[1], Validators.min(1)],
       injuredAnimals: [instance.involved[2], Validators.min(1)],
       killedAnimals: [instance.involved[3], Validators.min(1)],
-      alarmedDate: [instance.alarmed === null || instance.alarmed, Validators.required],
       alarmed: [instance.alarmed == null ? '' : moment(instance.alarmed).format('HH:mm'), Validators.required],
-      engagedDate: [instance.engaged === null || instance.engaged],
+      alarmedDate: [instance.alarmed === null || instance.alarmed, Validators.required],
       engaged: [instance.engaged == null ? '' : moment(instance.engaged).format('HH:mm')],
-      reachedDate: [instance.reached === null || instance.reached],
+      engagedDate: [instance.engaged === null || instance.engaged],
       reached: [instance.reached == null ? '' : moment(instance.reached).format('HH:mm')],
-      stopDate: [instance.stop === null || instance.stop],
+      reachedDate: [instance.reached === null || instance.reached],
       stop: [instance.stop == null ? '' : moment(instance.stop).format('HH:mm')],
-      indentedDate: [instance.indented === null || instance.indented],
+      stopDate: [instance.stop === null || instance.stop],
       indented: [instance.indented == null ? '' : moment(instance.indented).format('HH:mm')],
-      readyDate: [instance.ready === null || instance.ready, Validators.required],
+      indentedDate: [instance.indented === null || instance.indented],
       ready: [instance.ready == null ? '' : moment(instance.ready).format('HH:mm'), Validators.required],
-      fireOutDate: [{ value: instance.fireOut === null || instance.fireOut, disabled: instance.alarmType !== 'Realbrand' }, Validators.required],
+      readyDate: [instance.ready === null || instance.ready, Validators.required],
       fireOut: [{ value: instance.fireOut == null ? '' : moment(instance.fireOut).format('HH:mm'), disabled: instance.alarmType !== 'Realbrand' }, Validators.required],
+      fireOutDate: [{ value: instance.fireOut === null || instance.fireOut, disabled: instance.alarmType !== 'Realbrand' }, Validators.required],
       department: [''],
       organisation: [''],
       damage: [instance.damage],
       events: [instance.events],
-      activities: [instance.activities]
+      problems: [instance.problems]
     });
     this.form.get('alarmedDate').valueChanges.subscribe(_ => {
       this.createAlarmId();
@@ -190,9 +189,13 @@ export class GeneralComponent implements OnInit {
   }
 
   public setCurrentTime(formControlName: string): void {
-    const control = this.form.get(formControlName);
-    if (control.value.length === 0)
-      control.setValue(moment().format('HH:mm'));
+    const now = moment();
+    const time = this.form.get(formControlName);
+    const date = this.form.get(`${formControlName}Date`);
+    if (time.value.length === 0)
+      time.setValue(moment().format('HH:mm'));
+    if (!date.value)
+      date.setValue(now.toDate());
   }
 
   public select(department: any): void {

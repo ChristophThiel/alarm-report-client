@@ -55,7 +55,7 @@ export const environment = {
     'Fahrzeugkommandant',
     'FMD',
     'Funk',
-    'Mann',
+    'Zentralist',
     'Maschinist',
     'Reserve',
     'Vollschutzträger',

@@ -79,45 +79,9 @@ export class AppComponent implements OnInit {
       }
     }
 
-    /* if (this.tabs.selectedIndex === 0) {
-      if (this.validateGeneral()) {
-        if (!this.validateTeam) {
-          this.tabs.selectedIndex = 2;
-          this.tabs.animationDone.pipe(take(1))
-            .subscribe(() => {
-              this.validateTeam();
-              this.openErrorDialog();
-            });
-        }
-      }
-    } else if (this.tabs.selectedIndex === 2) {
-      if (this.validateGeneral()) {
-        this.validateTeam();
-        this.openErrorDialog();
-      }
-      else {
-        this.tabs.selectedIndex = 0;
-        this.tabs.animationDone.pipe(take(1))
-          .subscribe(() => this.validateGeneral());
-      }
-    } else {
-      if (this.validateGeneral()) {
-        if (!this.validateTeam) {
-          this.tabs.selectedIndex = 2;
-          this.tabs.animationDone.pipe(take(1))
-            .subscribe(() => {
-              this.validateTeam();
-              this.openErrorDialog();
-            });
-        }
-      } else {
-        this.tabs.selectedIndex = 0;
-        this.tabs.animationDone.pipe(take(1))
-          .subscribe(() => this.validateGeneral());
-      }
-    } */
-
-    // Call dialog
+    if (this.isGeneralValid() && this.isTeamValid()) {
+      this.dialog.open(FinishDialogComponent, { data: this.alarm })
+    }
   }
 
   private initializeForms(): void {

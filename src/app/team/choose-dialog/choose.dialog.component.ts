@@ -17,7 +17,7 @@ export class ChooseDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<ChooseDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public builder: FormBuilder) {
     this.form = this.builder.group({
-      position: [data.position, Validators.required],
+      position: [data.position === '' ? 'Feuerwehrmann' : data.position, Validators.required],
       vehicle: [{ value: data.vehicle === '' ? null : data.vehicle, disabled: this.data.vehicles.length === 0 }]
     });
     const control = this.form.get('position');

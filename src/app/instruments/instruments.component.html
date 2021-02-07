@@ -4,15 +4,14 @@
     <mat-form-field appearance="outline" class="left" fxFlex.gt-xs="60" fxFlex.xs="40">
       <mat-label>Fahrzeug</mat-label>
       <mat-select formControlName="name" (selectionChange)="isNoVehicle($event)" [errorStateMatcher]="matcher">
-        <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle">{{vehicle}}</mat-option>
+        <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle.name">{{vehicle.name}}</mat-option>
       </mat-select>
       <mat-error *ngIf="vehicleForm.get('name').invalid">Feld wird benötigt</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="center is-center" fxFlex.gt-xs="20" fxFlex.xs="40">
-      <mat-label>Kilometer</mat-label>
+      <mat-label>{{ vehicleRangeString }}</mat-label>
       <input formControlName="range" matInput min="1" type="number" [errorStateMatcher]="matcher">
-      <mat-error *ngIf="vehicleForm.get('range').hasError('required')">Feld wird benötigt</mat-error>
       <mat-error *ngIf="vehicleForm.get('range').hasError('min')">Ungültiger Wert</mat-error>
     </mat-form-field>
 
@@ -27,7 +26,8 @@
       <mat-label>Eingesetzte Fahrzeuge</mat-label>
       <mat-chip-list #chipList>
         <mat-chip *ngIf="alarm.vehicles.length === 0" style="visibility: hidden;"></mat-chip>
-        <mat-chip *ngFor="let vehicle of alarm.vehicles" (removed)="openRemoveVehicleConfirmationDialog(vehicle)">
+        <mat-chip *ngFor="let vehicle of alarm.vehicles" (click)="selectVehicle(vehicle)"
+          (removed)="openRemoveVehicleConfirmationDialog(vehicle)">
           {{buildVehicleString(vehicle)}}
           <mat-icon matChipRemove svgIcon="cancel"></mat-icon>
         </mat-chip>

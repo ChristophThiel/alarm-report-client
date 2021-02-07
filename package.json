@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "main": "electron.js",
   "scripts": {
-    "build": "ng build --output-path=dist --prod"
+    "build": "ng build --output-path=dist --prod",
+    "package": "electron-packager . AlarmReport --platform=linux,win32 --arch=x64 --ignore=/e2e --ignore=/src  --overwrite --out=../"
   },
   "private": true,
   "dependencies": {

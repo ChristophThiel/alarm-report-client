@@ -21,8 +21,8 @@ export class InstrumentsComponent implements OnInit {
   public vehicleForm: FormGroup;
   public deviceForm: FormGroup;
 
-  public vehicles: string[];
-  public noVehicles: string[] = ['TSA', 'Boot', 'Rüst Anhänger'];
+  public vehicles: any[];
+  public vehicleRangeString = 'Kilometer';
 
   public matcher: CustomErrorStateMatcher;
 
@@ -37,24 +37,26 @@ export class InstrumentsComponent implements OnInit {
     });
     this.vehicleForm = this.builder.group({
       name: ['', Validators.required],
-      range: ['', [Validators.required, Validators.min(0)]]
+      range: ['', [Validators.min(0)]]
     });
-    this.http.get<string[]>(environment.vehicles).subscribe(data => this.vehicles = data.sort((v1, v2) => sortAlhabetical(v1, v2)));
+    this.http.get<string[]>(environment.vehicles)
+      .subscribe(data => this.vehicles = data.sort((v1, v2) => sortAlhabetical(v1, v2)));
   }
 
   public buildVehicleString(vehicle: any): string {
-    const result = vehicle.name;
+    const name = vehicle.name
     if (vehicle.range > 0)
-      return `${result} (${vehicle.range} km)`;
-    return result;
+      return `${name} (${vehicle.range} ${this.getVehicleUnit(name)})`;
+    return name;
   }
 
   public isNoVehicle(event: any): void {
     const formControl = this.vehicleForm.get('range');
-    if (this.noVehicles.indexOf(event.value) === -1) {
-      formControl.enable();
+    const vehicle = this.vehicles.find(vehicle => vehicle.name === event.value);
+    if (vehicle.isVehicle) {
+      this.vehicleRangeString = 'Kilometer';
     } else {
-      formControl.disable();
+      this.vehicleRangeString = 'Betriebsstunden';
     }
   }
 
@@ -82,11 +84,19 @@ export class InstrumentsComponent implements OnInit {
 
     const name = this.vehicleForm.get('name').value
     const range = this.vehicleForm.get('range');
-    this.alarm.vehicles.push({
-      name: name,
-      range: +range.value
-    });
-    this.vehicles.splice(this.vehicles.indexOf(name), 1);
+
+    const vehicle = this.alarm.vehicles.find(vehicle => vehicle.name === name);
+    if (vehicle) {
+      vehicle.range = range.value;
+      this.alarm.vehicles[this.alarm.vehicles.indexOf(vehicle)] = vehicle;
+    } else {
+      this.alarm.vehicles.push({
+        name: name,
+        range: +range.value,
+        unit: this.getVehicleUnit(name)
+      });
+    }
+    // this.vehicles.splice(this.vehicles.indexOf(name), 1);
     this.vehicleForm.reset();
     formDirective.resetForm();
 
@@ -128,10 +138,20 @@ export class InstrumentsComponent implements OnInit {
     this.alarm.devices.splice(this.alarm.devices.indexOf(device), 1);
   }
 
+  public selectVehicle(vehicle: any) {
+    this.vehicleForm.get('name').setValue(vehicle.name);
+    this.vehicleForm.get('range').setValue(vehicle.range);
+  }
+
+  private getVehicleUnit(vehicleName: string): string {
+    const vehicle = this.vehicles.find(vehicle => vehicle.name === vehicleName);
+    return vehicle.isVehicle
+      ? 'km'
+      : 'h';
+  }
+
   private removeVehicle(vehicle: any): void {
     this.alarm.vehicles.splice(this.alarm.vehicles.indexOf(vehicle), 1);
-    this.vehicles.push(vehicle.name);
-    this.vehicles.sort((v1, v2) => sortAlhabetical(v1, v2));
   }
 
 }

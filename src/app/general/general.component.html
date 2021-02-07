@@ -30,7 +30,8 @@
 
         <mat-form-field *ngIf="alarm.alarmedBy !== alarmedByOptions[1]" appearance="outline" class="right" fxFlex="65">
           <mat-label>Information</mat-label>
-          <input matInput formControlName="others" (input)="alarm.others = form.get('others').value">
+          <input matInput formControlName="others" (input)="alarm.others = form.get('others').value"
+            placeholder="z.B. Telefon">
           <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
 
@@ -43,19 +44,11 @@
         </mat-form-field>
       </form>
 
-      <form [formGroup]="form">
-        <mat-form-field appearance="outline" class="left" fxFlex="50">
-          <mat-label>Hauptaktivität</mat-label>
-          <input matInput formControlName="mainActivity" (input)="alarm.mainActivity = form.get('mainActivity').value">
-          <mat-error>Feld wird benötigt</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="right" fxFlex="50">
-          <mat-label>Nebenaktivität</mat-label>
-          <input matInput formControlName="sideActivity" (input)="alarm.sideActivity = form.get('sideActivity').value">
-          <mat-error>Feld wird benötigt</mat-error>
-        </mat-form-field>
-      </form>
+      <mat-form-field appearance="outline">
+        <mat-label>Einsatzgrund</mat-label>
+        <input matInput formControlName="reason" (input)="alarm.reason = form.get('reason').value">
+        <mat-error>Feld wird benötigt</mat-error>
+      </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Gemeinde</mat-label>
@@ -78,7 +71,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="50" appearance="outline" class="right is-center" floatLabel="always">
-          <mat-label>Getötete Personen</mat-label>
+          <mat-label>Totgeborgene Personen</mat-label>
           <input formControlName="killedPeople" matInput min="0" placeholder="0" type="number"
             (input)="alarm.involved[1] = $event.target.value">
           <mat-error>Ungültiger Wert</mat-error>
@@ -94,7 +87,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="50" appearance="outline" class="right is-center" floatLabel="always">
-          <mat-label>Getötete Tiere</mat-label>
+          <mat-label>Totgeborgene Tiere</mat-label>
           <input formControlName="killedAnimals" matInput placeholder="0" type="number"
             (input)="alarm.involved[3] = $event.target.value">
           <mat-error>Ungültiger Wert</mat-error>
@@ -115,14 +108,7 @@
 
     <form fxFlex="calc(50% - 8px)" fxLayout="column" [formGroup]="form">
       <form [formGroup]="form">
-        <mat-form-field appearance="outline" class="left" fxFlex="50" (click)="alarmedPicker.open()">
-          <mat-label>Datum</mat-label>
-          <input class="date" formControlName="alarmedDate" matInput readonly [matDatepicker]="alarmedPicker" />
-          <mat-datepicker #alarmedPicker></mat-datepicker>
-          <mat-error>Feld wird benötigt</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="left fix-time is-center" fxFlex="50">
           <mat-label>Alarmiert</mat-label>
           <input formControlName="alarmed" matInput type="time" />
           <button mat-icon-button matSuffix type="button" (click)="setCurrentTime('alarmed')">
@@ -130,81 +116,81 @@
           </button>
           <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right" fxFlex="50" (click)="alarmedPicker.open()">
+          <mat-label>Datum</mat-label>
+          <input class="date" formControlName="alarmedDate" matInput readonly [matDatepicker]="alarmedPicker" />
+          <mat-datepicker #alarmedPicker></mat-datepicker>
+          <mat-error>Feld wird benötigt</mat-error>
+        </mat-form-field>
       </form>
 
       <form [formGroup]="form">
-        <mat-form-field appearance="outline" class="left" fxFlex="50" (click)="engagedPicker.open()">
-          <mat-label>Datum</mat-label>
-          <input class="date" formControlName="engagedDate" matInput readonly [matDatepicker]="engagedPicker" />
-          <mat-datepicker #engagedPicker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="left fix-time is-center" fxFlex="50">
           <mat-label>Ausgerückt</mat-label>
           <input formControlName="engaged" matInput type="time" />
           <button mat-icon-button matSuffix (click)="setCurrentTime('engaged')">
             <mat-icon>schedule</mat-icon>
           </button>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right" fxFlex="50" (click)="engagedPicker.open()">
+          <mat-label>Datum</mat-label>
+          <input class="date" formControlName="engagedDate" matInput readonly [matDatepicker]="engagedPicker" />
+          <mat-datepicker #engagedPicker></mat-datepicker>
+        </mat-form-field>
       </form>
 
       <form [formGroup]="form">
-        <mat-form-field appearance="outline" class="left" fxFlex="50" (click)="reachedPicker.open()">
-          <mat-label>Datum</mat-label>
-          <input class="date" formControlName="reachedDate" matInput readonly [matDatepicker]="reachedPicker" />
-          <mat-datepicker #reachedPicker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="left fix-time is-center" fxFlex="50">
           <mat-label>Am Einsatzort</mat-label>
           <input formControlName="reached" matInput type="time" />
           <button mat-icon-button matSuffix (click)="setCurrentTime('reached')">
             <mat-icon>schedule</mat-icon>
           </button>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right" fxFlex="50" (click)="reachedPicker.open()">
+          <mat-label>Datum</mat-label>
+          <input class="date" formControlName="reachedDate" matInput readonly [matDatepicker]="reachedPicker" />
+          <mat-datepicker #reachedPicker></mat-datepicker>
+        </mat-form-field>
       </form>
 
       <form [formGroup]="form">
-        <mat-form-field appearance="outline" class="left" fxFlex="50" (click)="stopPicker.open()">
-          <mat-label>Datum</mat-label>
-          <input class="date" formControlName="stopDate" matInput readonly [matDatepicker]="stopPicker" />
-          <mat-datepicker #stopPicker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="left fix-time is-center" fxFlex="50">
           <mat-label>Alarmstopp</mat-label>
           <input formControlName="stop" matInput type="time" />
           <button mat-icon-button matSuffix (click)="setCurrentTime('stop')">
             <mat-icon>schedule</mat-icon>
           </button>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right" fxFlex="50" (click)="stopPicker.open()">
+          <mat-label>Datum</mat-label>
+          <input class="date" formControlName="stopDate" matInput readonly [matDatepicker]="stopPicker" />
+          <mat-datepicker #stopPicker></mat-datepicker>
+        </mat-form-field>
       </form>
 
       <form [formGroup]="form">
-        <mat-form-field appearance="outline" class="left" fxFlex="50" (click)="indentedPicker.open()">
-          <mat-label>Datum</mat-label>
-          <input class="date" formControlName="indentedDate" matInput readonly [matDatepicker]="indentedPicker" />
-          <mat-datepicker #indentedPicker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="left fix-time is-center" fxFlex="50">
           <mat-label>Eingerückt</mat-label>
           <input formControlName="indented" matInput type="time" />
           <button mat-icon-button matSuffix (click)="setCurrentTime('indented')">
             <mat-icon>schedule</mat-icon>
           </button>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right" fxFlex="50" (click)="indentedPicker.open()">
+          <mat-label>Datum</mat-label>
+          <input class="date" formControlName="indentedDate" matInput readonly [matDatepicker]="indentedPicker" />
+          <mat-datepicker #indentedPicker></mat-datepicker>
+        </mat-form-field>
       </form>
 
       <form [formGroup]="form">
-        <mat-form-field appearance="outline" class="left" fxFlex="50" (click)="readyPicker.open()">
-          <mat-label>Datum</mat-label>
-          <input class="date" formControlName="readyDate" matInput readonly [matDatepicker]="readyPicker" />
-          <mat-datepicker #readyPicker></mat-datepicker>
-          <mat-error>Feld wird benötigt</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field appearance="outline" class="left fix-time is-center" fxFlex="50">
           <mat-label>Einsatzbereit</mat-label>
           <input formControlName="ready" matInput type="time" />
           <button mat-icon-button matSuffix type="button" (click)="setCurrentTime('ready')">
@@ -212,22 +198,29 @@
           </button>
           <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right" fxFlex="50" (click)="readyPicker.open()">
+          <mat-label>Datum</mat-label>
+          <input class="date" formControlName="readyDate" matInput readonly [matDatepicker]="readyPicker" />
+          <mat-datepicker #readyPicker></mat-datepicker>
+          <mat-error>Feld wird benötigt</mat-error>
+        </mat-form-field>
       </form>
 
       <form *ngIf="alarm.alarmType === alarmTypes[1]" fxLayout="row" [formGroup]="form">
-        <mat-form-field appearance="outline" class="left" fxFlex="50" (click)="fireOutPicker.open()">
-          <mat-label>Datum</mat-label>
-          <input class="date" formControlName="fireOutDate" matInput readonly [matDatepicker]="fireOutPicker" />
-          <mat-datepicker #fireOutPicker></mat-datepicker>
-          <mat-error>Feld wird benötigt</mat-error>
-        </mat-form-field>
-
-        <mat-form-field *ngIf="true" appearance="outline" class="right fix-time is-center" fxFlex="50">
+        <mat-form-field *ngIf="true" appearance="outline" class="left fix-time is-center" fxFlex="50">
           <mat-label>Brand aus</mat-label>
           <input formControlName="fireOut" matInput type="time">
           <button mat-icon-button matSuffix type="button" (click)="setCurrentTime('fireOut')">
             <mat-icon>schedule</mat-icon>
           </button>
+          <mat-error>Feld wird benötigt</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="right" fxFlex="50" (click)="fireOutPicker.open()">
+          <mat-label>Datum</mat-label>
+          <input class="date" formControlName="fireOutDate" matInput readonly [matDatepicker]="fireOutPicker" />
+          <mat-datepicker #fireOutPicker></mat-datepicker>
           <mat-error>Feld wird benötigt</mat-error>
         </mat-form-field>
       </form>
@@ -263,6 +256,7 @@
           <mat-icon *ngIf="department.name !== 'Marchtrenk'" matChipRemove svgIcon="cancel"></mat-icon>
         </mat-chip>
       </mat-chip-list>
+      <mat-hint>Hinweis: Einsatzleiter ist von der ausgewählten Feuerwehr.</mat-hint>
     </mat-form-field>
   </form>
 
@@ -303,15 +297,15 @@
     </mat-form-field>
 
     <mat-form-field fxFlex appearance="outline">
-      <mat-label>Vorkommnisse</mat-label>
+      <mat-label>Vorkommnisse / Tätigkeiten</mat-label>
       <textarea matInput formControlName="events" cdkTextareaAutosize
         (input)="alarm.events = form.get('events').value"></textarea>
     </mat-form-field>
 
     <mat-form-field appearance="outline" fxFlex>
-      <mat-label>Tätigkeiten</mat-label>
-      <textarea matInput formControlName="activities" cdkTextareaAutosize
-        (input)="alarm.activities = form.get('activities').value"></textarea>
+      <mat-label>Probleme</mat-label>
+      <textarea matInput formControlName="problems" cdkTextareaAutosize
+        (input)="alarm.problems = form.get('problems').value"></textarea>
     </mat-form-field>
   </form>
 </div>
