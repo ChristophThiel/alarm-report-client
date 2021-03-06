@@ -189,6 +189,10 @@ export class PdfService {
 
     this.drawTable(tableData, this.getColumnsConfiguration(tableData));
 
+    // Print signature
+    tableData = [['Unterschrift:', '']];
+    this.drawTable(tableData, this.getColumnsConfiguration(tableData));
+
     this.finishDocument(alarm);
 
     return this.doc;
