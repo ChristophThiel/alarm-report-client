@@ -43,7 +43,6 @@ export class GeneralComponent implements OnInit {
   public weatherOptions: string[];
   public departments: any[];
   public filteredDepartments: any[];
-  public organisations: string[];
 
   @Input() alarm: Alarm;
 
@@ -54,7 +53,6 @@ export class GeneralComponent implements OnInit {
     this.officers = environment.officers
       .sort((a, b) => sortAlhabetical(a, b));
     this.weatherOptions = environment.weatherOptions;
-    this.organisations = environment.organisations;
   }
 
   public ngOnInit(): void {
@@ -94,6 +92,8 @@ export class GeneralComponent implements OnInit {
       killedPeople: [instance.involved[1], Validators.min(1)],
       injuredAnimals: [instance.involved[2], Validators.min(1)],
       killedAnimals: [instance.involved[3], Validators.min(1)],
+      // chargeable: [instance.isChargeable],
+      // costs: [instance.costs, Validators.min(0)],
       alarmed: [instance.alarmed == null ? '' : moment(instance.alarmed).format('HH:mm'), Validators.required],
       alarmedDate: [instance.alarmed === null || instance.alarmed, Validators.required],
       engaged: [instance.engaged == null ? '' : moment(instance.engaged).format('HH:mm')],
@@ -169,10 +169,7 @@ export class GeneralComponent implements OnInit {
       return;
 
     const control = this.form.get('organisation');
-    for (let organisation of control.value) {
-      this.organisations.splice(this.organisations.indexOf(organisation), 1);
-      this.alarm.organisations.push(organisation);
-    }
+    this.alarm.organisations.push(control.value);
     control.reset();
   }
 
@@ -184,8 +181,6 @@ export class GeneralComponent implements OnInit {
 
   public removeOrganisation(organisation: string): void {
     this.alarm.organisations.splice(this.alarm.organisations.indexOf(organisation), 1);
-    this.organisations.push(organisation);
-    this.organisations.sort((o1, o2) => sortAlhabetical(o1, o2));
   }
 
   public setCurrentTime(formControlName: string): void {

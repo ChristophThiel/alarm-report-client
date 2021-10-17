@@ -35,20 +35,6 @@ export const environment = {
     'Himpsl Daniel',
     'Greinegger Alexander'
   ],
-  organisations: [
-    'Abschleppdienst',
-    'AFK',
-    'Behörde',
-    'Bestatter',
-    'BFK',
-    'Gasunternehmen',
-    'Gemeinde',
-    'ÖBB',
-    'Polizei',
-    'Rotes Kreuz',
-    'Straßenmeisterei',
-    'Stromversorger'
-  ],
   positions: [
     'Atemschutzträger',
     'Einsatzleiter',

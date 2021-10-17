@@ -12,7 +12,6 @@ import { FinishDialogComponent } from './finish-dialog/finish-dialog.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { MatTabGroup } from '@angular/material/tabs';
 import { take } from 'rxjs/operators';
-import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
 import { FormControl } from '@angular/forms';
 

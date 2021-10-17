@@ -86,10 +86,27 @@
           <mat-error>Ungültiger Wert</mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="50" appearance="outline" class="right is-center" floatLabel="always">
+        <mat-form-field fxFlex="50" appearance="outline" class="right is-center" floatLabel>
           <mat-label>Totgeborgene Tiere</mat-label>
           <input formControlName="killedAnimals" matInput placeholder="0" type="number"
             (input)="alarm.involved[3] = $event.target.value">
+          <mat-error>Ungültiger Wert</mat-error>
+        </mat-form-field>
+      </form>
+
+      <form [formGroup]="form">
+        <mat-form-field fxFlex="50" appearance="outline" class="left is-center">
+          <mat-label>Kostenpflichtig</mat-label>
+          <!-- <mat-select (selectionChange)="alarm.weather = $event.value" [value]="alarm.weather"> -->
+          <mat-select formControlName="chargeable" [value]="alarm.isChargeable">
+            <mat-option value="true">Ja</mat-option>
+            <mat-option value="false">Nein</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" appearance="outline" class="right is-center">
+          <mat-label>Betrag</mat-label>
+          <input formControlName="" matInput type="number">
           <mat-error>Ungültiger Wert</mat-error>
         </mat-form-field>
       </form>
@@ -263,9 +280,7 @@
   <form [formGroup]="form" (submit)="onSubmitOrganisation()">
     <mat-form-field appearance="outline" class="left" fxFlex="80">
       <mat-label>Organisation</mat-label>
-      <mat-select formControlName="organisation" multiple>
-        <mat-option *ngFor="let organisation of organisations" [value]="organisation">{{organisation}}</mat-option>
-      </mat-select>
+      <input formControlName="organisation" matInput>
     </mat-form-field>
 
     <button class="form-submit-button right" color="accent" fxFlex="20" mat-stroked-button type="submit">

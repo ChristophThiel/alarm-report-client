@@ -14,6 +14,9 @@ export class Alarm {
 
   public involved: any[4] = [];
 
+  public isChargeable: boolean = false;
+  public costs: number = 0;
+
   public weather: string = 'Sonnig';
 
   public alarmed: Date;
